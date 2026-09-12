@@ -10,7 +10,7 @@ SOURCE_DIRECTORY = REPOSITORY_ROOT / "src"
 if str(SOURCE_DIRECTORY) not in sys.path:
     sys.path.insert(0, str(SOURCE_DIRECTORY))
 
-from stage3 import load_rankings
+from stage3 import generate_explanation, load_rankings
 
 
 RANKINGS_PATH = REPOSITORY_ROOT / "demo_data" / "mock_ranking_results.json"
@@ -83,3 +83,6 @@ for candidate in top_candidates:
         matched_skills_column.write(matched_skills_text)
         missing_skills_column.write("**Missing Required Skills**")
         missing_skills_column.write(missing_skills_text)
+
+        st.write("**Why this candidate ranked here**")
+        st.write(generate_explanation(candidate))
