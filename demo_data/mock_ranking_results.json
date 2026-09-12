@@ -1,0 +1,114 @@
+[
+  {
+    "candidate_id": "C001",
+    "name": "Aisha Mehta",
+    "rank": 1,
+    "final_score": 92.4,
+    "keyword_score": 90.0,
+    "semantic_score": 94.8,
+    "matched_required_skills": [
+      "JavaScript",
+      "React",
+      "Node.js",
+      "REST API development"
+    ],
+    "matched_preferred_skills": [
+      "MongoDB",
+      "Git"
+    ],
+    "missing_required_skills": [
+      "TypeScript"
+    ],
+    "evidence": [
+      {
+        "requirement": "JavaScript and React",
+        "resume_evidence": "Developed responsive customer dashboards with JavaScript and React",
+        "match_type": "keyword"
+      },
+      {
+        "requirement": "Node.js and REST API development",
+        "resume_evidence": "Built and maintained REST APIs using Node.js, Express, and MongoDB",
+        "match_type": "semantic"
+      },
+      {
+        "requirement": "Git",
+        "resume_evidence": "Used Git for feature branching, code reviews, and release workflows",
+        "match_type": "keyword"
+      }
+    ]
+  },
+  {
+    "candidate_id": "C002",
+    "name": "Rohan Das",
+    "rank": 2,
+    "final_score": 86.6,
+    "keyword_score": 84.8,
+    "semantic_score": 88.4,
+    "matched_required_skills": [
+      "JavaScript",
+      "React",
+      "REST API development"
+    ],
+    "matched_preferred_skills": [
+      "Git"
+    ],
+    "missing_required_skills": [
+      "Node.js",
+      "TypeScript"
+    ],
+    "evidence": [
+      {
+        "requirement": "JavaScript and React",
+        "resume_evidence": "Created reusable React components and client-side features in JavaScript",
+        "match_type": "keyword"
+      },
+      {
+        "requirement": "REST API development",
+        "resume_evidence": "Integrated and extended REST API endpoints for an internal workflow platform",
+        "match_type": "semantic"
+      },
+      {
+        "requirement": "Git",
+        "resume_evidence": "Collaborated through Git pull requests and peer code reviews",
+        "match_type": "keyword"
+      }
+    ]
+  },
+  {
+    "candidate_id": "C003",
+    "name": "Neha Kapoor",
+    "rank": 3,
+    "final_score": 80.0,
+    "keyword_score": 77.5,
+    "semantic_score": 82.5,
+    "matched_required_skills": [
+      "JavaScript",
+      "REST API development"
+    ],
+    "matched_preferred_skills": [
+      "Git"
+    ],
+    "missing_required_skills": [
+      "React",
+      "Node.js",
+      "TypeScript"
+    ],
+    "evidence": [
+      {
+        "requirement": "JavaScript",
+        "resume_evidence": "Implemented interactive web form validation and reporting features in JavaScript",
+        "match_type": "keyword"
+      },
+      {
+        "requirement": "REST API development",
+        "resume_evidence": "Developed REST API endpoints for a Python-based inventory service",
+        "match_type": "semantic"
+      },
+      {
+        "requirement": "Git",
+        "resume_evidence": "Managed source changes and release tags with Git",
+        "match_type": "keyword"
+      }
+    ]
+  }
+]
