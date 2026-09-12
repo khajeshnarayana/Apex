@@ -1,23 +1,33 @@
 """
-Hidden-text / ATS-stuffing stripper for resume PDFs.
+Stage 1 — Resume Parser
+Hidden-text / ATS-stuffing stripper + section splitter + skill extractor
 
-Detects and removes text spans that are:
-  - Below a minimum visible font size (tiny-text stuffing)
-  - The same (or near-same) color as the page background (invisible text)
-  - Rendered with PDF "invisible" render mode (Tr 3)
-  - Positioned outside the visible page area (off-page stuffing)
+Supports: PDF and DOCX
+Output:   One resume_<id>.json per file
 
-Requires: pip install pymupdf --break-system-packages
+Usage:
+  python hidden_text_strip.py <resume.pdf|docx>         # single file debug
+  python hidden_text_strip.py <pdf_dir> <out_dir>       # batch mode
+
+Requires: pip install pymupdf python-docx
 """
 
 import fitz  # PyMuPDF
+import re
+import json
+import os
 from dataclasses import dataclass, field
+from docx import Document
 
 
-MIN_FONT_SIZE = 4.5          # pt — anything smaller is almost certainly stuffing
-COLOR_SIMILARITY_THRESHOLD = 12  # max per-channel diff (0-255) to count as "matches background"
-DEFAULT_BG = (255, 255, 255)     # assume white page unless we detect otherwise
+# ── Config ────────────────────────────────────────────────────────────────────
 
+MIN_FONT_SIZE = 4.5
+COLOR_SIMILARITY_THRESHOLD = 12
+DEFAULT_BG = (255, 255, 255)
+
+
+# ── Data classes ──────────────────────────────────────────────────────────────
 
 @dataclass
 class SpanFlag:
@@ -44,8 +54,9 @@ class ExtractionResult:
         return "\n".join(lines)
 
 
+# ── PDF extraction ─────────────────────────────────────────────────────────────
+
 def _int_color(color_val) -> tuple:
-    """PyMuPDF span color is a packed int (sRGB). Unpack to (r,g,b) 0-255."""
     if isinstance(color_val, tuple):
         return color_val
     r = (color_val >> 16) & 255
@@ -58,7 +69,7 @@ def _color_matches_bg(color: tuple, bg: tuple = DEFAULT_BG) -> bool:
     return all(abs(c - b) <= COLOR_SIMILARITY_THRESHOLD for c, b in zip(color, bg))
 
 
-def extract_clean_text(pdf_path: str) -> ExtractionResult:
+def extract_from_pdf(pdf_path: str) -> ExtractionResult:
     doc = fitz.open(pdf_path)
     clean_parts = []
     flagged = []
@@ -68,7 +79,7 @@ def extract_clean_text(pdf_path: str) -> ExtractionResult:
         page_dict = page.get_text("dict")
 
         for block in page_dict.get("blocks", []):
-            if block.get("type") != 0:  # 0 = text block
+            if block.get("type") != 0:
                 continue
             for line in block.get("lines", []):
                 line_parts = []
@@ -80,10 +91,8 @@ def extract_clean_text(pdf_path: str) -> ExtractionResult:
                     size = span.get("size", 0)
                     color = _int_color(span.get("color", 0))
                     bbox = span.get("bbox", (0, 0, 0, 0))
-                    render_mode = span.get("flags", 0)  # bitfield; see note below
 
                     reason = None
-
                     if size < MIN_FONT_SIZE:
                         reason = "tiny-font"
                     elif _color_matches_bg(color):
@@ -103,22 +112,101 @@ def extract_clean_text(pdf_path: str) -> ExtractionResult:
     return ExtractionResult(clean_text="\n".join(clean_parts), flagged_spans=flagged)
 
 
-## ---------------------------------------------------------------------
-## Section splitting
-## ---------------------------------------------------------------------
+# ── DOCX extraction ────────────────────────────────────────────────────────────
 
-import re
-import json
-import os
+def extract_from_docx(docx_path: str) -> ExtractionResult:
+    """
+    DOCX hidden text: Word has a 'vanish' font property that hides text.
+    We detect and strip paragraphs/runs where all runs are vanished.
+    No colour check needed — DOCX hidden text uses the vanish flag, not white colour.
+    """
+    doc = Document(docx_path)
+    clean_parts = []
+    flagged = []
+
+    for para in doc.paragraphs:
+        para_text = ""
+        para_flagged = False
+
+        for run in para.runs:
+            text = run.text
+            if not text.strip():
+                continue
+
+            # Check vanish (hidden text) property
+            vanish = False
+            if run.font.hidden:
+                vanish = True
+
+            if vanish:
+                flagged.append(SpanFlag(
+                    text=text,
+                    reason="docx-hidden",
+                    font_size=run.font.size.pt if run.font.size else 0,
+                    color=(0, 0, 0),
+                    bbox=(0, 0, 0, 0)
+                ))
+                para_flagged = True
+            else:
+                para_text += text
+
+        if para_text.strip():
+            clean_parts.append(para_text)
+
+    return ExtractionResult(clean_text="\n".join(clean_parts), flagged_spans=flagged)
+
+
+# ── TXT extraction ─────────────────────────────────────────────────────────────
+
+def extract_from_txt(txt_path: str) -> ExtractionResult:
+    with open(txt_path, "r", encoding="utf-8", errors="ignore") as f:
+        text = f.read()
+    return ExtractionResult(clean_text=text, flagged_spans=[])
+
+
+# ── XML extraction ─────────────────────────────────────────────────────────────
+
+def extract_from_xml(xml_path: str) -> ExtractionResult:
+    """Strip all XML tags and return inner text content only."""
+    with open(xml_path, "r", encoding="utf-8", errors="ignore") as f:
+        raw = f.read()
+    text = re.sub(r"<[^>]+>", " ", raw)
+    text = re.sub(r"[ \t]+", " ", text)
+    text = re.sub(r"\n\s*\n+", "\n", text).strip()
+    return ExtractionResult(clean_text=text, flagged_spans=[])
+
+
+# ── Dispatcher ─────────────────────────────────────────────────────────────────
+
+def extract_clean_text(file_path: str) -> ExtractionResult:
+    ext = os.path.splitext(file_path)[1].lower()
+    if ext == ".pdf":
+        return extract_from_pdf(file_path)
+    elif ext == ".docx":
+        return extract_from_docx(file_path)
+    elif ext == ".txt":
+        return extract_from_txt(file_path)
+    elif ext == ".xml":
+        return extract_from_xml(file_path)
+    else:
+        raise ValueError(f"Unsupported file type: {ext}")
+
+
+# ── Section splitting ──────────────────────────────────────────────────────────
 
 SECTION_HEADERS = {
-    "skills": ["skills", "technical skills", "core competencies", "technologies"],
-    "experience": ["experience", "work experience", "professional experience", "employment history"],
-    "projects": ["projects", "personal projects", "academic projects"],
-    "education": ["education", "academic background", "qualifications"],
+    "summary":        ["summary", "professional summary", "profile", "objective", "about me"],
+    "skills":         ["skills", "technical skills", "core competencies", "technologies", "key skills"],
+    "experience":     ["experience", "work experience", "professional experience",
+                       "employment history", "work history", "internships", "internship"],
+    "projects":       ["projects", "personal projects", "academic projects", "technical projects",
+                       "key projects"],
+    "education":      ["education", "academic background", "qualifications", "academic qualifications"],
+    "certifications": ["certifications", "certificates", "courses", "certifications & courses"],
+    "achievements":   ["achievements", "awards", "achievements & awards", "honours", "honors",
+                       "extracurricular activities", "extracurricular", "activities"],
 }
 
-# Flatten to a lookup: normalized header text -> canonical section name
 _HEADER_LOOKUP = {}
 for canonical, variants in SECTION_HEADERS.items():
     for v in variants:
@@ -126,19 +214,13 @@ for canonical, variants in SECTION_HEADERS.items():
 
 
 def _looks_like_header(line: str) -> str | None:
-    """Return the canonical section name if this line looks like a section header, else None."""
     normalized = line.strip().lower().strip(":").strip()
-    if not normalized or len(normalized) > 40:
+    if not normalized or len(normalized) > 50:
         return None
     return _HEADER_LOOKUP.get(normalized)
 
 
 def split_into_sections(clean_text: str) -> dict:
-    """
-    Naive line-based section splitter. clean_text is assumed to still have
-    original line breaks (join spans with '\n' instead of ' ' if you need this
-    to work well -- see NOTE in extract_clean_text call site below).
-    """
     sections = {name: [] for name in SECTION_HEADERS}
     current = None
 
@@ -153,22 +235,39 @@ def split_into_sections(clean_text: str) -> dict:
     return {name: "\n".join(lines).strip() for name, lines in sections.items()}
 
 
-## ---------------------------------------------------------------------
-## Skill extraction (vocabulary match against a shared skill list)
-## ---------------------------------------------------------------------
+# ── Skill extraction ───────────────────────────────────────────────────────────
 
-# Starter vocabulary -- extend this with terms pulled from your actual JD + resumes.
-# Share this exact list with Member 2 so keyword scoring uses the same normalized terms.
+# Extend this list once you have the actual JD
 SKILL_VOCAB = [
-    "python", "javascript", "java", "c++", "typescript", "sql", "node.js",
-    "react", "express", "mongodb", "postgresql", "aws", "docker", "kubernetes",
-    "git", "rest apis", "graphql", "html", "css", "django", "flask",
+    # Languages
+    "python", "javascript", "java", "c++", "typescript", "sql", "go", "ruby", "php", "swift",
+    "dart", "kotlin", "bash", "powershell", "r",
+    # Frontend
+    "react", "vue", "angular", "html", "css", "next.js", "tailwind", "react native",
+    # Mobile
+    "flutter", "android", "ios", "android sdk", "firebase",
+    # Backend
+    "node.js", "express", "django", "flask", "fastapi", "spring boot", "celery", "rabbitmq",
+    # Databases
+    "mongodb", "postgresql", "mysql", "redis", "sqlite", "firestore",
+    # Cloud / DevOps
+    "aws", "gcp", "azure", "docker", "kubernetes", "git", "linux", "ci/cd", "terraform",
+    "github", "gitlab", "jenkins",
+    # APIs
+    "rest apis", "graphql", "websockets",
+    # Cyber
+    "burp suite", "owasp", "penetration testing", "nmap", "wireshark", "metasploit",
+    "sqlmap", "splunk", "kali linux", "vulnerability assessment", "vapt",
+    # Data / ML
+    "pandas", "numpy", "tensorflow", "pytorch", "machine learning", "scikit-learn",
+    "scapy", "opencv",
+    # Tools
+    "postman", "figma", "jira", "linux shell", "virtualbox",
 ]
 
 
 def extract_skills(text: str, vocab: list = SKILL_VOCAB) -> list:
-    """Lowercase, punctuation-light substring match against the shared vocabulary."""
-    normalized = re.sub(r"[^\w\s+.#-]", " ", text.lower())
+    normalized = re.sub(r"[^\w\s+.#/-]", " ", text.lower())
     found = []
     for skill in vocab:
         pattern = r"\b" + re.escape(skill) + r"\b"
@@ -177,12 +276,10 @@ def extract_skills(text: str, vocab: list = SKILL_VOCAB) -> list:
     return found
 
 
-## ---------------------------------------------------------------------
-## Full pipeline: PDF -> resume_<id>.json
-## ---------------------------------------------------------------------
+# ── Full pipeline ──────────────────────────────────────────────────────────────
 
-def build_resume_json(pdf_path: str, resume_id: str) -> dict:
-    result = extract_clean_text(pdf_path)
+def build_resume_json(file_path: str, resume_id: str) -> dict:
+    result = extract_clean_text(file_path)
     sections_raw = split_into_sections(result.clean_text)
 
     sections = {}
@@ -192,9 +289,18 @@ def build_resume_json(pdf_path: str, resume_id: str) -> dict:
             "extracted_skills": extract_skills(raw_text) if name in ("skills", "experience", "projects") else [],
         }
 
+    # Extract candidate name from first non-empty line
+    candidate_name = ""
+    for line in result.clean_text.split("\n"):
+        line = line.strip()
+        if line and len(line) < 60:
+            candidate_name = line
+            break
+
     return {
         "resume_id": resume_id,
-        "source_filename": os.path.basename(pdf_path),
+        "candidate_name": candidate_name,
+        "source_filename": os.path.basename(file_path),
         "sections": sections,
         "full_text_clean": result.clean_text,
         "integrity": {
@@ -204,32 +310,46 @@ def build_resume_json(pdf_path: str, resume_id: str) -> dict:
     }
 
 
-def process_batch(pdf_dir: str, out_dir: str):
+def process_batch(input_dir: str, out_dir: str):
     os.makedirs(out_dir, exist_ok=True)
-    for fname in sorted(os.listdir(pdf_dir)):
-        if not fname.lower().endswith(".pdf"):
-            continue
-        resume_id = os.path.splitext(fname)[0]
-        data = build_resume_json(os.path.join(pdf_dir, fname), resume_id)
-        out_path = os.path.join(out_dir, f"{resume_id}.json")
-        with open(out_path, "w") as f:
-            json.dump(data, f, indent=2)
-        print(f"wrote {out_path}  (stripped {data['integrity']['hidden_spans_stripped']} hidden span(s))")
+    supported = (".pdf", ".docx", ".txt", ".xml")
+    files = [f for f in sorted(os.listdir(input_dir)) if f.lower().endswith(supported)]
 
+    if not files:
+        print(f"No PDF or DOCX files found in {input_dir}")
+        return
+
+    for fname in files:
+        resume_id = os.path.splitext(fname)[0]
+        file_path = os.path.join(input_dir, fname)
+        try:
+            data = build_resume_json(file_path, resume_id)
+            out_path = os.path.join(out_dir, f"{resume_id}.json")
+            with open(out_path, "w") as f:
+                json.dump(data, f, indent=2)
+            stripped = data["integrity"]["hidden_spans_stripped"]
+            print(f"[OK] {fname}  →  {resume_id}.json  (stripped {stripped} hidden span(s))")
+        except Exception as e:
+            print(f"[ERR] {fname}: {e}")
+
+
+# ── Entry point ────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     import sys
-    if len(sys.argv) == 2 and sys.argv[1].lower().endswith(".pdf"):
-        # single-file debug mode: prints the report + JSON
-        result = extract_clean_text(sys.argv[1])
+
+    if len(sys.argv) == 2 and sys.argv[1].lower().endswith((".pdf", ".docx", ".txt", ".xml")):
+        path = sys.argv[1]
+        result = extract_clean_text(path)
         print(result.report())
-        data = build_resume_json(sys.argv[1], os.path.splitext(os.path.basename(sys.argv[1]))[0])
+        data = build_resume_json(path, os.path.splitext(os.path.basename(path))[0])
         print(json.dumps(data, indent=2))
+
     elif len(sys.argv) == 3:
-        # batch mode: python hidden_text_strip.py <pdf_dir> <out_dir>
         process_batch(sys.argv[1], sys.argv[2])
+
     else:
         print("Usage:")
-        print("  python hidden_text_strip.py <resume.pdf>            # single file, debug output")
-        print("  python hidden_text_strip.py <pdf_dir> <out_dir>     # batch -> resume_<id>.json files")
+        print("  python hidden_text_strip.py <resume.pdf|docx>      # single file, debug")
+        print("  python hidden_text_strip.py <input_dir> <out_dir>  # batch mode")
         sys.exit(1)
