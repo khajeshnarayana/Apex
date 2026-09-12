@@ -109,7 +109,19 @@ def extract_from_pdf(pdf_path: str) -> ExtractionResult:
                     clean_parts.append("".join(line_parts))
 
     doc.close()
-    return ExtractionResult(clean_text="\n".join(clean_parts), flagged_spans=flagged)
+    # Merge lone bullet characters with the next line so "•\nTypeScript" becomes "• TypeScript"
+    # This preserves skill context for the JD parser
+    merged = []
+    i = 0
+    while i < len(clean_parts):
+        line = clean_parts[i]
+        if line.strip() in ("\u2022", "-", "*") and i + 1 < len(clean_parts):
+            merged.append(line.strip() + " " + clean_parts[i + 1])
+            i += 2
+        else:
+            merged.append(line)
+            i += 1
+    return ExtractionResult(clean_text="\n".join(merged), flagged_spans=flagged)
 
 
 # ── DOCX extraction ────────────────────────────────────────────────────────────
@@ -366,13 +378,21 @@ def build_resume_json(file_path: str, resume_id: str) -> dict:
     }
 
 
-def process_batch(input_dir: str, out_dir: str):
+def process_batch(input_dir: str, out_dir: str, skip_file: str = ""):
+    """
+    skip_file: filename (not path) of the JD to exclude if it's inside the resumes folder.
+    """
     os.makedirs(out_dir, exist_ok=True)
     supported = (".pdf", ".docx", ".txt", ".xml")
-    files = [f for f in sorted(os.listdir(input_dir)) if f.lower().endswith(supported)]
+    skip_name = os.path.basename(skip_file).lower() if skip_file else ""
+
+    files = [
+        f for f in sorted(os.listdir(input_dir))
+        if f.lower().endswith(supported) and f.lower() != skip_name
+    ]
 
     if not files:
-        print(f"No PDF or DOCX files found in {input_dir}")
+        print(f"No resume files found in {input_dir}")
         return
 
     for fname in files:
@@ -395,6 +415,7 @@ if __name__ == "__main__":
     import sys
 
     if len(sys.argv) == 2 and sys.argv[1].lower().endswith((".pdf", ".docx", ".txt", ".xml")):
+        # Single file debug mode
         path = sys.argv[1]
         result = extract_clean_text(path)
         print(result.report())
@@ -402,10 +423,11 @@ if __name__ == "__main__":
         print(json.dumps(data, indent=2))
 
     elif len(sys.argv) == 3:
+        # Batch mode: python hidden_text_strip.py <resumes_dir> <out_dir>
         process_batch(sys.argv[1], sys.argv[2])
 
     else:
         print("Usage:")
-        print("  python hidden_text_strip.py <resume.pdf|docx>      # single file, debug")
-        print("  python hidden_text_strip.py <input_dir> <out_dir>  # batch mode")
+        print("  python hidden_text_strip.py <resume.pdf|docx|txt|xml>   # single file debug")
+        print("  python hidden_text_strip.py <resumes_dir> <out_dir>     # batch → one JSON per resume")
         sys.exit(1)
