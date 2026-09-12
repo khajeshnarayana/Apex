@@ -86,3 +86,73 @@ for candidate in top_candidates:
 
         st.write("**Why this candidate ranked here**")
         st.write(generate_explanation(candidate))
+
+st.header("Candidate Details")
+
+candidates_by_id = {
+    candidate["candidate_id"]: candidate for candidate in candidates
+}
+selected_candidate_id = st.selectbox(
+    "Select candidate",
+    options=list(candidates_by_id),
+    format_func=lambda candidate_id: candidates_by_id[candidate_id]["name"],
+)
+selected_candidate = candidates_by_id[selected_candidate_id]
+
+st.subheader(
+    f"Rank {selected_candidate['rank']} — {selected_candidate['name']}"
+)
+
+detail_final_column, detail_keyword_column, detail_semantic_column = st.columns(3)
+detail_final_column.metric(
+    "Final Score", f"{selected_candidate['final_score']:.1f}"
+)
+detail_keyword_column.metric(
+    "Keyword Score", f"{selected_candidate['keyword_score']:.1f}"
+)
+detail_semantic_column.metric(
+    "Semantic Score", f"{selected_candidate['semantic_score']:.1f}"
+)
+
+(
+    matched_required_column,
+    matched_preferred_column,
+    missing_required_column,
+) = st.columns(3)
+
+matched_required_column.subheader("Matched Required Skills")
+matched_required_column.write(
+    ", ".join(selected_candidate["matched_required_skills"])
+    or "None identified"
+)
+
+matched_preferred_column.subheader("Matched Preferred Skills")
+matched_preferred_column.write(
+    ", ".join(selected_candidate["matched_preferred_skills"])
+    or "None identified"
+)
+
+missing_required_column.subheader("Missing Required Skills")
+missing_required_column.write(
+    ", ".join(selected_candidate["missing_required_skills"])
+    or "None identified"
+)
+
+st.subheader("Why this candidate ranked here")
+st.write(generate_explanation(selected_candidate))
+
+st.subheader("Matching Evidence")
+selected_evidence = selected_candidate["evidence"]
+
+if selected_evidence:
+    for evidence_index, evidence_item in enumerate(selected_evidence, start=1):
+        requirement = (
+            evidence_item.get("requirement") or f"Evidence {evidence_index}"
+        )
+        with st.expander(requirement):
+            st.write("**Resume evidence:**")
+            st.write(evidence_item.get("resume_evidence") or "None identified")
+            st.write("**Match type:**")
+            st.write(evidence_item.get("match_type") or "None identified")
+else:
+    st.write("No supporting evidence recorded.")
