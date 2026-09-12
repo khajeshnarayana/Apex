@@ -1,0 +1,60 @@
+{
+  "resume_id": "Resume_15_Farhan_Sheikh",
+  "candidate_name": "Farhan Sheikh",
+  "source_filename": "Resume_15_Farhan_Sheikh.pdf",
+  "sections": {
+    "summary": {
+      "raw_text": "Full stack web developer with a completed coding bootcamp and multiple deployed MERN applications. Active\nopen-source contributor comfortable working with REST APIs and Git workflows.",
+      "extracted_skills": []
+    },
+    "skills": {
+      "raw_text": "JavaScript, React.js, Redux Toolkit, Node.js, Express.js, MongoDB, PostgreSQL, REST APIs, Git/GitHub, Docker\n(basic), Tailwind CSS, Jest",
+      "extracted_skills": [
+        "javascript",
+        "react",
+        "node.js",
+        "express",
+        "rest apis",
+        "postgresql",
+        "mongodb",
+        "git",
+        "github",
+        "docker",
+        "jest",
+        "css",
+        "tailwind"
+      ]
+    },
+    "experience": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "projects": {
+      "raw_text": "TaskFlow - Team Task Management App\n\u2022\nFull stack MERN app with drag-and-drop task boards, real-time updates via Socket.io\n\u2022\nDeployed on Render and Netlify; 40+ GitHub stars from bootcamp community\nOpen Source Contribution - DevConnect\n\u2022\nContributed 5 merged pull requests fixing bugs and adding features to a React/Node open-source project",
+      "extracted_skills": [
+        "react",
+        "github"
+      ]
+    },
+    "education": {
+      "degree": "Bengaluru City University (2023-2026)",
+      "institution": "B.C.A, Bengaluru City University",
+      "year": "2023-2026",
+      "cgpa": "8.4",
+      "raw_text": "B.C.A, Bengaluru City University (2023-2026), CGPA: 8.4/10\nFull Stack Web Development Bootcamp, Masai School (2026)"
+    },
+    "certifications": {
+      "raw_text": "Full Stack Web Development Certificate (Masai School)",
+      "extracted_skills": []
+    },
+    "achievements": {
+      "raw_text": "",
+      "extracted_skills": []
+    }
+  },
+  "full_text_clean": "Farhan Sheikh\nfarhan.sheikh.dev@gmail.com | +91 98xxxxxx15 | github.com/farhansheikh | Bengaluru\nSUMMARY\nFull stack web developer with a completed coding bootcamp and multiple deployed MERN applications. Active\nopen-source contributor comfortable working with REST APIs and Git workflows.\nEDUCATION\nB.C.A, Bengaluru City University (2023-2026), CGPA: 8.4/10\nFull Stack Web Development Bootcamp, Masai School (2026)\nSKILLS\nJavaScript, React.js, Redux Toolkit, Node.js, Express.js, MongoDB, PostgreSQL, REST APIs, Git/GitHub, Docker\n(basic), Tailwind CSS, Jest\nPROJECTS\nTaskFlow - Team Task Management App\n\u2022\nFull stack MERN app with drag-and-drop task boards, real-time updates via Socket.io\n\u2022\nDeployed on Render and Netlify; 40+ GitHub stars from bootcamp community\nOpen Source Contribution - DevConnect\n\u2022\nContributed 5 merged pull requests fixing bugs and adding features to a React/Node open-source project\nCERTIFICATIONS\nFull Stack Web Development Certificate (Masai School)",
+  "integrity": {
+    "hidden_spans_stripped": 0,
+    "reasons": []
+  }
+}

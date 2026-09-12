@@ -1,0 +1,47 @@
+{
+  "resume_id": "Resume_17_Aakash_Jain",
+  "candidate_name": "Aakash Jain",
+  "source_filename": "Resume_17_Aakash_Jain.pdf",
+  "sections": {
+    "summary": {
+      "raw_text": "Computer Science student focused primarily on data structures, algorithms, and competitive programming. No web\ndevelopment projects or internship experience yet.",
+      "extracted_skills": []
+    },
+    "skills": {
+      "raw_text": "C++, Data Structures & Algorithms, basic Python, basic SQL, Git (basic)",
+      "extracted_skills": [
+        "git",
+        "python",
+        "sql"
+      ]
+    },
+    "experience": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "projects": {
+      "raw_text": "Competitive Programming Practice\n\u2022\nSolved 400+ problems on Codeforces and LeetCode, rating 1500+ on Codeforces\nLibrary Book Search (C++ console app)\n\u2022\nConsole-based book search and inventory tool built in C++ with file handling",
+      "extracted_skills": []
+    },
+    "education": {
+      "degree": "B.Tech Computer Science",
+      "institution": "Manipal Institute of Technology",
+      "year": "2023-2027",
+      "cgpa": "7.9",
+      "raw_text": "B.Tech Computer Science, Manipal Institute of Technology (2023-2027), CGPA: 7.9/10"
+    },
+    "certifications": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "achievements": {
+      "raw_text": "",
+      "extracted_skills": []
+    }
+  },
+  "full_text_clean": "Aakash Jain\naakash.jain.cse@gmail.com | +91 98xxxxxx17 | github.com/aakashjain | Jaipur\nSUMMARY\nComputer Science student focused primarily on data structures, algorithms, and competitive programming. No web\ndevelopment projects or internship experience yet.\nEDUCATION\nB.Tech Computer Science, Manipal Institute of Technology (2023-2027), CGPA: 7.9/10\nSKILLS\nC++, Data Structures & Algorithms, basic Python, basic SQL, Git (basic)\nPROJECTS\nCompetitive Programming Practice\n\u2022\nSolved 400+ problems on Codeforces and LeetCode, rating 1500+ on Codeforces\nLibrary Book Search (C++ console app)\n\u2022\nConsole-based book search and inventory tool built in C++ with file handling",
+  "integrity": {
+    "hidden_spans_stripped": 0,
+    "reasons": []
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "resume_id": "Resume_04_Sneha_Reddy",
+  "candidate_name": "Sneha Reddy",
+  "source_filename": "Resume_04_Sneha_Reddy.pdf",
+  "sections": {
+    "summary": {
+      "raw_text": "Frontend developer passionate about building clean, accessible user interfaces with React. Limited backend\nexperience; has mostly consumed third-party or mock APIs in projects.",
+      "extracted_skills": []
+    },
+    "skills": {
+      "raw_text": "React.js, JavaScript, HTML5, CSS3, Tailwind CSS, Figma, Git, basic REST API consumption (Axios, fetch)",
+      "extracted_skills": [
+        "javascript",
+        "react",
+        "git",
+        "css",
+        "tailwind",
+        "figma"
+      ]
+    },
+    "experience": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "projects": {
+      "raw_text": "Portfolio Builder for Students\n\u2022\nBuilt a React app that generates shareable portfolio pages from a form-based input\n\u2022\nUsed Firebase for basic auth and Firestore for data storage (no custom backend)\nWeather Dashboard\n\u2022\nReact app consuming a public weather REST API, styled with Tailwind CSS",
+      "extracted_skills": [
+        "react",
+        "css",
+        "tailwind",
+        "firebase",
+        "firestore"
+      ]
+    },
+    "education": {
+      "degree": "B.Tech Computer Science",
+      "institution": "VIT Vellore",
+      "year": "2023-2027",
+      "cgpa": "8.5",
+      "raw_text": "B.Tech Computer Science, VIT Vellore (2023-2027), CGPA: 8.5/10"
+    },
+    "certifications": {
+      "raw_text": "React - The Complete Guide (Udemy)",
+      "extracted_skills": []
+    },
+    "achievements": {
+      "raw_text": "",
+      "extracted_skills": []
+    }
+  },
+  "full_text_clean": "Sneha Reddy\nsneha.reddy.dev@gmail.com | +91 98xxxxxx04 | github.com/snehareddy | Hyderabad\nSUMMARY\nFrontend developer passionate about building clean, accessible user interfaces with React. Limited backend\nexperience; has mostly consumed third-party or mock APIs in projects.\nEDUCATION\nB.Tech Computer Science, VIT Vellore (2023-2027), CGPA: 8.5/10\nSKILLS\nReact.js, JavaScript, HTML5, CSS3, Tailwind CSS, Figma, Git, basic REST API consumption (Axios, fetch)\nPROJECTS\nPortfolio Builder for Students\n\u2022\nBuilt a React app that generates shareable portfolio pages from a form-based input\n\u2022\nUsed Firebase for basic auth and Firestore for data storage (no custom backend)\nWeather Dashboard\n\u2022\nReact app consuming a public weather REST API, styled with Tailwind CSS\nCERTIFICATIONS\nReact - The Complete Guide (Udemy)",
+  "integrity": {
+    "hidden_spans_stripped": 0,
+    "reasons": []
+  }
+}

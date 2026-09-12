@@ -1,148 +1,1277 @@
 [
   {
-    "candidate_id": "App_Developer_Resume_2_Kavya_Menon",
-    "name": "Kavya Menon",
-    "final_score": 0.5198,
-    "keyword_score": 0.604,
-    "semantic_score": 0.4636,
+    "candidate_id": "Resume_08_Priya_Menon",
+    "name": "Priya Menon",
+    "final_score": 0.7116,
+    "keyword_score": 0.8161,
+    "semantic_score": 0.642,
     "matched_skills": [
       {
-        "skill": "REST API",
-        "found_as": "REST APIs",
-        "match_type": "synonym",
-        "found_in": "full_text",
-        "evidence": "Firebase, REST APIs, SQLite, Git, GitHub",
+        "skill": "Frontend",
+        "found_as": "Frontend",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Full stack MERN app with React frontend, Node/Express backend, MongoDB database",
         "required": true
       },
       {
-        "skill": "SQL",
-        "found_as": "SQLite",
+        "skill": "Database",
+        "found_as": "MongoDB",
         "match_type": "synonym",
-        "found_in": "full_text",
-        "evidence": "Firebase, REST APIs, SQLite, Git, GitHub",
+        "found_in": "projects",
+        "evidence": "Full stack MERN app with React frontend, Node/Express backend, MongoDB database",
         "required": true
       },
       {
         "skill": "Git",
-        "found_as": "GitHub",
-        "match_type": "synonym",
-        "found_in": "full_text",
-        "evidence": "Firebase, REST APIs, SQLite, Git, GitHub",
+        "found_as": "Git",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, TypeScript, React.js, Node.js, Express.js, MongoDB, PostgreSQL, REST APIs, Git, Docker, AWS",
         "required": true
       },
       {
         "skill": "JavaScript",
         "found_as": "JavaScript",
         "match_type": "exact",
-        "found_in": "full_text",
-        "evidence": "Programming Foundations with JavaScript, HTML and CSS",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, TypeScript, React.js, Node.js, Express.js, MongoDB, PostgreSQL, REST APIs, Git, Docker, AWS",
         "required": true
       },
       {
-        "skill": "Testing",
-        "found_as": "Testing",
+        "skill": "REST API",
+        "found_as": "REST APIs",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, TypeScript, React.js, Node.js, Express.js, MongoDB, PostgreSQL, REST APIs, Git, Docker, AWS",
+        "required": true
+      },
+      {
+        "skill": "Node.js",
+        "found_as": "Node",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Full stack MERN app with React frontend, Node/Express backend, MongoDB database",
+        "required": true
+      },
+      {
+        "skill": "Full Stack",
+        "found_as": "Full Stack",
         "match_type": "exact",
-        "found_in": "full_text",
-        "evidence": "Published a working APK with 4.5+ rating in internal testing.",
+        "found_in": "projects",
+        "evidence": "Full stack MERN app with React frontend, Node/Express backend, MongoDB database",
+        "required": true
+      },
+      {
+        "skill": "Docker",
+        "found_as": "Docker",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Containerized with Docker; deployed on AWS EC2 with an S3 bucket for file uploads",
+        "required": false
+      },
+      {
+        "skill": "Testing",
+        "found_as": "Jest",
+        "match_type": "synonym",
+        "found_in": "experience",
+        "evidence": "Wrote unit and integration tests using Jest, maintaining >80% coverage on new code",
+        "required": false
+      },
+      {
+        "skill": "Cloud",
+        "found_as": "AWS",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Containerized with Docker; deployed on AWS EC2 with an S3 bucket for file uploads",
+        "required": false
+      },
+      {
+        "skill": "Agile",
+        "found_as": "Scrum",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "(EC2, S3, basic Lambda), Jest, Agile/Scrum",
+        "required": false
+      },
+      {
+        "skill": "AWS",
+        "found_as": "AWS",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Containerized with Docker; deployed on AWS EC2 with an S3 bucket for file uploads",
+        "required": false
+      },
+      {
+        "skill": "React",
+        "found_as": "React",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Full stack MERN app with React frontend, Node/Express backend, MongoDB database",
+        "required": false
+      },
+      {
+        "skill": "SQL",
+        "found_as": "PostgreSQL",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, TypeScript, React.js, Node.js, Express.js, MongoDB, PostgreSQL, REST APIs, Git, Docker, AWS",
+        "required": false
+      },
+      {
+        "skill": "MongoDB",
+        "found_as": "MongoDB",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Full stack MERN app with React frontend, Node/Express backend, MongoDB database",
         "required": false
       },
       {
         "skill": "NoSQL",
-        "found_as": "Firebase",
+        "found_as": "MongoDB",
         "match_type": "synonym",
-        "found_in": "full_text",
-        "evidence": "Firebase, REST APIs, SQLite, Git, GitHub",
+        "found_in": "projects",
+        "evidence": "Full stack MERN app with React frontend, Node/Express backend, MongoDB database",
         "required": false
       }
     ],
-    "missing_required_skills": [
-      {
-        "skill": "Docker",
-        "semantic_hint": true
-      }
-    ],
+    "missing_required_skills": [],
     "signal_note": null,
     "rank": 1
   },
   {
-    "candidate_id": "App_Developer_Resume_1_Siddharth_Rao",
-    "name": "Siddharth Rao",
-    "final_score": 0.5195,
-    "keyword_score": 0.604,
-    "semantic_score": 0.4631,
+    "candidate_id": "Resume_01_Aditi_Sharma",
+    "name": "Aditi Sharma",
+    "final_score": 0.699,
+    "keyword_score": 0.8238,
+    "semantic_score": 0.6158,
     "matched_skills": [
       {
-        "skill": "REST API",
-        "found_as": "REST APIs",
-        "match_type": "synonym",
-        "found_in": "full_text",
-        "evidence": "Firebase, REST APIs, SQLite, Git, GitHub",
+        "skill": "Frontend",
+        "found_as": "Frontend",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Built a full stack peer-to-peer marketplace app with React frontend and Node/Express/MongoDB backend",
         "required": true
       },
       {
-        "skill": "SQL",
-        "found_as": "SQLite",
+        "skill": "Database",
+        "found_as": "MongoDB",
         "match_type": "synonym",
-        "found_in": "full_text",
-        "evidence": "Firebase, REST APIs, SQLite, Git, GitHub",
+        "found_in": "projects",
+        "evidence": "Built a full stack peer-to-peer marketplace app with React frontend and Node/Express/MongoDB backend",
         "required": true
       },
       {
         "skill": "Git",
         "found_as": "GitHub",
         "match_type": "synonym",
-        "found_in": "full_text",
-        "evidence": "Firebase, REST APIs, SQLite, Git, GitHub",
+        "found_in": "skills_section",
+        "evidence": "JavaScript (ES6+), React.js, Redux, Node.js, Express.js, MongoDB, REST APIs, Git/GitHub, HTML5/CSS3,",
         "required": true
       },
       {
         "skill": "JavaScript",
         "found_as": "JavaScript",
         "match_type": "exact",
-        "found_in": "full_text",
-        "evidence": "Programming Foundations with JavaScript, HTML and CSS",
+        "found_in": "skills_section",
+        "evidence": "JavaScript (ES6+), React.js, Redux, Node.js, Express.js, MongoDB, REST APIs, Git/GitHub, HTML5/CSS3,",
+        "required": true
+      },
+      {
+        "skill": "REST API",
+        "found_as": "REST APIs",
+        "match_type": "synonym",
+        "found_in": "experience",
+        "evidence": "Built 4 new React components for the customer dashboard, integrated with existing REST APIs",
+        "required": true
+      },
+      {
+        "skill": "Node.js",
+        "found_as": "Node",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Built a full stack peer-to-peer marketplace app with React frontend and Node/Express/MongoDB backend",
+        "required": true
+      },
+      {
+        "skill": "Full Stack",
+        "found_as": "Full Stack",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Built a full stack peer-to-peer marketplace app with React frontend and Node/Express/MongoDB backend",
         "required": true
       },
       {
         "skill": "Testing",
-        "found_as": "Testing",
+        "found_as": "Jest",
+        "match_type": "synonym",
+        "found_in": "experience",
+        "evidence": "Developed Node.js/Express backend endpoints for a notifications module, tested with Jest",
+        "required": false
+      },
+      {
+        "skill": "Cloud",
+        "found_as": "AWS",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "Tailwind CSS, basic AWS (EC2, S3), Jest",
+        "required": false
+      },
+      {
+        "skill": "AWS",
+        "found_as": "AWS",
         "match_type": "exact",
-        "found_in": "full_text",
-        "evidence": "Published a working APK with 4.5+ rating in internal testing.",
+        "found_in": "skills_section",
+        "evidence": "Tailwind CSS, basic AWS (EC2, S3), Jest",
+        "required": false
+      },
+      {
+        "skill": "React",
+        "found_as": "React",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Built a full stack peer-to-peer marketplace app with React frontend and Node/Express/MongoDB backend",
+        "required": false
+      },
+      {
+        "skill": "MongoDB",
+        "found_as": "MongoDB",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Built a full stack peer-to-peer marketplace app with React frontend and Node/Express/MongoDB backend",
+        "required": false
+      },
+      {
+        "skill": "NoSQL",
+        "found_as": "MongoDB",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Built a full stack peer-to-peer marketplace app with React frontend and Node/Express/MongoDB backend",
+        "required": false
+      }
+    ],
+    "missing_required_skills": [],
+    "signal_note": null,
+    "rank": 2
+  },
+  {
+    "candidate_id": "Resume_02_Rohan_Verma",
+    "name": "Rohan Verma",
+    "final_score": 0.6474,
+    "keyword_score": 0.6832,
+    "semantic_score": 0.6236,
+    "matched_skills": [
+      {
+        "skill": "Frontend",
+        "found_as": "Next.js",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Built with Next.js, Express, and PostgreSQL; supports event registration and QR-based check-in",
+        "required": true
+      },
+      {
+        "skill": "Database",
+        "found_as": "PostgreSQL",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Built with Next.js, Express, and PostgreSQL; supports event registration and QR-based check-in",
+        "required": true
+      },
+      {
+        "skill": "Git",
+        "found_as": "Git",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "React.js, Next.js, Node.js, Express, PostgreSQL, MongoDB, TypeScript, REST APIs, Docker (basic), Git, Postman,",
+        "required": true
+      },
+      {
+        "skill": "JavaScript",
+        "found_as": "TypeScript",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "React.js, Next.js, Node.js, Express, PostgreSQL, MongoDB, TypeScript, REST APIs, Docker (basic), Git, Postman,",
+        "required": true
+      },
+      {
+        "skill": "REST API",
+        "found_as": "REST APIs",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Designed REST APIs in Node.js/Express with JWT auth; documented with Swagger",
+        "required": true
+      },
+      {
+        "skill": "Node.js",
+        "found_as": "Node.js",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Designed REST APIs in Node.js/Express with JWT auth; documented with Swagger",
+        "required": true
+      },
+      {
+        "skill": "Docker",
+        "found_as": "Docker",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "React.js, Next.js, Node.js, Express, PostgreSQL, MongoDB, TypeScript, REST APIs, Docker (basic), Git, Postman,",
+        "required": false
+      },
+      {
+        "skill": "React",
+        "found_as": "Next.js",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Built with Next.js, Express, and PostgreSQL; supports event registration and QR-based check-in",
+        "required": false
+      },
+      {
+        "skill": "SQL",
+        "found_as": "PostgreSQL",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Built with Next.js, Express, and PostgreSQL; supports event registration and QR-based check-in",
+        "required": false
+      },
+      {
+        "skill": "MongoDB",
+        "found_as": "MongoDB",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "React.js, Next.js, Node.js, Express, PostgreSQL, MongoDB, TypeScript, REST APIs, Docker (basic), Git, Postman,",
+        "required": false
+      },
+      {
+        "skill": "NoSQL",
+        "found_as": "MongoDB",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "React.js, Next.js, Node.js, Express, PostgreSQL, MongoDB, TypeScript, REST APIs, Docker (basic), Git, Postman,",
+        "required": false
+      }
+    ],
+    "missing_required_skills": [
+      {
+        "skill": "Full Stack",
+        "semantic_hint": true
+      }
+    ],
+    "signal_note": null,
+    "rank": 3
+  },
+  {
+    "candidate_id": "Resume_15_Farhan_Sheikh",
+    "name": "Farhan Sheikh",
+    "final_score": 0.6292,
+    "keyword_score": 0.7588,
+    "semantic_score": 0.5428,
+    "matched_skills": [
+      {
+        "skill": "Frontend",
+        "found_as": "React",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Contributed 5 merged pull requests fixing bugs and adding features to a React/Node open-source project",
+        "required": true
+      },
+      {
+        "skill": "Database",
+        "found_as": "MongoDB",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, React.js, Redux Toolkit, Node.js, Express.js, MongoDB, PostgreSQL, REST APIs, Git/GitHub, Docker",
+        "required": true
+      },
+      {
+        "skill": "Git",
+        "found_as": "GitHub",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Deployed on Render and Netlify; 40+ GitHub stars from bootcamp community",
+        "required": true
+      },
+      {
+        "skill": "JavaScript",
+        "found_as": "JavaScript",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, React.js, Redux Toolkit, Node.js, Express.js, MongoDB, PostgreSQL, REST APIs, Git/GitHub, Docker",
+        "required": true
+      },
+      {
+        "skill": "REST API",
+        "found_as": "REST APIs",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, React.js, Redux Toolkit, Node.js, Express.js, MongoDB, PostgreSQL, REST APIs, Git/GitHub, Docker",
+        "required": true
+      },
+      {
+        "skill": "Node.js",
+        "found_as": "Node",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Contributed 5 merged pull requests fixing bugs and adding features to a React/Node open-source project",
+        "required": true
+      },
+      {
+        "skill": "Full Stack",
+        "found_as": "Full Stack",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Full stack MERN app with drag-and-drop task boards, real-time updates via Socket.io",
+        "required": true
+      },
+      {
+        "skill": "Docker",
+        "found_as": "Docker",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, React.js, Redux Toolkit, Node.js, Express.js, MongoDB, PostgreSQL, REST APIs, Git/GitHub, Docker",
+        "required": false
+      },
+      {
+        "skill": "Testing",
+        "found_as": "Jest",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "(basic), Tailwind CSS, Jest",
+        "required": false
+      },
+      {
+        "skill": "React",
+        "found_as": "React",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Contributed 5 merged pull requests fixing bugs and adding features to a React/Node open-source project",
+        "required": false
+      },
+      {
+        "skill": "SQL",
+        "found_as": "PostgreSQL",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, React.js, Redux Toolkit, Node.js, Express.js, MongoDB, PostgreSQL, REST APIs, Git/GitHub, Docker",
+        "required": false
+      },
+      {
+        "skill": "MongoDB",
+        "found_as": "MongoDB",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, React.js, Redux Toolkit, Node.js, Express.js, MongoDB, PostgreSQL, REST APIs, Git/GitHub, Docker",
+        "required": false
+      },
+      {
+        "skill": "NoSQL",
+        "found_as": "MongoDB",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, React.js, Redux Toolkit, Node.js, Express.js, MongoDB, PostgreSQL, REST APIs, Git/GitHub, Docker",
+        "required": false
+      }
+    ],
+    "missing_required_skills": [],
+    "signal_note": null,
+    "rank": 4
+  },
+  {
+    "candidate_id": "Resume_12_Divya_Krishnan",
+    "name": "Divya Krishnan",
+    "final_score": 0.5872,
+    "keyword_score": 0.6862,
+    "semantic_score": 0.5212,
+    "matched_skills": [
+      {
+        "skill": "Frontend",
+        "found_as": "Frontend",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Deployed backend on AWS EC2 and frontend on Vercel; used GitHub Actions for CI/CD",
+        "required": true
+      },
+      {
+        "skill": "Database",
+        "found_as": "MongoDB",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, React.js, Node.js, Express.js, MongoDB, REST APIs, Git/GitHub, AWS (EC2, S3), Jest, Agile/Scrum,",
+        "required": true
+      },
+      {
+        "skill": "Git",
+        "found_as": "GitHub",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, React.js, Node.js, Express.js, MongoDB, REST APIs, Git/GitHub, AWS (EC2, S3), Jest, Agile/Scrum,",
+        "required": true
+      },
+      {
+        "skill": "JavaScript",
+        "found_as": "JavaScript",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, React.js, Node.js, Express.js, MongoDB, REST APIs, Git/GitHub, AWS (EC2, S3), Jest, Agile/Scrum,",
+        "required": true
+      },
+      {
+        "skill": "REST API",
+        "found_as": "REST APIs",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, React.js, Node.js, Express.js, MongoDB, REST APIs, Git/GitHub, AWS (EC2, S3), Jest, Agile/Scrum,",
+        "required": true
+      },
+      {
+        "skill": "Node.js",
+        "found_as": "Node.js",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, React.js, Node.js, Express.js, MongoDB, REST APIs, Git/GitHub, AWS (EC2, S3), Jest, Agile/Scrum,",
+        "required": true
+      },
+      {
+        "skill": "Full Stack",
+        "found_as": "Full Stack",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Full stack MERN application allowing citizens to report and track local civic issues",
+        "required": true
+      },
+      {
+        "skill": "Testing",
+        "found_as": "Jest",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Wrote Jest test suites for critical API endpoints",
+        "required": false
+      },
+      {
+        "skill": "Cloud",
+        "found_as": "AWS",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Deployed backend on AWS EC2 and frontend on Vercel; used GitHub Actions for CI/CD",
+        "required": false
+      },
+      {
+        "skill": "Agile",
+        "found_as": "Agile",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Led a 4-person team through 2-week agile sprints to build 3 internal club tools using MERN",
+        "required": false
+      },
+      {
+        "skill": "AWS",
+        "found_as": "AWS",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Deployed backend on AWS EC2 and frontend on Vercel; used GitHub Actions for CI/CD",
+        "required": false
+      },
+      {
+        "skill": "React",
+        "found_as": "React.js",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, React.js, Node.js, Express.js, MongoDB, REST APIs, Git/GitHub, AWS (EC2, S3), Jest, Agile/Scrum,",
+        "required": false
+      },
+      {
+        "skill": "MongoDB",
+        "found_as": "MongoDB",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, React.js, Node.js, Express.js, MongoDB, REST APIs, Git/GitHub, AWS (EC2, S3), Jest, Agile/Scrum,",
+        "required": false
+      },
+      {
+        "skill": "NoSQL",
+        "found_as": "MongoDB",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "JavaScript, React.js, Node.js, Express.js, MongoDB, REST APIs, Git/GitHub, AWS (EC2, S3), Jest, Agile/Scrum,",
+        "required": false
+      }
+    ],
+    "missing_required_skills": [],
+    "signal_note": null,
+    "rank": 5
+  },
+  {
+    "candidate_id": "Resume_11_Nikhil_Rao",
+    "name": "Nikhil Rao",
+    "final_score": 0.5551,
+    "keyword_score": 0.6723,
+    "semantic_score": 0.4769,
+    "matched_skills": [
+      {
+        "skill": "Frontend",
+        "found_as": "Frontend",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Built with Angular frontend and Node.js/Express backend, MongoDB for data storage",
+        "required": true
+      },
+      {
+        "skill": "Database",
+        "found_as": "MongoDB",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Built with Angular frontend and Node.js/Express backend, MongoDB for data storage",
+        "required": true
+      },
+      {
+        "skill": "Git",
+        "found_as": "Git",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "Angular, TypeScript, Node.js, Express.js, MongoDB, MySQL, REST APIs, Git, RxJS, Bootstrap",
+        "required": true
+      },
+      {
+        "skill": "JavaScript",
+        "found_as": "TypeScript",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "Angular, TypeScript, Node.js, Express.js, MongoDB, MySQL, REST APIs, Git, RxJS, Bootstrap",
+        "required": true
+      },
+      {
+        "skill": "REST API",
+        "found_as": "REST API",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Node.js/Express REST API with MySQL, basic Angular frontend for CRUD operations",
+        "required": true
+      },
+      {
+        "skill": "Node.js",
+        "found_as": "Node.js",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Built with Angular frontend and Node.js/Express backend, MongoDB for data storage",
+        "required": true
+      },
+      {
+        "skill": "SQL",
+        "found_as": "MySQL",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Node.js/Express REST API with MySQL, basic Angular frontend for CRUD operations",
+        "required": false
+      },
+      {
+        "skill": "MongoDB",
+        "found_as": "MongoDB",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Built with Angular frontend and Node.js/Express backend, MongoDB for data storage",
+        "required": false
+      },
+      {
+        "skill": "NoSQL",
+        "found_as": "MongoDB",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Built with Angular frontend and Node.js/Express backend, MongoDB for data storage",
+        "required": false
+      }
+    ],
+    "missing_required_skills": [
+      {
+        "skill": "Full Stack",
+        "semantic_hint": true
+      }
+    ],
+    "signal_note": null,
+    "rank": 6
+  },
+  {
+    "candidate_id": "Resume_18_Pooja_Shetty",
+    "name": "Pooja Shetty",
+    "final_score": 0.5444,
+    "keyword_score": 0.5236,
+    "semantic_score": 0.5583,
+    "matched_skills": [
+      {
+        "skill": "Frontend",
+        "found_as": "Frontend",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "jQuery/Bootstrap frontend with AJAX-based form submissions",
+        "required": true
+      },
+      {
+        "skill": "Database",
+        "found_as": "MySQL",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Laravel + MySQL application for managing club memberships and event registrations",
+        "required": true
+      },
+      {
+        "skill": "Git",
+        "found_as": "Git",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "PHP, Laravel, MySQL, jQuery, HTML5, CSS3, Bootstrap, REST APIs, Git, basic JavaScript",
+        "required": true
+      },
+      {
+        "skill": "JavaScript",
+        "found_as": "JavaScript",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "PHP, Laravel, MySQL, jQuery, HTML5, CSS3, Bootstrap, REST APIs, Git, basic JavaScript",
+        "required": true
+      },
+      {
+        "skill": "REST API",
+        "found_as": "REST APIs",
+        "match_type": "synonym",
+        "found_in": "experience",
+        "evidence": "Integrated payment gateway REST APIs and built jQuery-based dynamic forms",
+        "required": true
+      },
+      {
+        "skill": "SQL",
+        "found_as": "MySQL",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Laravel + MySQL application for managing club memberships and event registrations",
+        "required": false
+      }
+    ],
+    "missing_required_skills": [
+      {
+        "skill": "Node.js",
+        "semantic_hint": true
+      },
+      {
+        "skill": "Full Stack",
+        "semantic_hint": true
+      }
+    ],
+    "signal_note": null,
+    "rank": 7
+  },
+  {
+    "candidate_id": "Resume_16_Meera_Pillai",
+    "name": "Meera Pillai",
+    "final_score": 0.4936,
+    "keyword_score": 0.4781,
+    "semantic_score": 0.5039,
+    "matched_skills": [
+      {
+        "skill": "Database",
+        "found_as": "MongoDB",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Built a GraphQL API on top of Express and MongoDB for a notes-taking service",
+        "required": true
+      },
+      {
+        "skill": "Git",
+        "found_as": "Git",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "Node.js, Express.js, MongoDB, PostgreSQL, REST APIs, GraphQL (basic), Git, Postman, basic HTML/CSS",
+        "required": true
+      },
+      {
+        "skill": "REST API",
+        "found_as": "REST API",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Designed a Node.js/Express REST API with PostgreSQL supporting multiple client organizations",
+        "required": true
+      },
+      {
+        "skill": "Node.js",
+        "found_as": "Node.js",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Designed a Node.js/Express REST API with PostgreSQL supporting multiple client organizations",
+        "required": true
+      },
+      {
+        "skill": "SQL",
+        "found_as": "PostgreSQL",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Designed a Node.js/Express REST API with PostgreSQL supporting multiple client organizations",
+        "required": false
+      },
+      {
+        "skill": "MongoDB",
+        "found_as": "MongoDB",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Built a GraphQL API on top of Express and MongoDB for a notes-taking service",
+        "required": false
+      },
+      {
+        "skill": "NoSQL",
+        "found_as": "MongoDB",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Built a GraphQL API on top of Express and MongoDB for a notes-taking service",
+        "required": false
+      }
+    ],
+    "missing_required_skills": [
+      {
+        "skill": "Frontend",
+        "semantic_hint": true
+      },
+      {
+        "skill": "JavaScript",
+        "semantic_hint": true
+      },
+      {
+        "skill": "Full Stack",
+        "semantic_hint": true
+      }
+    ],
+    "signal_note": null,
+    "rank": 8
+  },
+  {
+    "candidate_id": "Resume_04_Sneha_Reddy",
+    "name": "Sneha Reddy",
+    "final_score": 0.4854,
+    "keyword_score": 0.5373,
+    "semantic_score": 0.4508,
+    "matched_skills": [
+      {
+        "skill": "Frontend",
+        "found_as": "React",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Built a React app that generates shareable portfolio pages from a form-based input",
+        "required": true
+      },
+      {
+        "skill": "Database",
+        "found_as": "Firestore",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Used Firebase for basic auth and Firestore for data storage (no custom backend)",
+        "required": true
+      },
+      {
+        "skill": "Git",
+        "found_as": "Git",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "React.js, JavaScript, HTML5, CSS3, Tailwind CSS, Figma, Git, basic REST API consumption (Axios, fetch)",
+        "required": true
+      },
+      {
+        "skill": "JavaScript",
+        "found_as": "JavaScript",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "React.js, JavaScript, HTML5, CSS3, Tailwind CSS, Figma, Git, basic REST API consumption (Axios, fetch)",
+        "required": true
+      },
+      {
+        "skill": "REST API",
+        "found_as": "REST API",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "React app consuming a public weather REST API, styled with Tailwind CSS",
+        "required": true
+      },
+      {
+        "skill": "React",
+        "found_as": "React",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Built a React app that generates shareable portfolio pages from a form-based input",
+        "required": false
+      },
+      {
+        "skill": "NoSQL",
+        "found_as": "Firestore",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Used Firebase for basic auth and Firestore for data storage (no custom backend)",
+        "required": false
+      }
+    ],
+    "missing_required_skills": [
+      {
+        "skill": "Node.js",
+        "semantic_hint": true
+      },
+      {
+        "skill": "Full Stack",
+        "semantic_hint": true
+      }
+    ],
+    "signal_note": null,
+    "rank": 9
+  },
+  {
+    "candidate_id": "Resume_03_Karthik_Iyer",
+    "name": "Karthik Iyer",
+    "final_score": 0.4555,
+    "keyword_score": 0.5236,
+    "semantic_score": 0.4101,
+    "matched_skills": [
+      {
+        "skill": "Frontend",
+        "found_as": "Frontend",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Basic HTML/CSS frontend to consume the APIs; no frontend framework used",
+        "required": true
+      },
+      {
+        "skill": "Database",
+        "found_as": "MySQL",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Built a REST API backend in Spring Boot with MySQL for a college library system",
+        "required": true
+      },
+      {
+        "skill": "Git",
+        "found_as": "Git",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "Java, Spring Boot, Hibernate, MySQL, REST APIs, HTML/CSS, basic JavaScript, Git, Postman, Maven",
+        "required": true
+      },
+      {
+        "skill": "JavaScript",
+        "found_as": "JavaScript",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "Java, Spring Boot, Hibernate, MySQL, REST APIs, HTML/CSS, basic JavaScript, Git, Postman, Maven",
+        "required": true
+      },
+      {
+        "skill": "REST API",
+        "found_as": "REST API",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Built a REST API backend in Spring Boot with MySQL for a college library system",
+        "required": true
+      },
+      {
+        "skill": "SQL",
+        "found_as": "MySQL",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Built a REST API backend in Spring Boot with MySQL for a college library system",
+        "required": false
+      }
+    ],
+    "missing_required_skills": [
+      {
+        "skill": "Node.js",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Full Stack",
+        "semantic_hint": false
+      }
+    ],
+    "signal_note": null,
+    "rank": 10
+  },
+  {
+    "candidate_id": "Resume_05_Ananya_Das",
+    "name": "Ananya Das",
+    "final_score": 0.4478,
+    "keyword_score": 0.5722,
+    "semantic_score": 0.3649,
+    "matched_skills": [
+      {
+        "skill": "Frontend",
+        "found_as": "Frontend",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Server-rendered templates with Django (no separate JS frontend framework)",
+        "required": true
+      },
+      {
+        "skill": "Database",
+        "found_as": "Database",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Built with Django and Django REST Framework, PostgreSQL as the database",
+        "required": true
+      },
+      {
+        "skill": "Git",
+        "found_as": "Git",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "Python, Django, Django REST Framework, PostgreSQL, SQLite, Git, basic HTML/CSS, Postman",
+        "required": true
+      },
+      {
+        "skill": "JavaScript",
+        "found_as": "JS",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Server-rendered templates with Django (no separate JS frontend framework)",
+        "required": true
+      },
+      {
+        "skill": "REST API",
+        "found_as": "REST API",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "REST API built with DRF supporting CRUD operations and token authentication",
+        "required": true
+      },
+      {
+        "skill": "SQL",
+        "found_as": "PostgreSQL",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Built with Django and Django REST Framework, PostgreSQL as the database",
+        "required": false
+      }
+    ],
+    "missing_required_skills": [
+      {
+        "skill": "Node.js",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Full Stack",
+        "semantic_hint": false
+      }
+    ],
+    "signal_note": null,
+    "rank": 11
+  },
+  {
+    "candidate_id": "Resume_13_Sanjay_Patil",
+    "name": "Sanjay Patil",
+    "final_score": 0.4135,
+    "keyword_score": 0.4508,
+    "semantic_score": 0.3886,
+    "matched_skills": [
+      {
+        "skill": "Database",
+        "found_as": "MySQL",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Java Spring Boot application with MySQL, RESTful endpoints tested with Postman",
+        "required": true
+      },
+      {
+        "skill": "Git",
+        "found_as": "Git",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "Java, Spring Boot, Spring Data JPA, MySQL, PostgreSQL, REST APIs, HTML5, CSS3, vanilla JavaScript, Git",
+        "required": true
+      },
+      {
+        "skill": "JavaScript",
+        "found_as": "JavaScript",
+        "match_type": "exact",
+        "found_in": "projects",
+        "evidence": "Basic JavaScript used for form validation and simple interactivity",
+        "required": true
+      },
+      {
+        "skill": "REST API",
+        "found_as": "RESTful",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Java Spring Boot application with MySQL, RESTful endpoints tested with Postman",
+        "required": true
+      },
+      {
+        "skill": "SQL",
+        "found_as": "MySQL",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Java Spring Boot application with MySQL, RESTful endpoints tested with Postman",
+        "required": false
+      }
+    ],
+    "missing_required_skills": [
+      {
+        "skill": "Frontend",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Node.js",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Full Stack",
+        "semantic_hint": false
+      }
+    ],
+    "signal_note": null,
+    "rank": 12
+  },
+  {
+    "candidate_id": "Resume_09_Arjun_Kumar",
+    "name": "Arjun Kumar",
+    "final_score": 0.3241,
+    "keyword_score": 0.343,
+    "semantic_score": 0.3115,
+    "matched_skills": [
+      {
+        "skill": "Database",
+        "found_as": "SQLite",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Android app with local SQLite storage and Firebase authentication",
+        "required": true
+      },
+      {
+        "skill": "Git",
+        "found_as": "Git",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "Kotlin, Java, Android SDK, REST API integration (Retrofit), Firebase, SQLite, Git, basic Python",
+        "required": true
+      },
+      {
+        "skill": "REST API",
+        "found_as": "REST APIs",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Used Retrofit to consume REST APIs for menu and order data",
+        "required": true
+      },
+      {
+        "skill": "SQL",
+        "found_as": "SQLite",
+        "match_type": "synonym",
+        "found_in": "projects",
+        "evidence": "Android app with local SQLite storage and Firebase authentication",
         "required": false
       },
       {
         "skill": "NoSQL",
         "found_as": "Firebase",
         "match_type": "synonym",
-        "found_in": "full_text",
-        "evidence": "Firebase, REST APIs, SQLite, Git, GitHub",
+        "found_in": "projects",
+        "evidence": "Built a native Android app in Kotlin, integrated with a Firebase backend",
         "required": false
       }
     ],
     "missing_required_skills": [
       {
-        "skill": "Docker",
-        "semantic_hint": true
+        "skill": "Frontend",
+        "semantic_hint": false
+      },
+      {
+        "skill": "JavaScript",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Node.js",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Full Stack",
+        "semantic_hint": false
       }
     ],
     "signal_note": null,
-    "rank": 2
+    "rank": 13
   },
   {
-    "candidate_id": "Content_Creation_Resume_1_Varun_Kapoor",
-    "name": "Varun Kapoor",
-    "final_score": 0.2509,
-    "keyword_score": 0.0,
-    "semantic_score": 0.4181,
-    "matched_skills": [],
+    "candidate_id": "Resume_17_Aakash_Jain",
+    "name": "Aakash Jain",
+    "final_score": 0.2889,
+    "keyword_score": 0.1539,
+    "semantic_score": 0.3789,
+    "matched_skills": [
+      {
+        "skill": "Database",
+        "found_as": "SQL",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "C++, Data Structures & Algorithms, basic Python, basic SQL, Git (basic)",
+        "required": true
+      },
+      {
+        "skill": "Git",
+        "found_as": "Git",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "C++, Data Structures & Algorithms, basic Python, basic SQL, Git (basic)",
+        "required": true
+      },
+      {
+        "skill": "SQL",
+        "found_as": "SQL",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "C++, Data Structures & Algorithms, basic Python, basic SQL, Git (basic)",
+        "required": false
+      }
+    ],
     "missing_required_skills": [
+      {
+        "skill": "Frontend",
+        "semantic_hint": false
+      },
+      {
+        "skill": "JavaScript",
+        "semantic_hint": false
+      },
       {
         "skill": "REST API",
         "semantic_hint": false
       },
       {
+        "skill": "Node.js",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Full Stack",
+        "semantic_hint": false
+      }
+    ],
+    "signal_note": null,
+    "rank": 14
+  },
+  {
+    "candidate_id": "Resume_10_Ishita_Gupta",
+    "name": "Ishita Gupta",
+    "final_score": 0.2255,
+    "keyword_score": 0.081,
+    "semantic_score": 0.3219,
+    "matched_skills": [
+      {
+        "skill": "Database",
+        "found_as": "SQL",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "MS Excel (advanced), Google Analytics, Canva, basic SQL, PowerPoint, social media marketing tools",
+        "required": true
+      },
+      {
         "skill": "SQL",
+        "found_as": "SQL",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "MS Excel (advanced), Google Analytics, Canva, basic SQL, PowerPoint, social media marketing tools",
+        "required": false
+      }
+    ],
+    "missing_required_skills": [
+      {
+        "skill": "Frontend",
         "semantic_hint": false
       },
       {
@@ -150,31 +1279,96 @@
         "semantic_hint": false
       },
       {
-        "skill": "Docker",
-        "semantic_hint": false
-      },
-      {
         "skill": "JavaScript",
         "semantic_hint": false
-      }
-    ],
-    "signal_note": "semantic_above_keyword",
-    "rank": 3
-  },
-  {
-    "candidate_id": "Content_Creation_Resume_2_Neha_Bhatia",
-    "name": "Neha Bhatia",
-    "final_score": 0.2509,
-    "keyword_score": 0.0,
-    "semantic_score": 0.4181,
-    "matched_skills": [],
-    "missing_required_skills": [
+      },
       {
         "skill": "REST API",
         "semantic_hint": false
       },
       {
+        "skill": "Node.js",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Full Stack",
+        "semantic_hint": false
+      }
+    ],
+    "signal_note": null,
+    "rank": 15
+  },
+  {
+    "candidate_id": "Resume_06_Vikram_Nair",
+    "name": "Vikram Nair",
+    "final_score": 0.2146,
+    "keyword_score": 0.1539,
+    "semantic_score": 0.255,
+    "matched_skills": [
+      {
+        "skill": "Database",
+        "found_as": "SQL",
+        "match_type": "synonym",
+        "found_in": "skills_section",
+        "evidence": "Python, Pandas, NumPy, Scikit-learn, TensorFlow, Matplotlib, SQL, Jupyter Notebook, basic Git",
+        "required": true
+      },
+      {
+        "skill": "Git",
+        "found_as": "Git",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "Python, Pandas, NumPy, Scikit-learn, TensorFlow, Matplotlib, SQL, Jupyter Notebook, basic Git",
+        "required": true
+      },
+      {
         "skill": "SQL",
+        "found_as": "SQL",
+        "match_type": "exact",
+        "found_in": "skills_section",
+        "evidence": "Python, Pandas, NumPy, Scikit-learn, TensorFlow, Matplotlib, SQL, Jupyter Notebook, basic Git",
+        "required": false
+      }
+    ],
+    "missing_required_skills": [
+      {
+        "skill": "Frontend",
+        "semantic_hint": false
+      },
+      {
+        "skill": "JavaScript",
+        "semantic_hint": false
+      },
+      {
+        "skill": "REST API",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Node.js",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Full Stack",
+        "semantic_hint": false
+      }
+    ],
+    "signal_note": null,
+    "rank": 16
+  },
+  {
+    "candidate_id": "Resume_07_Mohammed_Faizan",
+    "name": "Mohammed Faizan",
+    "final_score": 0.1186,
+    "keyword_score": 0.0,
+    "semantic_score": 0.1976,
+    "matched_skills": [],
+    "missing_required_skills": [
+      {
+        "skill": "Frontend",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Database",
         "semantic_hint": false
       },
       {
@@ -182,15 +1376,63 @@
         "semantic_hint": false
       },
       {
-        "skill": "Docker",
+        "skill": "JavaScript",
+        "semantic_hint": false
+      },
+      {
+        "skill": "REST API",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Node.js",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Full Stack",
+        "semantic_hint": false
+      }
+    ],
+    "signal_note": null,
+    "rank": 17
+  },
+  {
+    "candidate_id": "Resume_14_Ramya_Nagaraj",
+    "name": "Ramya Nagaraj",
+    "final_score": 0.1052,
+    "keyword_score": 0.0,
+    "semantic_score": 0.1754,
+    "matched_skills": [],
+    "missing_required_skills": [
+      {
+        "skill": "Frontend",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Database",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Git",
         "semantic_hint": false
       },
       {
         "skill": "JavaScript",
         "semantic_hint": false
+      },
+      {
+        "skill": "REST API",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Node.js",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Full Stack",
+        "semantic_hint": false
       }
     ],
-    "signal_note": "semantic_above_keyword",
-    "rank": 4
+    "signal_note": null,
+    "rank": 18
   }
 ]

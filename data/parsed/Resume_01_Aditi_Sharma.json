@@ -1,0 +1,68 @@
+{
+  "resume_id": "Resume_01_Aditi_Sharma",
+  "candidate_name": "Aditi Sharma",
+  "source_filename": "Resume_01_Aditi_Sharma.pdf",
+  "sections": {
+    "summary": {
+      "raw_text": "Final-year Computer Science student with hands-on experience building full stack web applications using the\nMERN stack. Completed a 3-month internship building customer-facing features end to end.",
+      "extracted_skills": []
+    },
+    "skills": {
+      "raw_text": "JavaScript (ES6+), React.js, Redux, Node.js, Express.js, MongoDB, REST APIs, Git/GitHub, HTML5/CSS3,\nTailwind CSS, basic AWS (EC2, S3), Jest",
+      "extracted_skills": [
+        "javascript",
+        "react",
+        "node.js",
+        "express",
+        "rest apis",
+        "mongodb",
+        "git",
+        "github",
+        "aws",
+        "jest",
+        "css",
+        "tailwind"
+      ]
+    },
+    "experience": {
+      "raw_text": "Software Development Intern, Zenith Web Labs (Jun-Aug 2026)\n\u2022\nBuilt 4 new React components for the customer dashboard, integrated with existing REST APIs\n\u2022\nDeveloped Node.js/Express backend endpoints for a notifications module, tested with Jest\n\u2022\nWorked in a 2-week sprint cycle using Jira and participated in daily standups",
+      "extracted_skills": [
+        "react",
+        "node.js",
+        "express",
+        "rest apis",
+        "jest",
+        "jira"
+      ]
+    },
+    "projects": {
+      "raw_text": "Campus Marketplace (MERN Stack)\n\u2022\nBuilt a full stack peer-to-peer marketplace app with React frontend and Node/Express/MongoDB backend\n\u2022\nImplemented JWT-based authentication and role-based access control\n\u2022\nDeployed on Render (backend) and Vercel (frontend); used GitHub Actions for CI\nReal-time Chat App\n\u2022\nBuilt a chat application using Socket.io, React, and Express with MongoDB for message persistence",
+      "extracted_skills": [
+        "react",
+        "express",
+        "mongodb",
+        "github"
+      ]
+    },
+    "education": {
+      "degree": "B.E. Computer Science",
+      "institution": "RV College of Engineering, Bengaluru",
+      "year": "2023-2027",
+      "cgpa": "8.7",
+      "raw_text": "B.E. Computer Science, RV College of Engineering, Bengaluru (2023-2027), CGPA: 8.7/10"
+    },
+    "certifications": {
+      "raw_text": "Meta Front-End Developer (Coursera), MongoDB Basics (MongoDB University)",
+      "extracted_skills": []
+    },
+    "achievements": {
+      "raw_text": "",
+      "extracted_skills": []
+    }
+  },
+  "full_text_clean": "Aditi Sharma\naditi.sharma.cs@gmail.com | +91 98xxxxxx01 | github.com/aditisharma | Bengaluru\nSUMMARY\nFinal-year Computer Science student with hands-on experience building full stack web applications using the\nMERN stack. Completed a 3-month internship building customer-facing features end to end.\nEDUCATION\nB.E. Computer Science, RV College of Engineering, Bengaluru (2023-2027), CGPA: 8.7/10\nSKILLS\nJavaScript (ES6+), React.js, Redux, Node.js, Express.js, MongoDB, REST APIs, Git/GitHub, HTML5/CSS3,\nTailwind CSS, basic AWS (EC2, S3), Jest\nEXPERIENCE\nSoftware Development Intern, Zenith Web Labs (Jun-Aug 2026)\n\u2022\nBuilt 4 new React components for the customer dashboard, integrated with existing REST APIs\n\u2022\nDeveloped Node.js/Express backend endpoints for a notifications module, tested with Jest\n\u2022\nWorked in a 2-week sprint cycle using Jira and participated in daily standups\nPROJECTS\nCampus Marketplace (MERN Stack)\n\u2022\nBuilt a full stack peer-to-peer marketplace app with React frontend and Node/Express/MongoDB backend\n\u2022\nImplemented JWT-based authentication and role-based access control\n\u2022\nDeployed on Render (backend) and Vercel (frontend); used GitHub Actions for CI\nReal-time Chat App\n\u2022\nBuilt a chat application using Socket.io, React, and Express with MongoDB for message persistence\nCERTIFICATIONS\nMeta Front-End Developer (Coursera), MongoDB Basics (MongoDB University)",
+  "integrity": {
+    "hidden_spans_stripped": 0,
+    "reasons": []
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "resume_id": "Resume_14_Ramya_Nagaraj",
+  "candidate_name": "Ramya Nagaraj",
+  "source_filename": "Resume_14_Ramya_Nagaraj.pdf",
+  "sections": {
+    "summary": {
+      "raw_text": "Electronics and Communication Engineering student with a background in embedded systems and hardware\nprogramming. Minimal exposure to web development.",
+      "extracted_skills": []
+    },
+    "skills": {
+      "raw_text": "Embedded C, Arduino, Raspberry Pi, basic Python, MATLAB, circuit design (KiCad), basic HTML",
+      "extracted_skills": [
+        "python",
+        "html"
+      ]
+    },
+    "experience": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "projects": {
+      "raw_text": "Smart Irrigation System\n\u2022\nBuilt an IoT-based irrigation controller using Arduino, embedded C, and soil moisture sensors\nHome Automation Prototype\n\u2022\nRaspberry Pi based home automation system with basic Python scripts controlling relays",
+      "extracted_skills": [
+        "python"
+      ]
+    },
+    "education": {
+      "degree": "B.E. Electronics and Communication Engineering",
+      "institution": "BMS College of Engineering",
+      "year": "2023-2027",
+      "cgpa": "8.0",
+      "raw_text": "B.E. Electronics and Communication Engineering, BMS College of Engineering (2023-2027), CGPA: 8.0/10"
+    },
+    "certifications": {
+      "raw_text": "Embedded Systems with Arduino (Udemy)",
+      "extracted_skills": []
+    },
+    "achievements": {
+      "raw_text": "",
+      "extracted_skills": []
+    }
+  },
+  "full_text_clean": "Ramya Nagaraj\nramya.nagaraj.ece@gmail.com | +91 98xxxxxx14 | Bengaluru\nSUMMARY\nElectronics and Communication Engineering student with a background in embedded systems and hardware\nprogramming. Minimal exposure to web development.\nEDUCATION\nB.E. Electronics and Communication Engineering, BMS College of Engineering (2023-2027), CGPA: 8.0/10\nSKILLS\nEmbedded C, Arduino, Raspberry Pi, basic Python, MATLAB, circuit design (KiCad), basic HTML\nPROJECTS\nSmart Irrigation System\n\u2022\nBuilt an IoT-based irrigation controller using Arduino, embedded C, and soil moisture sensors\nHome Automation Prototype\n\u2022\nRaspberry Pi based home automation system with basic Python scripts controlling relays\nCERTIFICATIONS\nEmbedded Systems with Arduino (Udemy)",
+  "integrity": {
+    "hidden_spans_stripped": 0,
+    "reasons": []
+  }
+}

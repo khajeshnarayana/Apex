@@ -1,0 +1,75 @@
+{
+  "resume_id": "Aditya Kulkarni CyberSec Resume",
+  "candidate_name": "ADITYA KULKARNI",
+  "source_filename": "Aditya Kulkarni CyberSec Resume.docx",
+  "sections": {
+    "summary": {
+      "raw_text": "Final-year B.Tech Computer Science (Cybersecurity specialisation) student at Symbiosis Institute of Technology, Pune with hands-on experience in penetration testing, vulnerability assessment, and network security analysis. Ranked in the top 2% on TryHackMe globally and completed a security internship conducting VAPT assessments on live client environments. Adept at offensive and defensive security tooling with a strong foundation in networking protocols and exploit development. Seeking a Cybersecurity Internship to contribute to red team or SOC operations in a professional security environment.",
+      "extracted_skills": []
+    },
+    "skills": {
+      "raw_text": "Offensive Security:     Metasploit, Burp Suite Pro, Nmap, Nikto, SQLMap, Gobuster, Hydra, John the Ripper, Netcat\nDefensive & Forensics: Wireshark, Snort, Splunk (basic), Autopsy, Volatility, OSSEC, UFW, Fail2Ban\nLanguages & Scripting: Python, Bash, PowerShell (basic), SQL\nPlatforms & Standards: Kali Linux, Parrot OS, Windows AD (lab), OWASP Top 10, MITRE ATT&CK, CVE/CVSS, VirtualBox",
+      "extracted_skills": [
+        "python",
+        "sql",
+        "bash",
+        "powershell",
+        "linux",
+        "burp suite",
+        "owasp",
+        "nmap",
+        "wireshark",
+        "metasploit",
+        "sqlmap",
+        "splunk",
+        "kali linux",
+        "virtualbox"
+      ]
+    },
+    "experience": {
+      "raw_text": "Cybersecurity Intern  \u2014  Kratikal Tech Pvt. Ltd., Noida (Remote)May 2025 \u2013 Jul 2025\nConducted web application VAPT on 3 client environments under senior supervision, identifying 14 vulnerabilities including 2 critical-severity issues (IDOR and stored XSS) using Burp Suite and manual testing aligned with OWASP Top 10.\nPerformed network reconnaissance and internal port scanning using Nmap NSE scripts on a simulated enterprise LAN; documented findings in CVSS-scored vulnerability reports delivered to clients.\nAutomated a Python script to parse Nmap XML output and generate formatted HTML summary reports, reducing manual report compilation time from approximately 2 hours to 18 minutes per assessment.",
+      "extracted_skills": [
+        "python",
+        "html",
+        "burp suite",
+        "owasp",
+        "nmap",
+        "vapt"
+      ]
+    },
+    "projects": {
+      "raw_text": "Home Lab Active Directory Attack & Defence Simulation  |  Windows Server, Kali Linux, SplunkJan 2025 \u2013 Mar 2025\nBuilt a virtualised 3-machine Active Directory lab (Windows Server 2019 DC + 2 Windows 10 clients) to simulate and detect common AD attack chains including AS-REP Roasting, Pass-the-Hash, and Kerberoasting using Impacket and CrackMapExec.\nDeployed Splunk Free on the domain controller and wrote 6 custom detection rules alerting on suspicious LDAP queries, failed Kerberos pre-auth events, and lateral movement indicators, achieving zero false positives across 4 test runs.\nDocumented the full kill chain with screenshots and mitigations in a 22-page technical report; shared on GitHub where it received 47 stars from security students.\nWeb Application Penetration Testing \u2014 DVWA & Juice Shop  |  Burp Suite, SQLMap, PythonAug 2024 \u2013 Oct 2024\nSystematically exploited all 10 OWASP vulnerability categories across DVWA (all security levels) and OWASP Juice Shop, documenting attack vectors, payloads, and remediation guidance for each finding.\nChained a reflected XSS vulnerability with a CSRF token bypass to achieve stored session hijacking on DVWA medium security \u2014 a multi-step exploit not covered in standard walkthroughs.\nPublished a structured methodology write-up on Medium covering the full testing approach; article received 2,900+ views and was shared in 3 cybersecurity Discord communities.\nNetwork Traffic Analyser & Anomaly Detector  |  Python, Scapy, Wireshark, PandasMar 2024 \u2013 May 2024\nBuilt a Python tool using Scapy to capture and parse live packet data, extract protocol distribution, top talkers, and flag port scan patterns (SYN flood detection via threshold-based heuristics).\nValidated detection logic by replaying 4 publicly available PCAP files from the Wireshark sample captures repository, correctly identifying scan activity in all 4 cases with no false positives.\nExported parsed session data to Pandas DataFrames for time-series visualisation; tool processes approximately 8,000 packets per second on a mid-range laptop.",
+      "extracted_skills": [
+        "python",
+        "linux",
+        "github",
+        "burp suite",
+        "owasp",
+        "penetration testing",
+        "wireshark",
+        "sqlmap",
+        "splunk",
+        "kali linux",
+        "pandas",
+        "scapy"
+      ]
+    },
+    "education": {
+      "raw_text": "B.Tech \u2014 Computer Science & Engineering (Cybersecurity Specialisation)2022 \u2013 2026 (Expected)\nSymbiosis Institute of Technology, PuneCGPA: 8.6 / 10.0\nRelevant Coursework: Network Security, Cryptography, Ethical Hacking, Digital Forensics, Operating Systems, Computer Networks, Reverse Engineering, Secure Coding Practices",
+      "extracted_skills": []
+    },
+    "certifications": {
+      "raw_text": "eJPT \u2014 eLearnSecurity Junior Penetration Tester  (INE Security)Completed: Jan 2025\nGoogle Cybersecurity Professional Certificate  \u2014  Coursera (8 courses)Completed: Aug 2024",
+      "extracted_skills": []
+    },
+    "achievements": {
+      "raw_text": "Top 2% globally on TryHackMe (handle: aditya0xk) \u2014 completed 180+ rooms including Advent of Cyber 2024 (all 24 days) and earned 14 pathway completion badges across OWASP, Pre-Security, and SOC Level 1 paths.\n1st place, CyberQuest CTF 2024 (SIT Pune inter-college event, 38 teams) \u2014 solved 11 of 12 challenges across web exploitation, forensics, and cryptography categories within 8 hours.\nResponsible disclosure: reported a reflected XSS vulnerability in a Maharashtra state government portal via CERT-In; acknowledged and patched within 3 weeks (disclosure timeline maintained).\nPresident, CyberSec Club, SIT Pune \u2014 organised a 2-day annual event CipherStorm 2025 featuring a CTF, two guest talks, and a hands-on Burp Suite workshop attended by 190 students from 5 colleges.\nRegular CTF competitor (team: 0xSIT) on PicoCTF, HackTheBox, and CTFtime-listed events; team ranked 34th nationally in PicoCTF 2024 (1,800+ Indian teams).\nWrites technical CVE breakdowns and HTB machine walkthroughs on a personal blog; 6 posts published, 3,100+ total views, with one post featured in a weekly cybersecurity newsletter.",
+      "extracted_skills": []
+    }
+  },
+  "full_text_clean": "ADITYA KULKARNI\n+91 96650 28174   |   aditya.kulkarni@gmail.com   |   linkedin.com/in/adityakulkarni-sec   |   tryhackme.com/p/aditya0xk   |   Pune, Maharashtra\nPROFESSIONAL SUMMARY\nFinal-year B.Tech Computer Science (Cybersecurity specialisation) student at Symbiosis Institute of Technology, Pune with hands-on experience in penetration testing, vulnerability assessment, and network security analysis. Ranked in the top 2% on TryHackMe globally and completed a security internship conducting VAPT assessments on live client environments. Adept at offensive and defensive security tooling with a strong foundation in networking protocols and exploit development. Seeking a Cybersecurity Internship to contribute to red team or SOC operations in a professional security environment.\nEDUCATION\nB.Tech \u2014 Computer Science & Engineering (Cybersecurity Specialisation)2022 \u2013 2026 (Expected)\nSymbiosis Institute of Technology, PuneCGPA: 8.6 / 10.0\nRelevant Coursework: Network Security, Cryptography, Ethical Hacking, Digital Forensics, Operating Systems, Computer Networks, Reverse Engineering, Secure Coding Practices\nTECHNICAL SKILLS\nOffensive Security:     Metasploit, Burp Suite Pro, Nmap, Nikto, SQLMap, Gobuster, Hydra, John the Ripper, Netcat\nDefensive & Forensics: Wireshark, Snort, Splunk (basic), Autopsy, Volatility, OSSEC, UFW, Fail2Ban\nLanguages & Scripting: Python, Bash, PowerShell (basic), SQL\nPlatforms & Standards: Kali Linux, Parrot OS, Windows AD (lab), OWASP Top 10, MITRE ATT&CK, CVE/CVSS, VirtualBox\nEXPERIENCE\nCybersecurity Intern  \u2014  Kratikal Tech Pvt. Ltd., Noida (Remote)May 2025 \u2013 Jul 2025\nConducted web application VAPT on 3 client environments under senior supervision, identifying 14 vulnerabilities including 2 critical-severity issues (IDOR and stored XSS) using Burp Suite and manual testing aligned with OWASP Top 10.\nPerformed network reconnaissance and internal port scanning using Nmap NSE scripts on a simulated enterprise LAN; documented findings in CVSS-scored vulnerability reports delivered to clients.\nAutomated a Python script to parse Nmap XML output and generate formatted HTML summary reports, reducing manual report compilation time from approximately 2 hours to 18 minutes per assessment.\nPROJECTS\nHome Lab Active Directory Attack & Defence Simulation  |  Windows Server, Kali Linux, SplunkJan 2025 \u2013 Mar 2025\nBuilt a virtualised 3-machine Active Directory lab (Windows Server 2019 DC + 2 Windows 10 clients) to simulate and detect common AD attack chains including AS-REP Roasting, Pass-the-Hash, and Kerberoasting using Impacket and CrackMapExec.\nDeployed Splunk Free on the domain controller and wrote 6 custom detection rules alerting on suspicious LDAP queries, failed Kerberos pre-auth events, and lateral movement indicators, achieving zero false positives across 4 test runs.\nDocumented the full kill chain with screenshots and mitigations in a 22-page technical report; shared on GitHub where it received 47 stars from security students.\nWeb Application Penetration Testing \u2014 DVWA & Juice Shop  |  Burp Suite, SQLMap, PythonAug 2024 \u2013 Oct 2024\nSystematically exploited all 10 OWASP vulnerability categories across DVWA (all security levels) and OWASP Juice Shop, documenting attack vectors, payloads, and remediation guidance for each finding.\nChained a reflected XSS vulnerability with a CSRF token bypass to achieve stored session hijacking on DVWA medium security \u2014 a multi-step exploit not covered in standard walkthroughs.\nPublished a structured methodology write-up on Medium covering the full testing approach; article received 2,900+ views and was shared in 3 cybersecurity Discord communities.\nNetwork Traffic Analyser & Anomaly Detector  |  Python, Scapy, Wireshark, PandasMar 2024 \u2013 May 2024\nBuilt a Python tool using Scapy to capture and parse live packet data, extract protocol distribution, top talkers, and flag port scan patterns (SYN flood detection via threshold-based heuristics).\nValidated detection logic by replaying 4 publicly available PCAP files from the Wireshark sample captures repository, correctly identifying scan activity in all 4 cases with no false positives.\nExported parsed session data to Pandas DataFrames for time-series visualisation; tool processes approximately 8,000 packets per second on a mid-range laptop.\nCERTIFICATIONS\neJPT \u2014 eLearnSecurity Junior Penetration Tester  (INE Security)Completed: Jan 2025\nGoogle Cybersecurity Professional Certificate  \u2014  Coursera (8 courses)Completed: Aug 2024\nACHIEVEMENTS\nTop 2% globally on TryHackMe (handle: aditya0xk) \u2014 completed 180+ rooms including Advent of Cyber 2024 (all 24 days) and earned 14 pathway completion badges across OWASP, Pre-Security, and SOC Level 1 paths.\n1st place, CyberQuest CTF 2024 (SIT Pune inter-college event, 38 teams) \u2014 solved 11 of 12 challenges across web exploitation, forensics, and cryptography categories within 8 hours.\nResponsible disclosure: reported a reflected XSS vulnerability in a Maharashtra state government portal via CERT-In; acknowledged and patched within 3 weeks (disclosure timeline maintained).\nEXTRACURRICULAR ACTIVITIES\nPresident, CyberSec Club, SIT Pune \u2014 organised a 2-day annual event CipherStorm 2025 featuring a CTF, two guest talks, and a hands-on Burp Suite workshop attended by 190 students from 5 colleges.\nRegular CTF competitor (team: 0xSIT) on PicoCTF, HackTheBox, and CTFtime-listed events; team ranked 34th nationally in PicoCTF 2024 (1,800+ Indian teams).\nWrites technical CVE breakdowns and HTB machine walkthroughs on a personal blog; 6 posts published, 3,100+ total views, with one post featured in a weekly cybersecurity newsletter.",
+  "integrity": {
+    "hidden_spans_stripped": 0,
+    "reasons": []
+  }
+}

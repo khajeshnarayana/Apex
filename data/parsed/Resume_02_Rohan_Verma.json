@@ -1,0 +1,67 @@
+{
+  "resume_id": "Resume_02_Rohan_Verma",
+  "candidate_name": "Rohan Verma",
+  "source_filename": "Resume_02_Rohan_Verma.pdf",
+  "sections": {
+    "summary": {
+      "raw_text": "Full stack developer with a strong portfolio of deployed React/Node projects and active hackathon participation.\nComfortable working across the stack from database design to UI polish.",
+      "extracted_skills": []
+    },
+    "skills": {
+      "raw_text": "React.js, Next.js, Node.js, Express, PostgreSQL, MongoDB, TypeScript, REST APIs, Docker (basic), Git, Postman,\nFigma (basic)",
+      "extracted_skills": [
+        "react",
+        "node.js",
+        "express",
+        "rest apis",
+        "postgresql",
+        "mongodb",
+        "git",
+        "typescript",
+        "docker",
+        "next.js",
+        "postman",
+        "figma"
+      ]
+    },
+    "experience": {
+      "raw_text": "Freelance Web Developer (2025-Present)\n\u2022\nDelivered 3 small business websites with React frontends and Node/Express backends\n\u2022\nSet up PostgreSQL schemas and REST APIs for client inventory management systems",
+      "extracted_skills": [
+        "react",
+        "express",
+        "rest apis",
+        "postgresql"
+      ]
+    },
+    "projects": {
+      "raw_text": "EventHive - College Event Management Platform\n\u2022\nBuilt with Next.js, Express, and PostgreSQL; supports event registration and QR-based check-in\n\u2022\nWon 2nd place at a regional inter-college hackathon (2026)\nExpense Tracker API\n\u2022\nDesigned REST APIs in Node.js/Express with JWT auth; documented with Swagger",
+      "extracted_skills": [
+        "node.js",
+        "express",
+        "rest apis",
+        "postgresql",
+        "next.js"
+      ]
+    },
+    "education": {
+      "degree": "B.Tech Information Technology",
+      "institution": "Manipal Institute of Technology",
+      "year": "2023-2027",
+      "cgpa": "8.9",
+      "raw_text": "B.Tech Information Technology, Manipal Institute of Technology (2023-2027), CGPA: 8.9/10"
+    },
+    "certifications": {
+      "raw_text": "The Complete Node.js Developer Course (Udemy)",
+      "extracted_skills": []
+    },
+    "achievements": {
+      "raw_text": "",
+      "extracted_skills": []
+    }
+  },
+  "full_text_clean": "Rohan Verma\nrohan.verma98@gmail.com | +91 98xxxxxx02 | linkedin.com/in/rohanverma | Mysuru\nSUMMARY\nFull stack developer with a strong portfolio of deployed React/Node projects and active hackathon participation.\nComfortable working across the stack from database design to UI polish.\nEDUCATION\nB.Tech Information Technology, Manipal Institute of Technology (2023-2027), CGPA: 8.9/10\nSKILLS\nReact.js, Next.js, Node.js, Express, PostgreSQL, MongoDB, TypeScript, REST APIs, Docker (basic), Git, Postman,\nFigma (basic)\nEXPERIENCE\nFreelance Web Developer (2025-Present)\n\u2022\nDelivered 3 small business websites with React frontends and Node/Express backends\n\u2022\nSet up PostgreSQL schemas and REST APIs for client inventory management systems\nPROJECTS\nEventHive - College Event Management Platform\n\u2022\nBuilt with Next.js, Express, and PostgreSQL; supports event registration and QR-based check-in\n\u2022\nWon 2nd place at a regional inter-college hackathon (2026)\nExpense Tracker API\n\u2022\nDesigned REST APIs in Node.js/Express with JWT auth; documented with Swagger\nCERTIFICATIONS\nThe Complete Node.js Developer Course (Udemy)",
+  "integrity": {
+    "hidden_spans_stripped": 0,
+    "reasons": []
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "resume_id": "Resume_11_Nikhil_Rao",
+  "candidate_name": "Nikhil Rao",
+  "source_filename": "Resume_11_Nikhil_Rao.pdf",
+  "sections": {
+    "summary": {
+      "raw_text": "Full stack developer with hands-on experience in Angular and Node.js. Comfortable with backend REST API\ndesign but has not worked with React specifically.",
+      "extracted_skills": []
+    },
+    "skills": {
+      "raw_text": "Angular, TypeScript, Node.js, Express.js, MongoDB, MySQL, REST APIs, Git, RxJS, Bootstrap",
+      "extracted_skills": [
+        "node.js",
+        "express",
+        "rest apis",
+        "mysql",
+        "mongodb",
+        "git",
+        "typescript",
+        "angular"
+      ]
+    },
+    "experience": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "projects": {
+      "raw_text": "Hostel Complaint Management System\n\u2022\nBuilt with Angular frontend and Node.js/Express backend, MongoDB for data storage\n\u2022\nImplemented role-based dashboards for students, wardens, and admin staff\nInventory Management Tool\n\u2022\nNode.js/Express REST API with MySQL, basic Angular frontend for CRUD operations",
+      "extracted_skills": [
+        "node.js",
+        "express",
+        "mysql",
+        "mongodb",
+        "angular"
+      ]
+    },
+    "education": {
+      "degree": "B.E. Computer Science",
+      "institution": "NMAM Institute of Technology",
+      "year": "2023-2027",
+      "cgpa": "8.1",
+      "raw_text": "B.E. Computer Science, NMAM Institute of Technology (2023-2027), CGPA: 8.1/10"
+    },
+    "certifications": {
+      "raw_text": "Angular - The Complete Guide (Udemy)",
+      "extracted_skills": []
+    },
+    "achievements": {
+      "raw_text": "",
+      "extracted_skills": []
+    }
+  },
+  "full_text_clean": "Nikhil Rao\nnikhil.rao.dev@gmail.com | +91 98xxxxxx11 | github.com/nikhilrao | Mangaluru\nSUMMARY\nFull stack developer with hands-on experience in Angular and Node.js. Comfortable with backend REST API\ndesign but has not worked with React specifically.\nEDUCATION\nB.E. Computer Science, NMAM Institute of Technology (2023-2027), CGPA: 8.1/10\nSKILLS\nAngular, TypeScript, Node.js, Express.js, MongoDB, MySQL, REST APIs, Git, RxJS, Bootstrap\nPROJECTS\nHostel Complaint Management System\n\u2022\nBuilt with Angular frontend and Node.js/Express backend, MongoDB for data storage\n\u2022\nImplemented role-based dashboards for students, wardens, and admin staff\nInventory Management Tool\n\u2022\nNode.js/Express REST API with MySQL, basic Angular frontend for CRUD operations\nCERTIFICATIONS\nAngular - The Complete Guide (Udemy)",
+  "integrity": {
+    "hidden_spans_stripped": 0,
+    "reasons": []
+  }
+}

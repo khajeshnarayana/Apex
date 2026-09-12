@@ -181,15 +181,42 @@ def _find_evidence(term, section_text, max_len=180):
     return best
 
 
+def _expand_candidates(required_skill):
+    """
+    Build every term that should count as evidence of a required skill.
+
+    Expansion runs two levels, because the map contains category entries
+    whose members have their own aliases:
+
+        Frontend -> React -> React Native, React.js, Next.js, Redux
+
+    Without the second level, a resume saying "React Native" would match
+    the skill "React" but NOT the category "Frontend" — which is incoherent,
+    since anyone with React Native plainly has a frontend framework.
+
+    Two levels is deliberate: deeper expansion starts pulling in terms that
+    are only distantly related, which would make matches hard to defend.
+    """
+    candidates = {required_skill}
+
+    first_level = SYNONYM_MAP.get(required_skill, [])
+    candidates.update(first_level)
+
+    for alias in first_level:
+        candidates.update(SYNONYM_MAP.get(alias, []))
+
+    return list(candidates)
+
+
 def _skill_matches(required_skill, resume_skills_by_section, section_texts=None):
     """
-    Check if a required skill (or one of its synonyms) appears in the resume.
+    Check if a required skill (or any of its equivalents) appears in the resume.
 
     Returns the best section weight it was found under, which term matched,
     whether that was an exact or synonym match, which section it came from,
     and — when section_texts is supplied — the sentence proving it.
     """
-    candidates = [required_skill] + SYNONYM_MAP.get(required_skill, [])
+    candidates = _expand_candidates(required_skill)
     best_weight = 0.0
     matched_term = None
     match_type = None

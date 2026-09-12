@@ -1,0 +1,59 @@
+{
+  "resume_id": "Resume_03_Karthik_Iyer",
+  "candidate_name": "Karthik Iyer",
+  "source_filename": "Resume_03_Karthik_Iyer.pdf",
+  "sections": {
+    "summary": {
+      "raw_text": "Backend-focused developer with strong Java and Spring Boot fundamentals. Some exposure to frontend basics\nthrough college coursework but limited hands-on React experience.",
+      "extracted_skills": []
+    },
+    "skills": {
+      "raw_text": "Java, Spring Boot, Hibernate, MySQL, REST APIs, HTML/CSS, basic JavaScript, Git, Postman, Maven",
+      "extracted_skills": [
+        "javascript",
+        "rest apis",
+        "mysql",
+        "git",
+        "java",
+        "html",
+        "css",
+        "spring boot",
+        "postman"
+      ]
+    },
+    "experience": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "projects": {
+      "raw_text": "Library Management System\n\u2022\nBuilt a REST API backend in Spring Boot with MySQL for a college library system\n\u2022\nBasic HTML/CSS frontend to consume the APIs; no frontend framework used\nStudent Attendance Tracker\n\u2022\nJava console-based application with MySQL database integration",
+      "extracted_skills": [
+        "mysql",
+        "java",
+        "html",
+        "css",
+        "spring boot"
+      ]
+    },
+    "education": {
+      "degree": "B.E. Computer Science",
+      "institution": "PES University",
+      "year": "2023-2027",
+      "cgpa": "8.2",
+      "raw_text": "B.E. Computer Science, PES University (2023-2027), CGPA: 8.2/10"
+    },
+    "certifications": {
+      "raw_text": "Java Programming Masterclass (Udemy)",
+      "extracted_skills": []
+    },
+    "achievements": {
+      "raw_text": "",
+      "extracted_skills": []
+    }
+  },
+  "full_text_clean": "Karthik Iyer\nkarthik.iyer.dev@gmail.com | +91 98xxxxxx03 | github.com/kiyer | Chennai\nSUMMARY\nBackend-focused developer with strong Java and Spring Boot fundamentals. Some exposure to frontend basics\nthrough college coursework but limited hands-on React experience.\nEDUCATION\nB.E. Computer Science, PES University (2023-2027), CGPA: 8.2/10\nSKILLS\nJava, Spring Boot, Hibernate, MySQL, REST APIs, HTML/CSS, basic JavaScript, Git, Postman, Maven\nPROJECTS\nLibrary Management System\n\u2022\nBuilt a REST API backend in Spring Boot with MySQL for a college library system\n\u2022\nBasic HTML/CSS frontend to consume the APIs; no frontend framework used\nStudent Attendance Tracker\n\u2022\nJava console-based application with MySQL database integration\nCERTIFICATIONS\nJava Programming Masterclass (Udemy)",
+  "integrity": {
+    "hidden_spans_stripped": 0,
+    "reasons": []
+  }
+}

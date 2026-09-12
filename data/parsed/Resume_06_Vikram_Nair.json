@@ -1,0 +1,54 @@
+{
+  "resume_id": "Resume_06_Vikram_Nair",
+  "candidate_name": "Vikram Nair",
+  "source_filename": "Resume_06_Vikram_Nair.pdf",
+  "sections": {
+    "summary": {
+      "raw_text": "Data Science enthusiast focused on machine learning and data analysis. Strong in Python data libraries but has\nnot built web applications or worked with JavaScript.",
+      "extracted_skills": []
+    },
+    "skills": {
+      "raw_text": "Python, Pandas, NumPy, Scikit-learn, TensorFlow, Matplotlib, SQL, Jupyter Notebook, basic Git",
+      "extracted_skills": [
+        "git",
+        "python",
+        "sql",
+        "pandas",
+        "numpy",
+        "tensorflow",
+        "scikit-learn"
+      ]
+    },
+    "experience": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "projects": {
+      "raw_text": "Student Placement Prediction Model\n\u2022\nBuilt a classification model using Scikit-learn to predict placement outcomes from academic data\n\u2022\nPerformed EDA and feature engineering using Pandas and Matplotlib\nSentiment Analysis on Twitter Data\n\u2022\nUsed NLTK and Scikit-learn to classify tweet sentiment; no web deployment",
+      "extracted_skills": [
+        "pandas",
+        "scikit-learn"
+      ]
+    },
+    "education": {
+      "degree": "B.Tech Computer Science (AI/ML specialization)",
+      "institution": "",
+      "year": "2023-2027",
+      "cgpa": "8.8",
+      "raw_text": "B.Tech Computer Science (AI/ML specialization), Amrita Vishwa Vidyapeetham (2023-2027), CGPA: 8.8/10"
+    },
+    "certifications": {
+      "raw_text": "Machine Learning by Andrew Ng (Coursera)",
+      "extracted_skills": []
+    },
+    "achievements": {
+      "raw_text": "",
+      "extracted_skills": []
+    }
+  },
+  "full_text_clean": "Vikram Nair\nvikram.nair.ml@gmail.com | +91 98xxxxxx06 | github.com/vikramnair | Kochi\nSUMMARY\nData Science enthusiast focused on machine learning and data analysis. Strong in Python data libraries but has\nnot built web applications or worked with JavaScript.\nEDUCATION\nB.Tech Computer Science (AI/ML specialization), Amrita Vishwa Vidyapeetham (2023-2027), CGPA: 8.8/10\nSKILLS\nPython, Pandas, NumPy, Scikit-learn, TensorFlow, Matplotlib, SQL, Jupyter Notebook, basic Git\nPROJECTS\nStudent Placement Prediction Model\n\u2022\nBuilt a classification model using Scikit-learn to predict placement outcomes from academic data\n\u2022\nPerformed EDA and feature engineering using Pandas and Matplotlib\nSentiment Analysis on Twitter Data\n\u2022\nUsed NLTK and Scikit-learn to classify tweet sentiment; no web deployment\nCERTIFICATIONS\nMachine Learning by Andrew Ng (Coursera)",
+  "integrity": {
+    "hidden_spans_stripped": 0,
+    "reasons": []
+  }
+}

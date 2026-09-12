@@ -1,0 +1,58 @@
+{
+  "resume_id": "Resume_13_Sanjay_Patil",
+  "candidate_name": "Sanjay Patil",
+  "source_filename": "Resume_13_Sanjay_Patil.pdf",
+  "sections": {
+    "summary": {
+      "raw_text": "Backend-leaning developer skilled in Java and Spring Boot with working knowledge of plain JavaScript, HTML, and\nCSS. No experience with modern frontend frameworks like React or Angular.",
+      "extracted_skills": []
+    },
+    "skills": {
+      "raw_text": "Java, Spring Boot, Spring Data JPA, MySQL, PostgreSQL, REST APIs, HTML5, CSS3, vanilla JavaScript, Git",
+      "extracted_skills": [
+        "javascript",
+        "rest apis",
+        "mysql",
+        "postgresql",
+        "git",
+        "java",
+        "spring boot"
+      ]
+    },
+    "experience": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "projects": {
+      "raw_text": "Online Bookstore\n\u2022\nSpring Boot REST API backend with PostgreSQL, server-rendered pages using Thymeleaf\n\u2022\nBasic JavaScript used for form validation and simple interactivity\nEmployee Management System\n\u2022\nJava Spring Boot application with MySQL, RESTful endpoints tested with Postman",
+      "extracted_skills": [
+        "javascript",
+        "mysql",
+        "postgresql",
+        "java",
+        "spring boot",
+        "postman"
+      ]
+    },
+    "education": {
+      "degree": "B.E. Information Technology",
+      "institution": "College of Engineering Pune",
+      "year": "2023-2027",
+      "cgpa": "8.0",
+      "raw_text": "B.E. Information Technology, College of Engineering Pune (2023-2027), CGPA: 8.0/10"
+    },
+    "certifications": {
+      "raw_text": "Spring Framework Fundamentals (Udemy)",
+      "extracted_skills": []
+    },
+    "achievements": {
+      "raw_text": "",
+      "extracted_skills": []
+    }
+  },
+  "full_text_clean": "Sanjay Patil\nsanjay.patil.dev@gmail.com | +91 98xxxxxx13 | github.com/sanjaypatil | Pune\nSUMMARY\nBackend-leaning developer skilled in Java and Spring Boot with working knowledge of plain JavaScript, HTML, and\nCSS. No experience with modern frontend frameworks like React or Angular.\nEDUCATION\nB.E. Information Technology, College of Engineering Pune (2023-2027), CGPA: 8.0/10\nSKILLS\nJava, Spring Boot, Spring Data JPA, MySQL, PostgreSQL, REST APIs, HTML5, CSS3, vanilla JavaScript, Git\nPROJECTS\nOnline Bookstore\n\u2022\nSpring Boot REST API backend with PostgreSQL, server-rendered pages using Thymeleaf\n\u2022\nBasic JavaScript used for form validation and simple interactivity\nEmployee Management System\n\u2022\nJava Spring Boot application with MySQL, RESTful endpoints tested with Postman\nCERTIFICATIONS\nSpring Framework Fundamentals (Udemy)",
+  "integrity": {
+    "hidden_spans_stripped": 0,
+    "reasons": []
+  }
+}

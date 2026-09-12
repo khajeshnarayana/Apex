@@ -1,0 +1,46 @@
+{
+  "resume_id": "Resume_07_Mohammed_Faizan",
+  "candidate_name": "Mohammed Faizan",
+  "source_filename": "Resume_07_Mohammed_Faizan.pdf",
+  "sections": {
+    "summary": {
+      "raw_text": "Mechanical Engineering student with basic programming exposure through core coursework. Interested in\ntransitioning toward software roles but has limited web development experience.",
+      "extracted_skills": []
+    },
+    "skills": {
+      "raw_text": "C programming, MATLAB, AutoCAD, basic Python, Excel, basic HTML",
+      "extracted_skills": [
+        "python",
+        "html"
+      ]
+    },
+    "experience": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "projects": {
+      "raw_text": "Automated Attendance using RFID\n\u2022\nBuilt a hardware-software prototype using Arduino and basic C for RFID-based attendance\nSimple Calculator (C)\n\u2022\nConsole-based calculator application written in C as part of coursework",
+      "extracted_skills": []
+    },
+    "education": {
+      "degree": "B.E. Mechanical Engineering",
+      "institution": "BMS College of Engineering",
+      "year": "2023-2027",
+      "cgpa": "7.6",
+      "raw_text": "B.E. Mechanical Engineering, BMS College of Engineering (2023-2027), CGPA: 7.6/10"
+    },
+    "certifications": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "achievements": {
+      "raw_text": "",
+      "extracted_skills": []
+    }
+  },
+  "full_text_clean": "Mohammed Faizan\nfaizan.mech@gmail.com | +91 98xxxxxx07 | Bengaluru\nSUMMARY\nMechanical Engineering student with basic programming exposure through core coursework. Interested in\ntransitioning toward software roles but has limited web development experience.\nEDUCATION\nB.E. Mechanical Engineering, BMS College of Engineering (2023-2027), CGPA: 7.6/10\nSKILLS\nC programming, MATLAB, AutoCAD, basic Python, Excel, basic HTML\nPROJECTS\nAutomated Attendance using RFID\n\u2022\nBuilt a hardware-software prototype using Arduino and basic C for RFID-based attendance\nSimple Calculator (C)\n\u2022\nConsole-based calculator application written in C as part of coursework",
+  "integrity": {
+    "hidden_spans_stripped": 0,
+    "reasons": []
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "resume_id": "Cyber_Security_Resume_2_Priya_Kulkarni",
+  "candidate_name": "Priya Kulkarni",
+  "source_filename": "Cyber_Security_Resume_2_Priya_Kulkarni.xml",
+  "sections": {
+    "summary": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "skills": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "experience": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "projects": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "education": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "certifications": {
+      "raw_text": "",
+      "extracted_skills": []
+    },
+    "achievements": {
+      "raw_text": "",
+      "extracted_skills": []
+    }
+  },
+  "full_text_clean": "Priya Kulkarni \n Cyber Security \n +91 98123 45608 \n priya.kulkarni2024@gmail.com \n linkedin.com/in/priyakulkarni-dev \n github.com/priyakulkarni-dev \n Pune, Maharashtra \n Motivated B.Tech Computer Science student with a strong interest in network security, ethical hacking, and vulnerability assessment. Hands-on experience with penetration testing tools and secure coding practices. Seeking a Cyber Security Internship to contribute to real-world security operations. \n Bachelor of Engineering \u2014 Computer Engineering \n 2022 \u2013 2026 (Expected) \n Army Institute of Technology, Pune \n CGPA: 8.9 / 10.0 \n Relevant Coursework: Information Security, Computer Networks, Cryptography, Risk Assessment, Operating Systems \n Python, Bash, SQL \n Nmap, Wireshark, Burp Suite, Metasploit, OWASP ZAP \n Network Security, Vulnerability Assessment, Penetration Testing, Cryptography \n Linux, Kali Linux, Git, GitHub, AWS (basic) \n Cyber Security Intern \u2014 Synapse Analytics Pvt. Ltd., Pune \n June 2024 \u2013 July 2024 \n Performed vulnerability assessments on internal web applications, identifying 12 medium/high-risk issues. \n Assisted in configuring firewall and IDS rules, reducing false-positive alerts by 20%. \n Documented security findings and remediation steps in formal reports for the engineering team. \n Web Application Penetration Testing Lab \n Burp Suite, OWASP ZAP, Python \n Jan 2024 \u2013 Mar 2024 \n Set up a vulnerable web app lab and performed testing against OWASP Top 10 vulnerabilities. \n Identified and documented SQL injection and XSS vulnerabilities with proof-of-concept exploits. \n Proposed mitigations including input validation and parameterized queries. \n Network Intrusion Detection System \n Python, Scapy, Wireshark \n Sep 2023 \u2013 Nov 2023 \n Built a rule-based IDS to detect port scans and ARP spoofing in real time. \n Achieved 90% detection accuracy on simulated attack traffic. \n Password Strength &amp; Breach Checker Tool \n Python, Hashlib, HaveIBeenPwned API \n Jul 2023 \u2013 Aug 2023 \n Built a CLI tool evaluating password strength and checking for known data breaches. \n Used secure hashing practices to avoid storing plaintext credentials. \n Google Cybersecurity Professional Certificate \n Coursera \n Completed: Aug 2023 \n Ethical Hacking, Score: 84/100 \n NPTEL (IIT Madras) \n Completed: Nov 2023 \n Introduction to Cyber Security \n IBM / Coursera \n Completed: May 2023 \n Selected among 80 students college-wide for the Smart India Hackathon (SIH 2024) internal round. \n Received the Academic Excellence Award for Semester 2 with the highest GPA (9.3) in the CSE department cohort of 120 students. \n Active contributor to two college-wide technical fests, coordinating logistics and technical sessions for 150+ participants. \n Core Member, Technical Club, VIT Pune \u2014 organised hands-on workshops for 150+ students (2023\u2013Present). \n Technical Blogger \u2014 published articles on Medium covering tools and best practices relevant to the field; collectively read 4,000+ times. \n Volunteer Mentor, CodeForGood (NGO Initiative) \u2014 guided 15 high school students through technology fundamentals over an 8-week programme.",
+  "integrity": {
+    "hidden_spans_stripped": 0,
+    "reasons": []
+  }
+}

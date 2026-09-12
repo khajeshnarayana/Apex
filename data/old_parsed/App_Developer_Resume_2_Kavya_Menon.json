@@ -1,0 +1,67 @@
+{
+  "resume_id": "App_Developer_Resume_2_Kavya_Menon",
+  "candidate_name": "KAVYA MENON",
+  "source_filename": "App_Developer_Resume_2_Kavya_Menon.txt",
+  "sections": {
+    "summary": {
+      "raw_text": "Motivated B.Tech Computer Science student passionate about mobile\napplication development. Experienced in building cross-platform apps\nusing Flutter and React Native with clean, maintainable architecture.\nSeeking an App Developer Internship to build user-centric mobile\nproducts.",
+      "extracted_skills": []
+    },
+    "skills": {
+      "raw_text": "Languages: Dart, Kotlin, JavaScript, Python\n\nFrameworks: Flutter, React Native, Android SDK\n\nBackend & Tools: Firebase, REST APIs, SQLite, Git, GitHub\n\nPlatforms: Android Studio, Xcode (basic), Play Console, Postman",
+      "extracted_skills": [
+        "python",
+        "javascript",
+        "dart",
+        "kotlin",
+        "react",
+        "react native",
+        "flutter",
+        "android",
+        "android sdk",
+        "firebase",
+        "sqlite",
+        "git",
+        "github",
+        "rest apis",
+        "postman"
+      ]
+    },
+    "experience": {
+      "raw_text": "Mobile App Development Intern \u2014 Synapse Analytics Pvt. Ltd., Pune | June\n2024 \u2013 July 2024\n\n-   Developed UI screens and state management logic for a Flutter-based\n    internal field-reporting app.\n\n-   Integrated Firebase Authentication and Firestore, reducing backend\n    setup time by 50%.\n\n-   Fixed 25+ UI/performance bugs, improving app crash-free rate to 98%.",
+      "extracted_skills": [
+        "flutter",
+        "firebase",
+        "firestore"
+      ]
+    },
+    "projects": {
+      "raw_text": "Campus Event Management App | Flutter, Firebase Jan 2024 \u2013 Mar 2024\n\n-   Built a cross-platform app for event discovery, RSVP, and push\n    notifications.\n\n-   Used Firestore for real-time updates across 500+ simulated users.\n\n-   Published a working APK with 4.5+ rating in internal testing.\n\nPersonal Finance Tracker App | Flutter, SQLite, Provider Sep 2023 \u2013 Nov\n2023\n\n-   Built an offline-first expense tracker with category-wise analytics\n    and charts.\n\n-   Implemented local notifications for budget alerts.\n\nFitness Tracking App | React Native, Firebase Jul 2023 \u2013 Aug 2023\n\n-   Built a step-counter and workout-logging app using device sensors.\n\n-   Synced data across devices using Firebase Realtime Database.",
+      "extracted_skills": [
+        "react",
+        "react native",
+        "flutter",
+        "firebase",
+        "sqlite",
+        "firestore"
+      ]
+    },
+    "education": {
+      "raw_text": "Bachelor of Engineering \u2014 Computer Engineering | 2022 \u2013 2026 (Expected)\n\nMaharashtra Institute of Technology (MIT), Pune CGPA: 8.75 / 10.0\n\nRelevant Coursework: Mobile Computing, Cross-Platform Development,\nSoftware Design Patterns, DBMS, Networking",
+      "extracted_skills": []
+    },
+    "certifications": {
+      "raw_text": "Meta Android Developer Professional Certificate \u2014 Coursera Completed:\nAug 2023\n\nMobile Application Development, Score: 86/100 \u2014 NPTEL (IIT Madras)\nCompleted: Nov 2023\n\nProgramming Foundations with JavaScript, HTML and CSS \u2014 IBM / Coursera\nCompleted: May 2023",
+      "extracted_skills": []
+    },
+    "achievements": {
+      "raw_text": "-   Selected among 80 students college-wide for the Smart India\n    Hackathon (SIH 2024) internal round.\n\n-   Received the Academic Excellence Award for Semester 2 with the\n    highest GPA (9.3) in the CSE department cohort of 120 students.\n\n-   Active contributor to two college-wide technical fests, coordinating\n    logistics and technical sessions for 150+ participants.\n\n\n-   Core Member, Technical Club, VIT Pune \u2014 organised hands-on workshops\n    for 150+ students (2023\u2013Present).\n\n-   Technical Blogger \u2014 published articles on Medium covering tools and\n    best practices relevant to the field; collectively read 4,000+\n    times.\n\n-   Volunteer Mentor, CodeForGood (NGO Initiative) \u2014 guided 15 high\n    school students through technology fundamentals over an 8-week\n    programme.",
+      "extracted_skills": []
+    }
+  },
+  "full_text_clean": "KAVYA MENON\n\nAspiring App Developer\n\n+91 98123 45612 | kavya.menon2024@gmail.com |\nlinkedin.com/in/kavyamenon-dev | github.com/kavyamenon-dev | Pune,\nMaharashtra\n\nPROFESSIONAL SUMMARY\n\nMotivated B.Tech Computer Science student passionate about mobile\napplication development. Experienced in building cross-platform apps\nusing Flutter and React Native with clean, maintainable architecture.\nSeeking an App Developer Internship to build user-centric mobile\nproducts.\n\nEDUCATION\n\nBachelor of Engineering \u2014 Computer Engineering | 2022 \u2013 2026 (Expected)\n\nMaharashtra Institute of Technology (MIT), Pune CGPA: 8.75 / 10.0\n\nRelevant Coursework: Mobile Computing, Cross-Platform Development,\nSoftware Design Patterns, DBMS, Networking\n\nTECHNICAL SKILLS\n\nLanguages: Dart, Kotlin, JavaScript, Python\n\nFrameworks: Flutter, React Native, Android SDK\n\nBackend & Tools: Firebase, REST APIs, SQLite, Git, GitHub\n\nPlatforms: Android Studio, Xcode (basic), Play Console, Postman\n\nEXPERIENCE\n\nMobile App Development Intern \u2014 Synapse Analytics Pvt. Ltd., Pune | June\n2024 \u2013 July 2024\n\n-   Developed UI screens and state management logic for a Flutter-based\n    internal field-reporting app.\n\n-   Integrated Firebase Authentication and Firestore, reducing backend\n    setup time by 50%.\n\n-   Fixed 25+ UI/performance bugs, improving app crash-free rate to 98%.\n\nPROJECTS\n\nCampus Event Management App | Flutter, Firebase Jan 2024 \u2013 Mar 2024\n\n-   Built a cross-platform app for event discovery, RSVP, and push\n    notifications.\n\n-   Used Firestore for real-time updates across 500+ simulated users.\n\n-   Published a working APK with 4.5+ rating in internal testing.\n\nPersonal Finance Tracker App | Flutter, SQLite, Provider Sep 2023 \u2013 Nov\n2023\n\n-   Built an offline-first expense tracker with category-wise analytics\n    and charts.\n\n-   Implemented local notifications for budget alerts.\n\nFitness Tracking App | React Native, Firebase Jul 2023 \u2013 Aug 2023\n\n-   Built a step-counter and workout-logging app using device sensors.\n\n-   Synced data across devices using Firebase Realtime Database.\n\nCERTIFICATIONS\n\nMeta Android Developer Professional Certificate \u2014 Coursera Completed:\nAug 2023\n\nMobile Application Development, Score: 86/100 \u2014 NPTEL (IIT Madras)\nCompleted: Nov 2023\n\nProgramming Foundations with JavaScript, HTML and CSS \u2014 IBM / Coursera\nCompleted: May 2023\n\nACHIEVEMENTS & AWARDS\n\n-   Selected among 80 students college-wide for the Smart India\n    Hackathon (SIH 2024) internal round.\n\n-   Received the Academic Excellence Award for Semester 2 with the\n    highest GPA (9.3) in the CSE department cohort of 120 students.\n\n-   Active contributor to two college-wide technical fests, coordinating\n    logistics and technical sessions for 150+ participants.\n\nEXTRACURRICULAR ACTIVITIES\n\n-   Core Member, Technical Club, VIT Pune \u2014 organised hands-on workshops\n    for 150+ students (2023\u2013Present).\n\n-   Technical Blogger \u2014 published articles on Medium covering tools and\n    best practices relevant to the field; collectively read 4,000+\n    times.\n\n-   Volunteer Mentor, CodeForGood (NGO Initiative) \u2014 guided 15 high\n    school students through technology fundamentals over an 8-week\n    programme.\n",
+  "integrity": {
+    "hidden_spans_stripped": 0,
+    "reasons": []
+  }
+}

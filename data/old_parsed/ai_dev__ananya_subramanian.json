@@ -1,0 +1,52 @@
+{
+  "resume_id": "ai_dev__ananya_subramanian",
+  "candidate_name": "Ananya Subramanian",
+  "source_filename": "ai_dev__ananya_subramanian.pdf",
+  "sections": {
+    "summary": {
+      "raw_text": "Detail-oriented AI Developer focused on computer vision and conversational AI systems, with a strong \nfoundation in applied mathematics.",
+      "extracted_skills": []
+    },
+    "skills": {
+      "raw_text": "\u2022\nPython, NumPy, OpenCV\n\u2022\nConvolutional Neural Networks (CNNs)\n\u2022\nTensorFlow, Keras\n\u2022\nSpeech-to-text & NLP pipelines\n\u2022\nModel optimization (ONNX, quantization)\n\u2022\nGit, CI/CD for ML (GitHub Actions)\n\u2022\nCloud ML (Azure ML, GCP Vertex AI)",
+      "extracted_skills": [
+        "python",
+        "gcp",
+        "azure",
+        "git",
+        "ci/cd",
+        "github",
+        "numpy",
+        "tensorflow",
+        "opencv"
+      ]
+    },
+    "experience": {
+      "raw_text": "AI Engineer \u2014 VisionEdge Labs\nJan 2022 - Present\n\u2022\nDesigned a defect-detection CV model for manufacturing line cameras, reducing false negatives by 22%\n\u2022\nOptimized inference latency from 400ms to 90ms using model quantization and ONNX runtime\n\u2022\nBuilt a voice-assistant module integrating Whisper STT with a custom NLU layer\nData Science Intern \u2014 Quantica Insights\nMay 2021 - Dec 2021\n\u2022\nBuilt dashboards summarizing model performance metrics for stakeholders\n\u2022\nCleaned and labeled image datasets of 50K+ samples for training pipelines",
+      "extracted_skills": []
+    },
+    "projects": {
+      "raw_text": "Smart Attendance System\nFace-recognition based attendance system using OpenCV and a custom-trained CNN, deployed on Raspberry Pi\nChat Assistant for Healthcare FAQs\nBuilt an intent-classification chatbot using spaCy and Rasa for a clinic's patient queries",
+      "extracted_skills": [
+        "opencv"
+      ]
+    },
+    "education": {
+      "raw_text": "B.E, Information Technology \u2014 Anna University\n2018 - 2022",
+      "extracted_skills": []
+    },
+    "certifications": {
+      "raw_text": "\u2022\nCoursera - Deep Learning Specialization (Andrew Ng)\n\u2022\nNPTEL - Computer Vision",
+      "extracted_skills": []
+    },
+    "achievements": {
+      "raw_text": "",
+      "extracted_skills": []
+    }
+  },
+  "full_text_clean": "Ananya Subramanian\nAI/ML Developer\nChennai, India  |  +91 91234 56780  |  ananya.subramanian@outlook.com  |  linkedin.com/in/ananya-subramanian\nPROFESSIONAL SUMMARY\nDetail-oriented AI Developer focused on computer vision and conversational AI systems, with a strong \nfoundation in applied mathematics.\nSKILLS\n\u2022\nPython, NumPy, OpenCV\n\u2022\nConvolutional Neural Networks (CNNs)\n\u2022\nTensorFlow, Keras\n\u2022\nSpeech-to-text & NLP pipelines\n\u2022\nModel optimization (ONNX, quantization)\n\u2022\nGit, CI/CD for ML (GitHub Actions)\n\u2022\nCloud ML (Azure ML, GCP Vertex AI)\nWORK EXPERIENCE\nAI Engineer \u2014 VisionEdge Labs\nJan 2022 - Present\n\u2022\nDesigned a defect-detection CV model for manufacturing line cameras, reducing false negatives by 22%\n\u2022\nOptimized inference latency from 400ms to 90ms using model quantization and ONNX runtime\n\u2022\nBuilt a voice-assistant module integrating Whisper STT with a custom NLU layer\nData Science Intern \u2014 Quantica Insights\nMay 2021 - Dec 2021\n\u2022\nBuilt dashboards summarizing model performance metrics for stakeholders\n\u2022\nCleaned and labeled image datasets of 50K+ samples for training pipelines\nPROJECTS\nSmart Attendance System\nFace-recognition based attendance system using OpenCV and a custom-trained CNN, deployed on Raspberry Pi\nChat Assistant for Healthcare FAQs\nBuilt an intent-classification chatbot using spaCy and Rasa for a clinic's patient queries\nEDUCATION\nB.E, Information Technology \u2014 Anna University\n2018 - 2022\nCERTIFICATIONS\n\u2022\nCoursera - Deep Learning Specialization (Andrew Ng)\n\u2022\nNPTEL - Computer Vision",
+  "integrity": {
+    "hidden_spans_stripped": 0,
+    "reasons": []
+  }
+}

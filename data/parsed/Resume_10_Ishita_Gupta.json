@@ -1,0 +1,45 @@
+{
+  "resume_id": "Resume_10_Ishita_Gupta",
+  "candidate_name": "Ishita Gupta",
+  "source_filename": "Resume_10_Ishita_Gupta.pdf",
+  "sections": {
+    "summary": {
+      "raw_text": "Business Administration student with a strong interest in digital marketing and data-driven decision making. Limited\ntechnical/programming background.",
+      "extracted_skills": []
+    },
+    "skills": {
+      "raw_text": "MS Excel (advanced), Google Analytics, Canva, basic SQL, PowerPoint, social media marketing tools",
+      "extracted_skills": [
+        "sql"
+      ]
+    },
+    "experience": {
+      "raw_text": "Marketing Intern, LocalBazaar E-commerce (May-Jul 2026)\n\u2022\nBuilt Excel dashboards to track campaign performance across channels\n\u2022\nAssisted in running social media ad campaigns and analyzing basic conversion metrics",
+      "extracted_skills": []
+    },
+    "projects": {
+      "raw_text": "College Fest Sponsorship Drive\n\u2022\nLed outreach that secured sponsorships from 8 local businesses for the annual college fest",
+      "extracted_skills": []
+    },
+    "education": {
+      "degree": "Bengaluru (2023-2027)",
+      "institution": "BBA, Christ University, Bengaluru",
+      "year": "2023-2027",
+      "cgpa": "8.6",
+      "raw_text": "BBA, Christ University, Bengaluru (2023-2027), CGPA: 8.6/10"
+    },
+    "certifications": {
+      "raw_text": "Google Digital Marketing & E-commerce (Coursera)",
+      "extracted_skills": []
+    },
+    "achievements": {
+      "raw_text": "",
+      "extracted_skills": []
+    }
+  },
+  "full_text_clean": "Ishita Gupta\nishita.gupta.biz@gmail.com | +91 98xxxxxx10 | Bengaluru\nSUMMARY\nBusiness Administration student with a strong interest in digital marketing and data-driven decision making. Limited\ntechnical/programming background.\nEDUCATION\nBBA, Christ University, Bengaluru (2023-2027), CGPA: 8.6/10\nSKILLS\nMS Excel (advanced), Google Analytics, Canva, basic SQL, PowerPoint, social media marketing tools\nEXPERIENCE\nMarketing Intern, LocalBazaar E-commerce (May-Jul 2026)\n\u2022\nBuilt Excel dashboards to track campaign performance across channels\n\u2022\nAssisted in running social media ad campaigns and analyzing basic conversion metrics\nPROJECTS\nCollege Fest Sponsorship Drive\n\u2022\nLed outreach that secured sponsorships from 8 local businesses for the annual college fest\nCERTIFICATIONS\nGoogle Digital Marketing & E-commerce (Coursera)",
+  "integrity": {
+    "hidden_spans_stripped": 0,
+    "reasons": []
+  }
+}
