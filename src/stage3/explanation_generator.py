@@ -1,4 +1,4 @@
-"""Generate deterministic explanations from structured Stage 2 output."""
+"""Generate deterministic explanations from normalized Stage 2 output."""
 
 from typing import Any
 
@@ -11,60 +11,44 @@ def _format_list(items: list[str]) -> str:
     return f"{', '.join(items[:-1])}, and {items[-1]}"
 
 
+def _format_score(score: float) -> str:
+    return f"{score * 100:.1f}%"
+
+
 def generate_explanation(candidate: dict[str, Any]) -> str:
-    """Build an evidence-grounded explanation from Stage 2 candidate fields."""
-    explanation_parts: list[str] = []
+    """Explain only the normalized matches, gaps, and recorded Stage 2 scores."""
+    matched_phrases = []
+    for match in candidate["matched_skills"]:
+        phrase = match["skill"]
+        if (
+            match["match_type"] == "synonym"
+            and match["found_as"].casefold() != match["skill"].casefold()
+        ):
+            phrase = f"{match['skill']} via {match['found_as']}"
+        matched_phrases.append(phrase)
 
-    matched_required_skills = candidate["matched_required_skills"]
-    if matched_required_skills:
-        if len(matched_required_skills) == 1:
-            explanation_parts.append(
-                f"Matched required skill: {matched_required_skills[0]}."
-            )
-        else:
-            explanation_parts.append(
-                "Matched required skills include "
-                f"{_format_list(matched_required_skills)}."
-            )
-
-    matched_preferred_skills = candidate["matched_preferred_skills"]
-    if matched_preferred_skills:
-        if len(matched_preferred_skills) == 1:
-            explanation_parts.append(
-                "Also matched the preferred skill "
-                f"{matched_preferred_skills[0]}."
-            )
-        else:
-            explanation_parts.append(
-                "Also matched preferred skills such as "
-                f"{_format_list(matched_preferred_skills)}."
-            )
-
-    evidence = candidate["evidence"]
-    if evidence:
-        resume_evidence = evidence[0].get("resume_evidence")
-        if isinstance(resume_evidence, str) and resume_evidence.strip():
-            evidence_text = resume_evidence.strip()
-            if evidence_text[-1] not in ".!?":
-                evidence_text += "."
-            explanation_parts.append(
-                f"Supporting evidence includes: {evidence_text}"
-            )
-
-    missing_required_skills = candidate["missing_required_skills"]
-    if missing_required_skills:
-        skill_label = "skill" if len(missing_required_skills) == 1 else "skills"
-        explanation_parts.append(
-            f"Missing or unverified required {skill_label}: "
-            f"{_format_list(missing_required_skills)}."
-        )
+    parts = []
+    if matched_phrases:
+        parts.append(f"Matched skills include {_format_list(matched_phrases)}.")
     else:
-        explanation_parts.append("No required skills were identified as missing.")
+        parts.append("No matched skills were recorded.")
 
-    explanation_parts.append(
-        f"Recorded scores: {candidate['final_score']:.1f} final, "
-        f"{candidate['keyword_score']:.1f} keyword, and "
-        f"{candidate['semantic_score']:.1f} semantic."
+    missing_skills = candidate["missing_required_skills"]
+    if missing_skills:
+        for missing in missing_skills:
+            if missing["semantic_hint"]:
+                parts.append(
+                    f"{missing['skill']} was not explicitly identified, though the "
+                    "resume shows broader semantic relevance."
+                )
+            else:
+                parts.append(f"{missing['skill']} was not explicitly identified.")
+    else:
+        parts.append("No required skills were identified as missing.")
+
+    parts.append(
+        f"The candidate recorded a {_format_score(candidate['final_score'])} final "
+        f"score, with {_format_score(candidate['keyword_score'])} keyword matching "
+        f"and {_format_score(candidate['semantic_score'])} semantic similarity."
     )
-
-    return " ".join(explanation_parts)
+    return " ".join(parts)

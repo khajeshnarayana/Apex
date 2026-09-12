@@ -20,7 +20,6 @@ from stage3 import (
 
 RANKINGS_PATH = REPOSITORY_ROOT / "demo_data" / "mock_ranking_results.json"
 
-# Presentation only. Keep selectors centralized for future Streamlit upgrades.
 DASHBOARD_CSS = """
 <style>
 [data-testid="stAppViewContainer"] { background: #f6f8fc; color: #1d2939; }
@@ -80,6 +79,34 @@ DASHBOARD_CSS = """
 """
 
 
+def format_score(score):
+    """Format a normalized score without changing its stored value."""
+    return f"{score * 100:.1f}%"
+
+
+def format_score_difference(difference):
+    """Format a normalized score delta as percentage points."""
+    return f"{difference * 100:.1f} percentage points"
+
+
+def matched_skill_label(match):
+    if (
+        match["match_type"] == "synonym"
+        and match["found_as"].casefold() != match["skill"].casefold()
+    ):
+        return f'{match["skill"]} via "{match["found_as"]}"'
+    return match["skill"]
+
+
+def missing_skill_text(missing):
+    if missing["semantic_hint"]:
+        return (
+            f"{missing['skill']} — not explicitly identified, though the resume "
+            "shows broader semantic relevance."
+        )
+    return f"Missing: {missing['skill']}"
+
+
 def render_skill_badges(label, skills, treatment="matched", empty="None identified"):
     """Render escaped, read-only skill labels with a plain empty state."""
     st.markdown(f"**{label}**")
@@ -93,12 +120,24 @@ def render_skill_badges(label, skills, treatment="matched", empty="None identifi
     st.markdown(f'<div class="apex-skills">{badges}</div>', unsafe_allow_html=True)
 
 
+def render_missing_skills(label, missing_skills, empty="None identified"):
+    st.markdown(f"**{label}**")
+    if not missing_skills:
+        st.write(empty)
+        return
+    for missing in missing_skills:
+        st.write(missing_skill_text(missing))
+
+
 def render_score_metrics(candidate, compact=False):
-    """Present recorded scores without transforming their values."""
+    """Present recorded scores as percentages."""
     if compact:
-        st.metric("Final Score", f"{candidate['final_score']:.1f}")
+        st.metric("Final Score", format_score(candidate["final_score"]))
         columns = st.columns(2)
-        fields = (("Keyword Score", "keyword_score"), ("Semantic Score", "semantic_score"))
+        fields = (
+            ("Keyword Score", "keyword_score"),
+            ("Semantic Score", "semantic_score"),
+        )
     else:
         columns = st.columns(3)
         fields = (
@@ -107,7 +146,7 @@ def render_score_metrics(candidate, compact=False):
             ("Semantic Score", "semantic_score"),
         )
     for column, (label, field) in zip(columns, fields):
-        column.metric(label, f"{candidate[field]:.1f}")
+        column.metric(label, format_score(candidate[field]))
 
 
 def render_candidate_card(candidate):
@@ -115,9 +154,12 @@ def render_candidate_card(candidate):
         st.caption(f"RANK {candidate['rank']}")
         st.subheader(candidate["name"])
         render_score_metrics(candidate, compact=True)
-        render_skill_badges("Matched Required Skills", candidate["matched_required_skills"])
         render_skill_badges(
-            "Missing Required Skills", candidate["missing_required_skills"], "missing"
+            "Matched Skills",
+            [matched_skill_label(match) for match in candidate["matched_skills"]],
+        )
+        render_missing_skills(
+            "Missing Required Skills", candidate["missing_required_skills"]
         )
         st.markdown("**Why this candidate ranked here**")
         st.write(generate_explanation(candidate))
@@ -129,7 +171,7 @@ def render_dashboard(candidates):
     total, top_name, top_score = st.columns(3)
     total.metric("Total Candidates", len(candidates))
     top_name.metric("Top Candidate", candidates[0]["name"])
-    top_score.metric("Top Score", f"{candidates[0]['final_score']:.1f}")
+    top_score.metric("Top Score", format_score(candidates[0]["final_score"]))
     st.header("Top 3 Candidates")
     top_candidates = candidates[:3]
     for column, candidate in zip(st.columns(len(top_candidates)), top_candidates):
@@ -139,60 +181,58 @@ def render_dashboard(candidates):
 
 def render_rankings(candidates):
     st.title("Candidate Rankings")
-    st.caption(f"{len(candidates)} candidates • Ordered by recorded rank")
+    st.caption(f"{len(candidates)} candidates • Stage 2 order preserved")
     with st.container(border=True):
         ranking_rows = [
             {
                 "Rank": candidate["rank"],
                 "Candidate": candidate["name"],
-                "Final Score": candidate["final_score"],
-                "Keyword Score": candidate["keyword_score"],
-                "Semantic Score": candidate["semantic_score"],
+                "Final Score": format_score(candidate["final_score"]),
+                "Keyword Score": format_score(candidate["keyword_score"]),
+                "Semantic Score": format_score(candidate["semantic_score"]),
             }
             for candidate in candidates
         ]
-        st.dataframe(
-            ranking_rows,
-            column_config={
-                field: st.column_config.NumberColumn(format="%.1f")
-                for field in ("Final Score", "Keyword Score", "Semantic Score")
-            },
-            hide_index=True,
-            width="stretch",
-        )
+        st.dataframe(ranking_rows, hide_index=True, width="stretch")
+
+
+def render_matching_details(matches):
+    st.subheader("Matching Details")
+    if not matches:
+        st.write("No matched skills recorded.")
+        return
+    for match in matches:
+        with st.container(border=True):
+            st.markdown(f"**{escape(match['skill'])}**")
+            st.write(f'Term found in resume: "{match["found_as"]}"')
+            st.caption(f"{match['match_type'].title()} match")
 
 
 def render_details(candidates_by_id):
     st.title("Candidate Details")
     selected_id = st.selectbox(
-        "Select candidate", options=list(candidates_by_id),
+        "Select candidate",
+        options=list(candidates_by_id),
         format_func=lambda candidate_id: candidates_by_id[candidate_id]["name"],
         key="detail_candidate",
     )
     candidate = candidates_by_id[selected_id]
     st.subheader(f"{candidate['name']} · Rank {candidate['rank']}")
     render_score_metrics(candidate)
-    sections = (
-        ("Matched Required Skills", "matched_required_skills", "matched"),
-        ("Matched Preferred Skills", "matched_preferred_skills", "matched"),
-        ("Missing Required Skills", "missing_required_skills", "missing"),
-    )
-    for column, (label, field, treatment) in zip(st.columns(3), sections):
-        with column, st.container(border=True):
-            render_skill_badges(label, candidate[field], treatment)
+    matched_column, missing_column = st.columns(2)
+    with matched_column, st.container(border=True):
+        render_skill_badges(
+            "Matched Skills",
+            [matched_skill_label(match) for match in candidate["matched_skills"]],
+        )
+    with missing_column, st.container(border=True):
+        render_missing_skills(
+            "Missing Required Skills", candidate["missing_required_skills"]
+        )
     with st.container(border=True):
         st.subheader("Why this candidate ranked here")
         st.write(generate_explanation(candidate))
-    st.subheader("Matching Evidence")
-    if candidate["evidence"]:
-        for index, item in enumerate(candidate["evidence"], start=1):
-            with st.expander(item.get("requirement") or f"Evidence {index}"):
-                st.markdown("**Resume evidence:**")
-                st.write(item.get("resume_evidence") or "None identified")
-                st.markdown("**Match type:**")
-                st.write(item.get("match_type") or "None identified")
-    else:
-        st.write("No supporting evidence recorded.")
+    render_matching_details(candidate["matched_skills"])
 
 
 def render_comparison(candidates_by_id):
@@ -201,7 +241,8 @@ def render_comparison(candidates_by_id):
     for index, (column, label) in enumerate(zip(st.columns(2), ("A", "B"))):
         with column, st.container(border=True):
             candidate_id = st.selectbox(
-                f"Candidate {label}", options=list(candidates_by_id),
+                f"Candidate {label}",
+                options=list(candidates_by_id),
                 index=1 if index == 1 and len(candidates_by_id) > 1 else 0,
                 format_func=lambda value: candidates_by_id[value]["name"],
                 key=f"comparison_candidate_{label.lower()}",
@@ -214,6 +255,7 @@ def render_comparison(candidates_by_id):
     if selected_ids[0] == selected_ids[1]:
         st.info("Select two different candidates to compare.")
         return
+
     comparison = compare_candidates(
         candidates_by_id[selected_ids[0]], candidates_by_id[selected_ids[1]]
     )
@@ -221,32 +263,38 @@ def render_comparison(candidates_by_id):
     lower = comparison["lower_ranked_candidate"]
     st.caption(f"Higher ranked candidate: {higher['name']}")
     st.subheader("Score Differences")
-    fields = (
-        ("Rank Difference", "rank_difference"),
-        ("Final Score Difference", "final_score_difference"),
-        ("Keyword Score Difference", "keyword_score_difference"),
-        ("Semantic Score Difference", "semantic_score_difference"),
+    rank_column, final_column, keyword_column, semantic_column = st.columns(4)
+    rank_column.metric("Rank Difference", comparison["rank_difference"])
+    final_column.metric(
+        "Final Score Difference",
+        format_score_difference(comparison["final_score_difference"]),
     )
-    for column, (label, field) in zip(st.columns(4), fields):
-        value = comparison[field]
-        column.metric(label, value if field == "rank_difference" else f"{value:.1f}")
+    keyword_column.metric(
+        "Keyword Score Difference",
+        format_score_difference(comparison["keyword_score_difference"]),
+    )
+    semantic_column.metric(
+        "Semantic Score Difference",
+        format_score_difference(comparison["semantic_score_difference"]),
+    )
+
     st.subheader("Skill Differences")
     for column, side in zip(st.columns(2), ("a", "b")):
         with column, st.container(border=True):
             name = comparison[f"candidate_{side}"]["name"]
-            for kind in ("required", "preferred"):
-                render_skill_badges(
-                    f"{kind.title()} skills only {name} matched",
-                    comparison[f"candidate_{side}_unique_{kind}_skills"],
-                    empty="None",
-                )
+            render_skill_badges(
+                f"Skills only {name} matched",
+                comparison[f"candidate_{side}_unique_matched_skills"],
+                empty="None",
+            )
+
     st.subheader("Missing Required Skills")
     for column, side in zip(st.columns(2), ("a", "b")):
         with column, st.container(border=True):
-            render_skill_badges(
+            render_missing_skills(
                 comparison[f"candidate_{side}"]["name"],
                 comparison[f"candidate_{side}_missing_required_skills"],
-                "missing", empty="None",
+                empty="None",
             )
     with st.container(border=True):
         st.subheader(f"Why is {higher['name']} ranked above {lower['name']}?")
@@ -254,7 +302,8 @@ def render_comparison(candidates_by_id):
 
 
 st.set_page_config(
-    page_title="Apex — Smart Shortlisting Engine", layout="wide",
+    page_title="Apex — Smart Shortlisting Engine",
+    layout="wide",
     initial_sidebar_state="expanded",
 )
 st.markdown(DASHBOARD_CSS, unsafe_allow_html=True)
@@ -263,7 +312,8 @@ with st.sidebar:
     st.caption("Smart Shortlisting Engine")
     st.divider()
     page = st.radio(
-        "Workspace", ("Dashboard", "Rankings", "Candidate Details", "Compare Candidates"),
+        "Workspace",
+        ("Dashboard", "Rankings", "Candidate Details", "Compare Candidates"),
         key="navigation",
     )
     st.divider()
