@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import sys
 import unittest
 from pathlib import Path
@@ -27,6 +28,10 @@ class StreamlitUploadTests(unittest.TestCase):
         self.assertEqual(len(self.app.exception), 0)
         self.assertEqual(len(self.app.get("file_uploader")), 2)
         self.assertEqual(self.app.radio[0].value, "Upload Documents")
+        upload_markup = " ".join(markdown.value for markdown in self.app.markdown)
+        self.assertIn("required", upload_markup.lower())
+        self.assertIn("nice-to-have", upload_markup.lower())
+        self.assertIn("PDF, DOCX, TXT, XML", upload_markup)
 
         self.app.button[0].click().run(timeout=20)
 
@@ -39,21 +44,54 @@ class StreamlitUploadTests(unittest.TestCase):
         candidates = load_rankings(
             REPOSITORY_ROOT / "demo_data" / "mock_ranking_results.json"
         )
+        original_candidates = copy.deepcopy(candidates)
         self.app.session_state["analysis_candidates"] = candidates
         self.app.session_state["analysis_files"] = {
             "job_description": "job.txt",
             "resumes": ["one.txt", "two.txt", "three.txt"],
         }
 
+        self.app.radio[0].set_value("Leading Candidates")
+        self.app.run(timeout=20)
+        self.assertEqual(len(self.app.exception), 0)
+        self.assertEqual(len(self.app.get("column")), 0)
+        leading_markup = " ".join(markdown.value for markdown in self.app.markdown)
+        candidate_positions = [
+            leading_markup.index(candidate["name"]) for candidate in candidates[:3]
+        ]
+        self.assertEqual(candidate_positions, sorted(candidate_positions))
+
         self.app.radio[0].set_value("Candidate Details")
         self.app.run(timeout=20)
         self.assertEqual(len(self.app.exception), 0)
         self.assertEqual(len(self.app.selectbox), 1)
+        for candidate in candidates:
+            self.app.selectbox[0].set_value(candidate["candidate_id"])
+            self.app.run(timeout=20)
+            self.assertEqual(len(self.app.exception), 0)
+            detail_markup = " ".join(
+                markdown.value for markdown in self.app.markdown
+            )
+            self.assertIn(candidate["name"], detail_markup)
 
         self.app.radio[0].set_value("Candidate Comparison")
         self.app.run(timeout=20)
         self.assertEqual(len(self.app.exception), 0)
         self.assertEqual(len(self.app.selectbox), 2)
+        comparison_markup = " ".join(
+            markdown.value for markdown in self.app.markdown
+        )
+        self.assertIn("Shared matched skills", comparison_markup)
+
+        first_id = candidates[0]["candidate_id"]
+        self.app.selectbox[0].set_value(first_id)
+        self.app.selectbox[1].set_value(first_id)
+        self.app.run(timeout=20)
+        self.assertEqual(len(self.app.exception), 0)
+        self.assertTrue(
+            any("two different candidates" in info.value.lower() for info in self.app.info)
+        )
+        self.assertEqual(self.app.session_state["analysis_candidates"], original_candidates)
 
         reset = next(
             button

@@ -90,6 +90,26 @@ def render_page_header(kicker: str, title: str, subtitle: str) -> None:
     )
 
 
+def navigate_to(page: str) -> None:
+    """Move between existing pages through Streamlit session state."""
+    st.session_state["navigation"] = page
+
+
+def render_data_context(using_uploaded_analysis: bool) -> None:
+    """Make demo and uploaded result sets visually unambiguous."""
+    if using_uploaded_analysis:
+        label = "Uploaded analysis"
+        detail = "Showing the current locally processed document set."
+    else:
+        label = "Demo fixture"
+        detail = "Upload documents to replace this illustrative ranking with a real analysis."
+    st.markdown(
+        f'<div class="context-notice"><strong>{escape(label)}</strong>'
+        f'<span>{escape(detail)}</span></div>',
+        unsafe_allow_html=True,
+    )
+
+
 def render_upload_documents() -> None:
     """Collect documents and run the existing local backend on explicit action."""
     render_page_header(
@@ -97,24 +117,75 @@ def render_upload_documents() -> None:
         "Upload Documents",
         "Add one job description and one or more resumes, then start analysis.",
     )
-    supported = ", ".join(extension.upper() for extension in SUPPORTED_EXTENSIONS)
-    st.caption(f"Supported document types: {supported}. Processing stays local.")
+    st.markdown(
+        """
+        <div class="upload-flow" aria-label="Analysis workflow">
+            <div class="upload-step"><span>01 / Input</span><strong>Job description</strong></div>
+            <div class="upload-arrow">+</div>
+            <div class="upload-step"><span>02 / Input</span><strong>Candidate resumes</strong></div>
+            <div class="upload-arrow">→</div>
+            <div class="upload-step"><span>03 / Action</span><strong>Analyse candidates</strong></div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     generation = st.session_state.get("upload_generation", 0)
-    job_description_upload = st.file_uploader(
-        "Job Description",
-        type=list(SUPPORTED_EXTENSIONS),
-        accept_multiple_files=False,
-        key=f"job_description_upload_{generation}",
-    )
-    resume_uploads = st.file_uploader(
-        "Candidate Resumes",
-        type=list(SUPPORTED_EXTENSIONS),
-        accept_multiple_files=True,
-        key=f"resume_uploads_{generation}",
+    job_column, resume_column = st.columns(2, gap="large")
+    with job_column:
+        st.markdown(
+            '<div class="upload-intro"><strong>Job Description</strong>'
+            '<span>One source document</span></div>',
+            unsafe_allow_html=True,
+        )
+        job_description_upload = st.file_uploader(
+            "Job Description",
+            type=list(SUPPORTED_EXTENSIONS),
+            accept_multiple_files=False,
+            key=f"job_description_upload_{generation}",
+            label_visibility="collapsed",
+        )
+        job_status = (
+            f'Selected: <strong>{escape(job_description_upload.name)}</strong>'
+            if job_description_upload is not None
+            else "No job description selected"
+        )
+        st.markdown(f'<p class="file-status">{job_status}</p>', unsafe_allow_html=True)
+
+    with resume_column:
+        st.markdown(
+            '<div class="upload-intro"><strong>Candidate Resumes</strong>'
+            '<span>One or more source documents</span></div>',
+            unsafe_allow_html=True,
+        )
+        resume_uploads = st.file_uploader(
+            "Candidate Resumes",
+            type=list(SUPPORTED_EXTENSIONS),
+            accept_multiple_files=True,
+            key=f"resume_uploads_{generation}",
+            label_visibility="collapsed",
+        )
+        resume_count = len(resume_uploads)
+        resume_status = (
+            f'<strong>{resume_count}</strong> candidate file'
+            f"{'s' if resume_count != 1 else ''} selected"
+            if resume_count
+            else "No candidate resumes selected"
+        )
+        selected_names = ", ".join(escape(upload.name) for upload in resume_uploads)
+        if selected_names:
+            resume_status += f"<br>{selected_names}"
+        st.markdown(f'<p class="file-status">{resume_status}</p>', unsafe_allow_html=True)
+
+    supported = ", ".join(extension.upper() for extension in SUPPORTED_EXTENSIONS)
+    st.markdown(
+        f'<p class="helper-note"><strong>Before analysis:</strong> label required and '
+        f'preferred or nice-to-have skills explicitly in the JD so they are classified '
+        f'correctly. Supported formats: {escape(supported)}. Processing stays local.</p>',
+        unsafe_allow_html=True,
     )
 
-    if st.button("Analyse Candidates", type="primary"):
+    if st.button("Analyse Candidates", type="primary", use_container_width=True):
         try:
             job_description = (
                 from_streamlit_upload(job_description_upload)
@@ -144,10 +215,17 @@ def render_upload_documents() -> None:
 
     analysis_files = st.session_state.get("analysis_files")
     if analysis_files:
-        st.info(
-            f"Current analysis: {analysis_files['job_description']} with "
-            f"{len(analysis_files['resumes'])} resume"
-            f"{'s' if len(analysis_files['resumes']) != 1 else ''}."
+        resume_count = len(analysis_files["resumes"])
+        st.markdown(
+            f'<p class="analysis-ready"><strong>Current analysis</strong><br>'
+            f'{escape(analysis_files["job_description"])} · {resume_count} resume'
+            f'{"s" if resume_count != 1 else ""}</p>',
+            unsafe_allow_html=True,
+        )
+        st.button(
+            "Review Leading Candidates",
+            on_click=navigate_to,
+            args=("Leading Candidates",),
         )
 
 
@@ -205,11 +283,7 @@ def render_matched_skills(skills: list[dict[str, Any]]) -> None:
 
 
 def render_matched_skill_groups(skills: list[dict[str, Any]]) -> None:
-    """Separate classified matches while retaining the legacy combined view."""
-    if not any(skill.get("required") is not None for skill in skills):
-        render_matched_skills(skills)
-        return
-
+    """Separate required, preferred, and unavailable classifications."""
     groups = (
         ("Required matches", [skill for skill in skills if skill.get("required") is True]),
         ("Preferred matches", [skill for skill in skills if skill.get("required") is False]),
@@ -271,16 +345,17 @@ def render_signal_note(candidate: dict[str, Any]) -> None:
         )
 
 
-def render_candidate_feature(candidate: dict[str, Any], primary: bool = False) -> None:
-    modifier = " candidate-feature--primary" if primary else ""
+def render_candidate_feature(candidate: dict[str, Any]) -> None:
     st.markdown(
         f"""
-        <article class="candidate-feature{modifier}">
-            <div class="candidate-kicker">Rank {candidate['rank']:02d}</div>
-            <h3>{escape(candidate['name'])}</h3>
-            <div class="candidate-score">{format_score(candidate['final_score'])}</div>
-            <p class="candidate-id">Candidate {escape(candidate['candidate_id'])}</p>
-        </article>
+        <header class="candidate-entry">
+            <div class="candidate-entry__head">
+                <span class="candidate-entry__rank">{candidate['rank']:02d}</span>
+                <div class="candidate-entry__identity"><h3>{escape(candidate['name'])}</h3>
+                <p>Candidate {escape(candidate['candidate_id'])}</p></div>
+                <strong class="candidate-entry__score">{format_score(candidate['final_score'])}</strong>
+            </div>
+        </header>
         """,
         unsafe_allow_html=True,
     )
@@ -290,14 +365,18 @@ def render_candidate_feature(candidate: dict[str, Any], primary: bool = False) -
     st.markdown('<p class="minor-heading">Missing requirements</p>', unsafe_allow_html=True)
     render_missing_skills(candidate["missing_required_skills"])
     render_explanation(candidate)
+    st.markdown('<div class="candidate-separator"></div>', unsafe_allow_html=True)
 
 
-def render_dashboard(candidates: list[dict[str, Any]]) -> None:
+def render_dashboard(
+    candidates: list[dict[str, Any]], using_uploaded_analysis: bool
+) -> None:
     render_page_header(
-        "Stage 3 / Decision intelligence",
-        "Candidate intelligence",
-        "Explainable hybrid candidate ranking",
+        "Stage 3 / Ranked shortlist",
+        "Leading candidates",
+        "The strongest supplied matches, in authoritative Stage 2 order.",
     )
+    render_data_context(using_uploaded_analysis)
     st.markdown(
         f"""
         <div class="briefing-strip">
@@ -316,20 +395,19 @@ def render_dashboard(candidates: list[dict[str, Any]]) -> None:
     if not top_candidates:
         return
 
-    primary_column, supporting_column = st.columns([1.35, 1], gap="large")
-    with primary_column:
-        render_candidate_feature(top_candidates[0], primary=True)
-    with supporting_column:
-        for candidate in top_candidates[1:]:
-            render_candidate_feature(candidate)
+    for candidate in top_candidates:
+        render_candidate_feature(candidate)
 
 
-def render_rankings(candidates: list[dict[str, Any]]) -> None:
+def render_rankings(
+    candidates: list[dict[str, Any]], using_uploaded_analysis: bool
+) -> None:
     render_page_header(
         "Stage 3 / Ranked field",
         "Candidate rankings",
         "The complete Stage 2 result set, presented in its supplied rank order.",
     )
+    render_data_context(using_uploaded_analysis)
     rows = "".join(
         f"""
         <tr><td class="rank-cell">{candidate['rank']:02d}</td>
@@ -372,21 +450,29 @@ def render_matching_details(candidate: dict[str, Any]) -> None:
             if skill.get("evidence")
             else ""
         )
+        found_as = (
+            f'<span>Found as: {escape(skill["found_as"])}</span>'
+            if skill["found_as"] != skill["skill"]
+            else ""
+        )
         records.append(
             f'<article class="match-record"><h4>{escape(skill["skill"])}</h4>'
-            f'<p>Matched via: <strong>{escape(skill["found_as"])}</strong></p>'
-            f'<div class="match-meta"><span>{escape(skill["match_type"].title())} match</span>'
-            f'{location}<span>{classification}</span></div>{evidence}</article>'
+            f'<div class="match-meta"><span>{escape(classification)}</span>'
+            f'<span>{escape(skill["match_type"].title())} match</span>'
+            f'{found_as}{location}</div>{evidence}</article>'
         )
     st.markdown(f'<div class="match-records">{"".join(records)}</div>', unsafe_allow_html=True)
 
 
-def render_details(candidates: list[dict[str, Any]]) -> None:
+def render_details(
+    candidates: list[dict[str, Any]], using_uploaded_analysis: bool
+) -> None:
     render_page_header(
         "Stage 3 / Candidate record",
         "Candidate details",
         "Inspect one ranked candidate without changing the supplied scores or evidence.",
     )
+    render_data_context(using_uploaded_analysis)
     candidate_by_id = {candidate["candidate_id"]: candidate for candidate in candidates}
     selected_candidate_id = st.selectbox(
         "Select candidate",
@@ -397,20 +483,19 @@ def render_details(candidates: list[dict[str, Any]]) -> None:
 
     st.markdown(
         f"""
-        <div class="record-masthead"><span>Rank {candidate['rank']:02d}</span>
-        <h2>{escape(candidate['name'])}</h2><small>{escape(candidate['candidate_id'])}</small></div>
+        <div class="record-masthead"><span>Rank {candidate['rank']:02d} · Candidate {escape(candidate['candidate_id'])}</span>
+        <h2>{escape(candidate['name'])}</h2>
+        <strong class="record-score">{format_score(candidate['final_score'])}</strong></div>
         """,
         unsafe_allow_html=True,
     )
     render_score_strip(candidate)
-    matched_column, missing_column = st.columns([1.2, 1], gap="large")
-    with matched_column:
-        st.markdown('<h3 class="subsection-title">Matched skills</h3>', unsafe_allow_html=True)
-        render_matched_skill_groups(candidate["matched_skills"])
-    with missing_column:
-        st.markdown('<h3 class="subsection-title">Missing required skills</h3>', unsafe_allow_html=True)
-        render_missing_skills(candidate["missing_required_skills"])
     render_explanation(candidate)
+    render_signal_note(candidate)
+    st.markdown('<h3 class="subsection-title">Matched skills</h3>', unsafe_allow_html=True)
+    render_matched_skill_groups(candidate["matched_skills"])
+    st.markdown('<h3 class="subsection-title">Missing required skills</h3>', unsafe_allow_html=True)
+    render_missing_skills(candidate["missing_required_skills"])
     render_matching_details(candidate)
 
 
@@ -431,12 +516,31 @@ def render_comparison_candidate(candidate: dict[str, Any], label: str) -> None:
     render_missing_skills(candidate["missing_required_skills"])
 
 
-def render_comparison(candidates: list[dict[str, Any]]) -> None:
+def common_matched_skill_names(
+    candidate_a: dict[str, Any], candidate_b: dict[str, Any]
+) -> list[str]:
+    """Return shared normalized matches in Candidate A's supplied order."""
+    candidate_b_skills = {
+        match["skill"] for match in candidate_b["matched_skills"]
+    }
+    return list(
+        dict.fromkeys(
+            match["skill"]
+            for match in candidate_a["matched_skills"]
+            if match["skill"] in candidate_b_skills
+        )
+    )
+
+
+def render_comparison(
+    candidates: list[dict[str, Any]], using_uploaded_analysis: bool
+) -> None:
     render_page_header(
         "Stage 3 / Side-by-side analysis",
         "Compare candidates",
         "Read the supplied ranking signals together. No scores or ranks are recalculated here.",
     )
+    render_data_context(using_uploaded_analysis)
     candidate_by_id = {candidate["candidate_id"]: candidate for candidate in candidates}
     candidate_ids = list(candidate_by_id)
     selector_a, selector_b = st.columns(2, gap="large")
@@ -480,6 +584,11 @@ def render_comparison(candidates: list[dict[str, Any]]) -> None:
     )
 
     render_section_header("01", "Skill differences")
+    st.markdown(
+        '<h3 class="subsection-title">Shared matched skills</h3>',
+        unsafe_allow_html=True,
+    )
+    render_string_list(common_matched_skill_names(candidate_a, candidate_b))
     a_column, b_column = st.columns(2, gap="large")
     with a_column:
         st.markdown(f'<h3 class="subsection-title">Only {escape(candidate_a["name"])} matched</h3>', unsafe_allow_html=True)
@@ -589,10 +698,10 @@ with st.sidebar:
 if selected_page == "Upload Documents":
     render_upload_documents()
 elif selected_page == "Leading Candidates":
-    render_dashboard(candidates)
+    render_dashboard(candidates, using_uploaded_analysis)
 elif selected_page == "Rankings":
-    render_rankings(candidates)
+    render_rankings(candidates, using_uploaded_analysis)
 elif selected_page == "Candidate Details":
-    render_details(candidates)
+    render_details(candidates, using_uploaded_analysis)
 else:
-    render_comparison(candidates)
+    render_comparison(candidates, using_uploaded_analysis)
