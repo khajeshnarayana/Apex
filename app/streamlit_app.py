@@ -10,7 +10,12 @@ SOURCE_DIRECTORY = REPOSITORY_ROOT / "src"
 if str(SOURCE_DIRECTORY) not in sys.path:
     sys.path.insert(0, str(SOURCE_DIRECTORY))
 
-from stage3 import generate_explanation, load_rankings
+from stage3 import (
+    compare_candidates,
+    generate_comparison_explanation,
+    generate_explanation,
+    load_rankings,
+)
 
 
 RANKINGS_PATH = REPOSITORY_ROOT / "demo_data" / "mock_ranking_results.json"
@@ -156,3 +161,107 @@ if selected_evidence:
             st.write(evidence_item.get("match_type") or "None identified")
 else:
     st.write("No supporting evidence recorded.")
+
+st.header("Compare Candidates")
+
+comparison_candidate_a_column, comparison_candidate_b_column = st.columns(2)
+comparison_candidate_a_id = comparison_candidate_a_column.selectbox(
+    "Candidate A",
+    options=list(candidates_by_id),
+    format_func=lambda candidate_id: candidates_by_id[candidate_id]["name"],
+    key="comparison_candidate_a",
+)
+comparison_candidate_b_id = comparison_candidate_b_column.selectbox(
+    "Candidate B",
+    options=list(candidates_by_id),
+    index=1 if len(candidates_by_id) > 1 else 0,
+    format_func=lambda candidate_id: candidates_by_id[candidate_id]["name"],
+    key="comparison_candidate_b",
+)
+
+if comparison_candidate_a_id == comparison_candidate_b_id:
+    st.info("Select two different candidates to compare.")
+else:
+    comparison_candidate_a = candidates_by_id[comparison_candidate_a_id]
+    comparison_candidate_b = candidates_by_id[comparison_candidate_b_id]
+    comparison = compare_candidates(
+        comparison_candidate_a, comparison_candidate_b
+    )
+
+    higher_ranked = comparison["higher_ranked_candidate"]
+    lower_ranked = comparison["lower_ranked_candidate"]
+
+    (
+        higher_ranked_column,
+        rank_difference_column,
+        final_difference_column,
+        keyword_difference_column,
+        semantic_difference_column,
+    ) = st.columns(5)
+    higher_ranked_column.metric("Higher Ranked Candidate", higher_ranked["name"])
+    rank_difference_column.metric(
+        "Rank Difference", comparison["rank_difference"]
+    )
+    final_difference_column.metric(
+        "Final Score Difference",
+        f"{comparison['final_score_difference']:.1f}",
+    )
+    keyword_difference_column.metric(
+        "Keyword Score Difference",
+        f"{comparison['keyword_score_difference']:.1f}",
+    )
+    semantic_difference_column.metric(
+        "Semantic Score Difference",
+        f"{comparison['semantic_score_difference']:.1f}",
+    )
+
+    st.subheader("Skill Differences")
+    required_a_column, required_b_column = st.columns(2)
+    required_a_column.write(
+        f"**Required skills only {comparison_candidate_a['name']} matched**"
+    )
+    required_a_column.write(
+        ", ".join(comparison["candidate_a_unique_required_skills"])
+        or "None"
+    )
+    required_b_column.write(
+        f"**Required skills only {comparison_candidate_b['name']} matched**"
+    )
+    required_b_column.write(
+        ", ".join(comparison["candidate_b_unique_required_skills"])
+        or "None"
+    )
+
+    preferred_a_column, preferred_b_column = st.columns(2)
+    preferred_a_column.write(
+        f"**Preferred skills only {comparison_candidate_a['name']} matched**"
+    )
+    preferred_a_column.write(
+        ", ".join(comparison["candidate_a_unique_preferred_skills"])
+        or "None"
+    )
+    preferred_b_column.write(
+        f"**Preferred skills only {comparison_candidate_b['name']} matched**"
+    )
+    preferred_b_column.write(
+        ", ".join(comparison["candidate_b_unique_preferred_skills"])
+        or "None"
+    )
+
+    st.subheader("Missing Required Skills")
+    missing_a_column, missing_b_column = st.columns(2)
+    missing_a_column.write(f"**{comparison_candidate_a['name']}**")
+    missing_a_column.write(
+        ", ".join(comparison["candidate_a_missing_required_skills"])
+        or "None"
+    )
+    missing_b_column.write(f"**{comparison_candidate_b['name']}**")
+    missing_b_column.write(
+        ", ".join(comparison["candidate_b_missing_required_skills"])
+        or "None"
+    )
+
+    st.subheader(
+        f"Why is {higher_ranked['name']} ranked above {lower_ranked['name']}?"
+    )
+    st.write(generate_comparison_explanation(comparison))
