@@ -31,8 +31,14 @@ CHOICE_CUES = ["or similar", "at least one", "one of", "such as", "e.g.",
                "preferred", "any of", "or equivalent", " or "]
 
 
+def _normalize_heading(line):
+    """Canonicalize heading separators without changing JD body content."""
+    normalized = re.sub(r"[-_–—]+", " ", line.casefold())
+    return re.sub(r"\s+", " ", normalized).strip().rstrip(":").strip()
+
+
 def _classify_heading(line):
-    t = line.strip().lower().rstrip(":")
+    t = _normalize_heading(line)
     if len(t) > 60:
         return None
     for group, names in (("required", REQUIRED_HEADINGS),
@@ -40,7 +46,7 @@ def _classify_heading(line):
                          ("ignore", IGNORE_HEADINGS),
                          ("context", CONTEXT_HEADINGS)):
         for n in names:
-            if n in t:
+            if _normalize_heading(n) in t:
                 return group
     return None
 

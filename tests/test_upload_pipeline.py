@@ -23,6 +23,7 @@ from stage3 import (  # noqa: E402
     reset_analysis_state,
     validate_uploads,
 )
+from matching_engine.jd_config import parse_jd  # noqa: E402
 
 
 JD = UploadedDocument(
@@ -78,6 +79,38 @@ class UploadValidationTests(unittest.TestCase):
 
 
 class JobDescriptionAdapterTests(unittest.TestCase):
+    def test_required_heading_separator_variants_preserve_classification(self) -> None:
+        headings = (
+            "MUST-HAVE SKILLS",
+            "Must Have Skills",
+            "must-have skills",
+            "must_have_skills",
+            "Must–Have Skills",
+            "Must—Have Skills",
+            "Required Skills",
+        )
+
+        for heading in headings:
+            with self.subTest(heading=heading):
+                result = parse_jd(f"{heading}\nPython\nNice to Have\nDocker")
+                self.assertEqual(result["required_skills"], ["Python"])
+                self.assertEqual(result["nice_to_have_skills"], ["Docker"])
+
+    def test_preferred_heading_separator_variants_preserve_classification(self) -> None:
+        headings = (
+            "Nice to Have",
+            "Nice-to-Have",
+            "NICE_TO_HAVE",
+            "Preferred Skills",
+            "Good to Have",
+        )
+
+        for heading in headings:
+            with self.subTest(heading=heading):
+                result = parse_jd(f"Required Skills\nPython\n{heading}\nDocker")
+                self.assertEqual(result["required_skills"], ["Python"])
+                self.assertEqual(result["nice_to_have_skills"], ["Docker"])
+
     def test_current_backend_parser_is_the_only_jd_classification_path(self) -> None:
         observed = []
         backend_result = {
