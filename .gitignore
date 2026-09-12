@@ -12,3 +12,7 @@ matching_engine/venv/
 .venv/
 __pycache__/
 *.pyc
+
+matching_engine/venv/
+__pycache__/
+*.pyc

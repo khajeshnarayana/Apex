@@ -9,32 +9,50 @@
       {
         "skill": "REST API",
         "found_as": "REST APIs",
-        "match_type": "synonym"
+        "match_type": "synonym",
+        "found_in": "full_text",
+        "evidence": "Firebase, REST APIs, SQLite, Git, GitHub",
+        "required": true
       },
       {
         "skill": "SQL",
         "found_as": "SQLite",
-        "match_type": "synonym"
+        "match_type": "synonym",
+        "found_in": "full_text",
+        "evidence": "Firebase, REST APIs, SQLite, Git, GitHub",
+        "required": true
       },
       {
         "skill": "Git",
         "found_as": "GitHub",
-        "match_type": "synonym"
+        "match_type": "synonym",
+        "found_in": "full_text",
+        "evidence": "Firebase, REST APIs, SQLite, Git, GitHub",
+        "required": true
       },
       {
         "skill": "JavaScript",
         "found_as": "JavaScript",
-        "match_type": "exact"
+        "match_type": "exact",
+        "found_in": "full_text",
+        "evidence": "Programming Foundations with JavaScript, HTML and CSS",
+        "required": true
       },
       {
         "skill": "Testing",
         "found_as": "Testing",
-        "match_type": "exact"
+        "match_type": "exact",
+        "found_in": "full_text",
+        "evidence": "Published a working APK with 4.5+ rating in internal testing.",
+        "required": false
       },
       {
         "skill": "NoSQL",
         "found_as": "Firebase",
-        "match_type": "synonym"
+        "match_type": "synonym",
+        "found_in": "full_text",
+        "evidence": "Firebase, REST APIs, SQLite, Git, GitHub",
+        "required": false
       }
     ],
     "missing_required_skills": [
@@ -43,6 +61,7 @@
         "semantic_hint": true
       }
     ],
+    "signal_note": null,
     "rank": 1
   },
   {
@@ -55,32 +74,50 @@
       {
         "skill": "REST API",
         "found_as": "REST APIs",
-        "match_type": "synonym"
+        "match_type": "synonym",
+        "found_in": "full_text",
+        "evidence": "Firebase, REST APIs, SQLite, Git, GitHub",
+        "required": true
       },
       {
         "skill": "SQL",
         "found_as": "SQLite",
-        "match_type": "synonym"
+        "match_type": "synonym",
+        "found_in": "full_text",
+        "evidence": "Firebase, REST APIs, SQLite, Git, GitHub",
+        "required": true
       },
       {
         "skill": "Git",
         "found_as": "GitHub",
-        "match_type": "synonym"
+        "match_type": "synonym",
+        "found_in": "full_text",
+        "evidence": "Firebase, REST APIs, SQLite, Git, GitHub",
+        "required": true
       },
       {
         "skill": "JavaScript",
         "found_as": "JavaScript",
-        "match_type": "exact"
+        "match_type": "exact",
+        "found_in": "full_text",
+        "evidence": "Programming Foundations with JavaScript, HTML and CSS",
+        "required": true
       },
       {
         "skill": "Testing",
         "found_as": "Testing",
-        "match_type": "exact"
+        "match_type": "exact",
+        "found_in": "full_text",
+        "evidence": "Published a working APK with 4.5+ rating in internal testing.",
+        "required": false
       },
       {
         "skill": "NoSQL",
         "found_as": "Firebase",
-        "match_type": "synonym"
+        "match_type": "synonym",
+        "found_in": "full_text",
+        "evidence": "Firebase, REST APIs, SQLite, Git, GitHub",
+        "required": false
       }
     ],
     "missing_required_skills": [
@@ -89,6 +126,7 @@
         "semantic_hint": true
       }
     ],
+    "signal_note": null,
     "rank": 2
   },
   {
@@ -120,6 +158,7 @@
         "semantic_hint": false
       }
     ],
+    "signal_note": "semantic_above_keyword",
     "rank": 3
   },
   {
@@ -151,6 +190,7 @@
         "semantic_hint": false
       }
     ],
+    "signal_note": "semantic_above_keyword",
     "rank": 4
   }
 ]

@@ -39,6 +39,7 @@ Outputs a ranked list of:
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+import re
 
 # ---------------------------------------------------------------------------
 # Config — tune these after eyeballing results on the real 18 resumes
@@ -72,6 +73,11 @@ SECTION_WEIGHTS = {
 # Semantic score above which a "missing" skill gets flagged as possibly
 # covered anyway — resume seems related in meaning even without the keyword.
 SEMANTIC_FLAG_THRESHOLD = 0.45
+
+# How far apart the two signals must be before we flag the disagreement.
+# A large gap means the two methods are "seeing" different things about the
+# same candidate, which is worth a human second look either way.
+SIGNAL_DISAGREEMENT_THRESHOLD = 0.30
 # Skill synonym map — catches "Express implies Node.js" type cases.
 # Extend this list based on the actual JD + resumes you're given.
 SYNONYM_MAP = {
@@ -135,16 +141,59 @@ def get_model():
 # Keyword / skill-based scoring
 # ---------------------------------------------------------------------------
 
-def _skill_matches(required_skill, resume_skills_by_section):
+def _find_evidence(term, section_text, max_len=180):
     """
-    Check if a required skill (or one of its synonyms) appears in the resume,
-    and return the best section weight it was found under, which term matched,
-    and whether it was an exact match or a synonym match.
+    Pull the sentence from a resume section where a matched skill actually
+    appears — so an explanation can show proof, not just a claim.
+
+    Splits on sentence-ish boundaries (periods, newlines, bullets) and returns
+    the first fragment containing the term, trimmed to a readable length.
+    Returns None if nothing suitable is found.
+    """
+    if not section_text or not term:
+        return None
+
+    # Resume text uses periods, newlines, and bullet characters as separators.
+    fragments = re.split(r"(?<=\.)\s+|\n+|(?:^|\s)[-•*]\s+", section_text)
+
+    pattern = r"(?<![A-Za-z0-9])" + re.escape(term) + r"(?![A-Za-z0-9])"
+
+    best = None
+    for frag in fragments:
+        frag = " ".join(frag.split())  # collapse whitespace
+        if not frag or len(frag) < 12:
+            continue
+        if re.search(pattern, frag, flags=re.IGNORECASE):
+            # Prefer a fragment that reads like a real sentence over a bare
+            # comma-separated skills list, which proves much less.
+            looks_like_prose = len(frag.split()) >= 6 and frag.count(",") < 5
+            if looks_like_prose:
+                best = frag
+                break
+            if best is None:
+                best = frag
+
+    if not best:
+        return None
+
+    if len(best) > max_len:
+        best = best[:max_len].rsplit(" ", 1)[0] + "..."
+    return best
+
+
+def _skill_matches(required_skill, resume_skills_by_section, section_texts=None):
+    """
+    Check if a required skill (or one of its synonyms) appears in the resume.
+
+    Returns the best section weight it was found under, which term matched,
+    whether that was an exact or synonym match, which section it came from,
+    and — when section_texts is supplied — the sentence proving it.
     """
     candidates = [required_skill] + SYNONYM_MAP.get(required_skill, [])
     best_weight = 0.0
     matched_term = None
     match_type = None
+    found_in = None
 
     for section, weight in SECTION_WEIGHTS.items():
         skills_in_section = resume_skills_by_section.get(section, [])
@@ -154,9 +203,22 @@ def _skill_matches(required_skill, resume_skills_by_section):
                     if weight > best_weight:
                         best_weight = weight
                         matched_term = found_skill
-                        match_type = "exact" if cand.lower() == required_skill.lower() else "synonym"
+                        match_type = (
+                            "exact" if cand.lower() == required_skill.lower()
+                            else "synonym"
+                        )
+                        found_in = section
 
-    return best_weight, matched_term, match_type
+    evidence = None
+    if matched_term and section_texts:
+        # Look in the section it scored from first, then anywhere else.
+        search_order = [found_in] + [s for s in section_texts if s != found_in]
+        for section in search_order:
+            evidence = _find_evidence(matched_term, section_texts.get(section, ""))
+            if evidence:
+                break
+
+    return best_weight, matched_term, match_type, found_in, evidence
 
 
 def keyword_score(jd_data, resume_data):
@@ -166,25 +228,48 @@ def keyword_score(jd_data, resume_data):
 
     Returns (score, matched_skills_list, missing_required_list) where
     matched_skills_list is a list of dicts:
-        {"skill": "Node.js", "found_as": "Express", "match_type": "synonym"}
+        {
+          "skill": "Node.js",
+          "found_as": "Express",
+          "match_type": "synonym",
+          "found_in": "projects",
+          "evidence": "Built backend services using Express and Mongoose...",
+          "required": True
+        }
     and missing_required_list is a plain list of skill name strings.
     """
     required = jd_data.get("required_skills", [])
     nice_to_have = jd_data.get("nice_to_have_skills", [])
     resume_skills = resume_data.get("extracted_skills", {})
 
+    # Map the engine's section keys onto the raw text we can quote from.
+    sections = resume_data.get("sections", {})
+    section_texts = {
+        "skills_section": sections.get("skills", ""),
+        "experience": sections.get("experience", ""),
+        "projects": sections.get("projects", ""),
+        "certifications": sections.get("certifications", ""),
+        "achievements": sections.get("achievements", ""),
+        "full_text": sections.get("experience", ""),  # fallback stores text here
+    }
+
     matched = []
     missing = []
     required_weight_sum = 0.0
 
     for skill in required:
-        weight, matched_term, match_type = _skill_matches(skill, resume_skills)
+        weight, term, match_type, found_in, evidence = _skill_matches(
+            skill, resume_skills, section_texts
+        )
         required_weight_sum += weight
         if weight > 0:
             matched.append({
                 "skill": skill,
-                "found_as": matched_term,
+                "found_as": term,
                 "match_type": match_type,
+                "found_in": found_in,
+                "evidence": evidence,
+                "required": True,
             })
         else:
             missing.append(skill)
@@ -193,13 +278,18 @@ def keyword_score(jd_data, resume_data):
 
     nice_weight_sum = 0.0
     for skill in nice_to_have:
-        weight, matched_term, match_type = _skill_matches(skill, resume_skills)
+        weight, term, match_type, found_in, evidence = _skill_matches(
+            skill, resume_skills, section_texts
+        )
         nice_weight_sum += weight
         if weight > 0:
             matched.append({
                 "skill": skill,
-                "found_as": matched_term,
+                "found_as": term,
                 "match_type": match_type,
+                "found_in": found_in,
+                "evidence": evidence,
+                "required": False,
             })
 
     nice_score = nice_weight_sum / len(nice_to_have) if nice_to_have else 0.0
@@ -271,6 +361,18 @@ def rank_candidates(jd_data, resumes):
             for skill in missing
         ]
 
+        # When the two signals disagree sharply, that itself is information a
+        # recruiter can act on — it usually means the resume describes relevant
+        # work in vocabulary the JD doesn't use, or conversely that it lists the
+        # right buzzwords without describing matching work.
+        gap = sem_score - kw_score
+        if gap >= SIGNAL_DISAGREEMENT_THRESHOLD:
+            signal_note = "semantic_above_keyword"
+        elif gap <= -SIGNAL_DISAGREEMENT_THRESHOLD:
+            signal_note = "keyword_above_semantic"
+        else:
+            signal_note = None
+
         results.append({
             "candidate_id": resume_data.get("candidate_id"),
             "name": resume_data.get("name"),
@@ -279,6 +381,7 @@ def rank_candidates(jd_data, resumes):
             "semantic_score": sem_score,
             "matched_skills": matched,
             "missing_required_skills": missing_detailed,
+            "signal_note": signal_note,
         })
 
     results.sort(key=lambda r: r["final_score"], reverse=True)
