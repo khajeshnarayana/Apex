@@ -28,6 +28,14 @@ from styles import EDITORIAL_CSS  # noqa: E402
 
 
 RANKINGS_PATH = REPOSITORY_ROOT / "demo_data" / "mock_ranking_results.json"
+SIGNAL_NOTE_TEXT = {
+    "semantic_above_keyword": (
+        "Semantic relevance is stronger than explicit keyword coverage."
+    ),
+    "keyword_above_semantic": (
+        "Explicit keyword coverage is stronger than overall semantic similarity."
+    ),
+}
 
 
 def escape(value: Any) -> str:
@@ -109,7 +117,7 @@ def render_score_strip(candidate: dict[str, Any]) -> None:
     )
 
 
-def render_matched_skills(skills: list[dict[str, str]]) -> None:
+def render_matched_skills(skills: list[dict[str, Any]]) -> None:
     if not skills:
         st.markdown('<p class="empty-state">None identified</p>', unsafe_allow_html=True)
         return
@@ -126,6 +134,26 @@ def render_matched_skills(skills: list[dict[str, str]]) -> None:
             f'{found_as}<span class="match-method">{escape(skill["match_type"])}</span></li>'
         )
     st.markdown(f'<ul class="skill-ledger">{"".join(rows)}</ul>', unsafe_allow_html=True)
+
+
+def render_matched_skill_groups(skills: list[dict[str, Any]]) -> None:
+    """Separate classified matches while retaining the legacy combined view."""
+    if not any(skill.get("required") is not None for skill in skills):
+        render_matched_skills(skills)
+        return
+
+    groups = (
+        ("Required matches", [skill for skill in skills if skill.get("required") is True]),
+        ("Preferred matches", [skill for skill in skills if skill.get("required") is False]),
+        (
+            "Classification unavailable",
+            [skill for skill in skills if skill.get("required") is None],
+        ),
+    )
+    for label, grouped_skills in groups:
+        if grouped_skills:
+            st.markdown(f'<p class="skill-group-label">{escape(label)}</p>', unsafe_allow_html=True)
+            render_matched_skills(grouped_skills)
 
 
 def render_missing_skills(skills: list[dict[str, Any]], empty_text: str = "None identified") -> None:
@@ -166,6 +194,15 @@ def render_explanation(candidate: dict[str, Any]) -> None:
     )
 
 
+def render_signal_note(candidate: dict[str, Any]) -> None:
+    signal_text = SIGNAL_NOTE_TEXT.get(candidate.get("signal_note"))
+    if signal_text:
+        st.markdown(
+            f'<p class="signal-note">{escape(signal_text)}</p>',
+            unsafe_allow_html=True,
+        )
+
+
 def render_candidate_feature(candidate: dict[str, Any], primary: bool = False) -> None:
     modifier = " candidate-feature--primary" if primary else ""
     st.markdown(
@@ -181,7 +218,7 @@ def render_candidate_feature(candidate: dict[str, Any], primary: bool = False) -
     )
     render_score_strip(candidate)
     st.markdown('<p class="minor-heading">Matched skills</p>', unsafe_allow_html=True)
-    render_matched_skills(candidate["matched_skills"])
+    render_matched_skill_groups(candidate["matched_skills"])
     st.markdown('<p class="minor-heading">Missing requirements</p>', unsafe_allow_html=True)
     render_missing_skills(candidate["missing_required_skills"])
     render_explanation(candidate)
@@ -250,19 +287,30 @@ def render_matching_details(candidate: dict[str, Any]) -> None:
     if not candidate["matched_skills"]:
         st.markdown('<p class="empty-state">No matched skills recorded.</p>', unsafe_allow_html=True)
         return
-    rows = "".join(
-        f"<tr><td>{escape(skill['skill'])}</td><td>{escape(skill['found_as'])}</td>"
-        f"<td>{escape(skill['match_type'])}</td></tr>"
-        for skill in candidate["matched_skills"]
-    )
-    st.markdown(
-        f"""
-        <div class="table-shell"><table class="evidence-table">
-        <thead><tr><th scope="col">JD requirement</th><th scope="col">Term found</th>
-        <th scope="col">Match method</th></tr></thead><tbody>{rows}</tbody></table></div>
-        """,
-        unsafe_allow_html=True,
-    )
+    records = []
+    for skill in candidate["matched_skills"]:
+        classification = {
+            True: "Required skill",
+            False: "Preferred skill",
+            None: "Classification unavailable",
+        }[skill.get("required")]
+        location = (
+            f'<span>Found in: {escape(skill["found_in"])}</span>'
+            if skill.get("found_in")
+            else ""
+        )
+        evidence = (
+            f'<blockquote><strong>Evidence</strong>{escape(skill["evidence"])}</blockquote>'
+            if skill.get("evidence")
+            else ""
+        )
+        records.append(
+            f'<article class="match-record"><h4>{escape(skill["skill"])}</h4>'
+            f'<p>Matched via: <strong>{escape(skill["found_as"])}</strong></p>'
+            f'<div class="match-meta"><span>{escape(skill["match_type"].title())} match</span>'
+            f'{location}<span>{classification}</span></div>{evidence}</article>'
+        )
+    st.markdown(f'<div class="match-records">{"".join(records)}</div>', unsafe_allow_html=True)
 
 
 def render_details(candidates: list[dict[str, Any]]) -> None:
@@ -290,7 +338,7 @@ def render_details(candidates: list[dict[str, Any]]) -> None:
     matched_column, missing_column = st.columns([1.2, 1], gap="large")
     with matched_column:
         st.markdown('<h3 class="subsection-title">Matched skills</h3>', unsafe_allow_html=True)
-        render_matched_skills(candidate["matched_skills"])
+        render_matched_skill_groups(candidate["matched_skills"])
     with missing_column:
         st.markdown('<h3 class="subsection-title">Missing required skills</h3>', unsafe_allow_html=True)
         render_missing_skills(candidate["missing_required_skills"])
@@ -308,8 +356,9 @@ def render_comparison_candidate(candidate: dict[str, Any], label: str) -> None:
         unsafe_allow_html=True,
     )
     render_score_strip(candidate)
+    render_signal_note(candidate)
     st.markdown('<p class="minor-heading">Matched skills</p>', unsafe_allow_html=True)
-    render_matched_skills(candidate["matched_skills"])
+    render_matched_skill_groups(candidate["matched_skills"])
     st.markdown('<p class="minor-heading">Missing requirements</p>', unsafe_allow_html=True)
     render_missing_skills(candidate["missing_required_skills"])
 
@@ -366,10 +415,28 @@ def render_comparison(candidates: list[dict[str, Any]]) -> None:
     a_column, b_column = st.columns(2, gap="large")
     with a_column:
         st.markdown(f'<h3 class="subsection-title">Only {escape(candidate_a["name"])} matched</h3>', unsafe_allow_html=True)
-        render_string_list(comparison["candidate_a_unique_matched_skills"])
+        if comparison["skill_classification_available"]:
+            for label, field in (
+                ("Required", "candidate_a_unique_required_skills"),
+                ("Preferred", "candidate_a_unique_preferred_skills"),
+                ("Classification unavailable", "candidate_a_unique_unclassified_skills"),
+            ):
+                st.markdown(f'<p class="skill-group-label">{label}</p>', unsafe_allow_html=True)
+                render_string_list(comparison[field])
+        else:
+            render_string_list(comparison["candidate_a_unique_matched_skills"])
     with b_column:
         st.markdown(f'<h3 class="subsection-title">Only {escape(candidate_b["name"])} matched</h3>', unsafe_allow_html=True)
-        render_string_list(comparison["candidate_b_unique_matched_skills"])
+        if comparison["skill_classification_available"]:
+            for label, field in (
+                ("Required", "candidate_b_unique_required_skills"),
+                ("Preferred", "candidate_b_unique_preferred_skills"),
+                ("Classification unavailable", "candidate_b_unique_unclassified_skills"),
+            ):
+                st.markdown(f'<p class="skill-group-label">{label}</p>', unsafe_allow_html=True)
+                render_string_list(comparison[field])
+        else:
+            render_string_list(comparison["candidate_b_unique_matched_skills"])
 
     render_section_header("02", "Missing required skills")
     missing_a, missing_b = st.columns(2, gap="large")

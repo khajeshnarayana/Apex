@@ -15,7 +15,10 @@ def _candidate_summary(candidate: dict[str, Any]) -> dict[str, Any]:
 
 
 def _unique_skill_names(
-    primary: list[dict[str, str]], other: list[dict[str, str]]
+    primary: list[dict[str, Any]],
+    other: list[dict[str, Any]],
+    required: bool | None = None,
+    filter_classification: bool = False,
 ) -> list[str]:
     other_skills = {match["skill"] for match in other}
     return list(
@@ -23,6 +26,9 @@ def _unique_skill_names(
             match["skill"]
             for match in primary
             if match["skill"] not in other_skills
+            and (
+                not filter_classification or match.get("required") is required
+            )
         )
     )
 
@@ -55,6 +61,12 @@ def compare_candidates(
         higher_ranked = candidate_b
         lower_ranked = candidate_a
 
+    classification_available = any(
+        match.get("required") is not None
+        for candidate in (candidate_a, candidate_b)
+        for match in candidate["matched_skills"]
+    )
+
     return {
         "candidate_a": _candidate_summary(candidate_a),
         "candidate_b": _candidate_summary(candidate_b),
@@ -77,6 +89,43 @@ def compare_candidates(
         ),
         "candidate_b_unique_matched_skills": _unique_skill_names(
             candidate_b["matched_skills"], candidate_a["matched_skills"]
+        ),
+        "skill_classification_available": classification_available,
+        "candidate_a_unique_required_skills": _unique_skill_names(
+            candidate_a["matched_skills"],
+            candidate_b["matched_skills"],
+            required=True,
+            filter_classification=True,
+        ),
+        "candidate_b_unique_required_skills": _unique_skill_names(
+            candidate_b["matched_skills"],
+            candidate_a["matched_skills"],
+            required=True,
+            filter_classification=True,
+        ),
+        "candidate_a_unique_preferred_skills": _unique_skill_names(
+            candidate_a["matched_skills"],
+            candidate_b["matched_skills"],
+            required=False,
+            filter_classification=True,
+        ),
+        "candidate_b_unique_preferred_skills": _unique_skill_names(
+            candidate_b["matched_skills"],
+            candidate_a["matched_skills"],
+            required=False,
+            filter_classification=True,
+        ),
+        "candidate_a_unique_unclassified_skills": _unique_skill_names(
+            candidate_a["matched_skills"],
+            candidate_b["matched_skills"],
+            required=None,
+            filter_classification=True,
+        ),
+        "candidate_b_unique_unclassified_skills": _unique_skill_names(
+            candidate_b["matched_skills"],
+            candidate_a["matched_skills"],
+            required=None,
+            filter_classification=True,
         ),
         "candidate_a_missing_required_skills": [
             dict(item) for item in candidate_a["missing_required_skills"]
@@ -123,18 +172,44 @@ def generate_comparison_explanation(comparison: dict[str, Any]) -> str:
     ]
     lower_missing = comparison[f"candidate_{lower_side}_missing_required_skills"]
 
-    if higher_unique:
-        label = "skill" if len(higher_unique) == 1 else "skills"
-        parts.append(
-            f"{higher['name']} uniquely matched {label} "
-            f"{_format_skills(higher_unique)}."
-        )
-    if lower_unique:
-        label = "skill" if len(lower_unique) == 1 else "skills"
-        parts.append(
-            f"{lower['name']} uniquely matched {label} "
-            f"{_format_skills(lower_unique)}."
-        )
+    if comparison.get("skill_classification_available"):
+        for side, candidate in ((higher_side, higher), (lower_side, lower)):
+            unique_required = comparison[f"candidate_{side}_unique_required_skills"]
+            unique_preferred = comparison[f"candidate_{side}_unique_preferred_skills"]
+            unique_unclassified = comparison[
+                f"candidate_{side}_unique_unclassified_skills"
+            ]
+            if unique_required:
+                parts.append(
+                    f"{candidate['name']} uniquely matched required "
+                    f"skill{'s' if len(unique_required) != 1 else ''} "
+                    f"{_format_skills(unique_required)}."
+                )
+            if unique_preferred:
+                parts.append(
+                    f"{candidate['name']} uniquely matched preferred "
+                    f"skill{'s' if len(unique_preferred) != 1 else ''} "
+                    f"{_format_skills(unique_preferred)}."
+                )
+            if unique_unclassified:
+                parts.append(
+                    f"{candidate['name']} uniquely matched additional "
+                    f"skill{'s' if len(unique_unclassified) != 1 else ''} "
+                    f"{_format_skills(unique_unclassified)}, with classification unavailable."
+                )
+    else:
+        if higher_unique:
+            label = "skill" if len(higher_unique) == 1 else "skills"
+            parts.append(
+                f"{higher['name']} uniquely matched {label} "
+                f"{_format_skills(higher_unique)}."
+            )
+        if lower_unique:
+            label = "skill" if len(lower_unique) == 1 else "skills"
+            parts.append(
+                f"{lower['name']} uniquely matched {label} "
+                f"{_format_skills(lower_unique)}."
+            )
 
     parts.append(
         f"{higher['name']} has {len(higher_missing)} missing required "

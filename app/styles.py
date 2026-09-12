@@ -69,12 +69,22 @@ html, body, [class*="css"] { font-family: var(--font-ui); }
 .skill-name { font-family: var(--font-display); font-size: 1rem; }
 .skill-found { color: var(--muted); font-size: .72rem; overflow-wrap: anywhere; }
 .match-method { color: var(--positive); font-family: var(--font-mono); font-size: .62rem; text-transform: uppercase; }
+.skill-group-label { color: var(--ink-soft); font-family: var(--font-display); font-size: 1rem; margin: 1rem 0 .35rem; }
 .missing-ledger li { border-bottom: 1px solid var(--line); color: var(--negative); padding: .55rem 0; }
 .missing-ledger small { color: var(--muted); display: block; font-size: .7rem; margin-top: .2rem; }
 .plain-ledger li { border-bottom: 1px solid var(--line); font-family: var(--font-display); padding: .5rem 0; }
 .analysis-note { border-left: 2px solid var(--accent); margin: 1.6rem 0 0; padding: .15rem 0 .15rem 1rem; }
 .analysis-note p:last-child { color: var(--ink-soft); font-family: var(--font-display); font-size: 1.03rem; line-height: 1.55; margin: .45rem 0 0; }
 .analysis-note--comparison { margin-top: 3rem; }
+.signal-note { border-left: 2px solid var(--positive); color: var(--ink-soft); font-family: var(--font-display); font-size: .95rem; margin: 1rem 0; padding: .25rem 0 .25rem .8rem; }
+.match-records { border-top: 2px solid var(--ink); }
+.match-record { border-bottom: 1px solid var(--line); padding: 1.2rem 0; }
+.match-record h4 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 500; margin: 0 0 .35rem; }
+.match-record > p { color: var(--ink-soft); font-size: .82rem; margin: 0; }
+.match-meta { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; margin-top: .65rem; }
+.match-meta span { color: var(--muted); font-family: var(--font-mono); font-size: .66rem; text-transform: uppercase; }
+.match-record blockquote { border-left: 2px solid var(--accent); color: var(--ink-soft); font-family: var(--font-display); line-height: 1.5; margin: .9rem 0 0; max-width: 760px; padding-left: .9rem; }
+.match-record blockquote strong { color: var(--muted); display: block; font-family: var(--font-mono); font-size: .62rem; letter-spacing: .06em; margin-bottom: .3rem; text-transform: uppercase; }
 .table-shell { overflow-x: auto; width: 100%; }
 .ranking-table, .evidence-table { border-collapse: collapse; font-size: .88rem; width: 100%; }
 .ranking-table thead, .evidence-table thead { border-bottom: 2px solid var(--ink); border-top: 1px solid var(--ink); }

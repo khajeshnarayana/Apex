@@ -21,7 +21,7 @@ def _normalize_score(value: Any, field: str, location: str) -> float:
 
 def _normalize_old_skill_list(
     value: Any, field: str, location: str
-) -> list[dict[str, str]]:
+) -> list[dict[str, Any]]:
     if value is None:
         return []
     if not isinstance(value, list):
@@ -35,12 +35,27 @@ def _normalize_old_skill_list(
             )
         skill = skill.strip()
         normalized.append(
-            {"skill": skill, "found_as": skill, "match_type": "exact"}
+            {
+                "skill": skill,
+                "found_as": skill,
+                "match_type": "exact",
+                "found_in": None,
+                "evidence": None,
+                "required": None,
+            }
         )
     return normalized
 
 
-def _normalize_matched_skills(value: Any, location: str) -> list[dict[str, str]]:
+def _normalize_optional_text(value: Any, field: str, location: str) -> str | None:
+    if value is None or value == "":
+        return None
+    if not _valid_text(value):
+        raise ValueError(f"{location} field '{field}' must be a string or null.")
+    return value.strip()
+
+
+def _normalize_matched_skills(value: Any, location: str) -> list[dict[str, Any]]:
     if value is None:
         return []
     if not isinstance(value, list):
@@ -78,8 +93,27 @@ def _normalize_matched_skills(value: Any, location: str) -> list[dict[str, str]]
         else:
             match_type = match_type.strip().lower()
 
+        found_in = _normalize_optional_text(
+            item.get("found_in"), "found_in", item_location
+        )
+        evidence = _normalize_optional_text(
+            item.get("evidence"), "evidence", item_location
+        )
+        required = item.get("required")
+        if required is not None and not isinstance(required, bool):
+            raise ValueError(
+                f"{item_location} field 'required' must be a boolean or null."
+            )
+
         normalized.append(
-            {"skill": skill, "found_as": found_as, "match_type": match_type}
+            {
+                "skill": skill,
+                "found_as": found_as,
+                "match_type": match_type,
+                "found_in": found_in,
+                "evidence": evidence,
+                "required": required,
+            }
         )
     return normalized
 
@@ -192,6 +226,12 @@ def normalize_stage2_output(payload: Any) -> list[dict[str, Any]]:
                 "matched_skills": matched_skills,
                 "missing_required_skills": _normalize_missing_skills(
                     raw_candidate.get("missing_required_skills"), location
+                ),
+                "signal_note": (
+                    raw_candidate.get("signal_note")
+                    if raw_candidate.get("signal_note")
+                    in {"semantic_above_keyword", "keyword_above_semantic"}
+                    else None
                 ),
             }
         )
