@@ -130,10 +130,13 @@ _model = None
 
 
 def get_model():
-    """Lazy-load the embedding model once (avoids reloading per call)."""
+    """Lazy-load the locally cached embedding model once."""
     global _model
     if _model is None:
-        _model = SentenceTransformer("all-MiniLM-L6-v2")
+        _model = SentenceTransformer(
+            "all-MiniLM-L6-v2",
+            local_files_only=True,
+        )
     return _model
 
 

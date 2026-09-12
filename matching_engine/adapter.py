@@ -23,7 +23,10 @@ import json
 import os
 import re
 
-from matching import SYNONYM_MAP
+try:
+    from .matching import SYNONYM_MAP
+except ImportError:  # Preserve standalone execution from matching_engine/.
+    from matching import SYNONYM_MAP
 
 
 # ---------------------------------------------------------------------------

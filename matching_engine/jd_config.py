@@ -2,8 +2,12 @@
 
 import re
 import sys
-from adapter import extract_skills_from_text
-from matching import SYNONYM_MAP
+try:
+    from .adapter import extract_skills_from_text
+    from .matching import SYNONYM_MAP
+except ImportError:  # Preserve standalone execution from matching_engine/.
+    from adapter import extract_skills_from_text
+    from matching import SYNONYM_MAP
 
 REQUIRED_HEADINGS = ["must-have", "must have", "required skills", "requirements",
                      "minimum qualifications", "essential skills", "key skills",
