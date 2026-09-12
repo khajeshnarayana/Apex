@@ -1,0 +1,156 @@
+[
+  {
+    "candidate_id": "App_Developer_Resume_2_Kavya_Menon",
+    "name": "Kavya Menon",
+    "final_score": 0.5198,
+    "keyword_score": 0.604,
+    "semantic_score": 0.4636,
+    "matched_skills": [
+      {
+        "skill": "REST API",
+        "found_as": "REST APIs",
+        "match_type": "synonym"
+      },
+      {
+        "skill": "SQL",
+        "found_as": "SQLite",
+        "match_type": "synonym"
+      },
+      {
+        "skill": "Git",
+        "found_as": "GitHub",
+        "match_type": "synonym"
+      },
+      {
+        "skill": "JavaScript",
+        "found_as": "JavaScript",
+        "match_type": "exact"
+      },
+      {
+        "skill": "Testing",
+        "found_as": "Testing",
+        "match_type": "exact"
+      },
+      {
+        "skill": "NoSQL",
+        "found_as": "Firebase",
+        "match_type": "synonym"
+      }
+    ],
+    "missing_required_skills": [
+      {
+        "skill": "Docker",
+        "semantic_hint": true
+      }
+    ],
+    "rank": 1
+  },
+  {
+    "candidate_id": "App_Developer_Resume_1_Siddharth_Rao",
+    "name": "Siddharth Rao",
+    "final_score": 0.5195,
+    "keyword_score": 0.604,
+    "semantic_score": 0.4631,
+    "matched_skills": [
+      {
+        "skill": "REST API",
+        "found_as": "REST APIs",
+        "match_type": "synonym"
+      },
+      {
+        "skill": "SQL",
+        "found_as": "SQLite",
+        "match_type": "synonym"
+      },
+      {
+        "skill": "Git",
+        "found_as": "GitHub",
+        "match_type": "synonym"
+      },
+      {
+        "skill": "JavaScript",
+        "found_as": "JavaScript",
+        "match_type": "exact"
+      },
+      {
+        "skill": "Testing",
+        "found_as": "Testing",
+        "match_type": "exact"
+      },
+      {
+        "skill": "NoSQL",
+        "found_as": "Firebase",
+        "match_type": "synonym"
+      }
+    ],
+    "missing_required_skills": [
+      {
+        "skill": "Docker",
+        "semantic_hint": true
+      }
+    ],
+    "rank": 2
+  },
+  {
+    "candidate_id": "Content_Creation_Resume_1_Varun_Kapoor",
+    "name": "Varun Kapoor",
+    "final_score": 0.2509,
+    "keyword_score": 0.0,
+    "semantic_score": 0.4181,
+    "matched_skills": [],
+    "missing_required_skills": [
+      {
+        "skill": "REST API",
+        "semantic_hint": false
+      },
+      {
+        "skill": "SQL",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Git",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Docker",
+        "semantic_hint": false
+      },
+      {
+        "skill": "JavaScript",
+        "semantic_hint": false
+      }
+    ],
+    "rank": 3
+  },
+  {
+    "candidate_id": "Content_Creation_Resume_2_Neha_Bhatia",
+    "name": "Neha Bhatia",
+    "final_score": 0.2509,
+    "keyword_score": 0.0,
+    "semantic_score": 0.4181,
+    "matched_skills": [],
+    "missing_required_skills": [
+      {
+        "skill": "REST API",
+        "semantic_hint": false
+      },
+      {
+        "skill": "SQL",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Git",
+        "semantic_hint": false
+      },
+      {
+        "skill": "Docker",
+        "semantic_hint": false
+      },
+      {
+        "skill": "JavaScript",
+        "semantic_hint": false
+      }
+    ],
+    "rank": 4
+  }
+]
