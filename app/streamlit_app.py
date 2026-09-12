@@ -22,7 +22,6 @@ from stage3.comparison import (  # noqa: E402
     compare_candidates,
     generate_comparison_explanation,
 )
-from stage3.data_loader import load_rankings  # noqa: E402
 from stage3.explanation_generator import generate_explanation  # noqa: E402
 from stage3.upload_pipeline import (  # noqa: E402
     SUPPORTED_EXTENSIONS,
@@ -34,7 +33,6 @@ from stage3.upload_pipeline import (  # noqa: E402
 from styles import EDITORIAL_CSS  # noqa: E402
 
 
-RANKINGS_PATH = REPOSITORY_ROOT / "demo_data" / "mock_ranking_results.json"
 SIGNAL_NOTE_TEXT = {
     "semantic_above_keyword": (
         "Semantic relevance is stronger than explicit keyword coverage."
@@ -95,18 +93,36 @@ def navigate_to(page: str) -> None:
     st.session_state["navigation"] = page
 
 
-def render_data_context(using_uploaded_analysis: bool) -> None:
-    """Make demo and uploaded result sets visually unambiguous."""
-    if using_uploaded_analysis:
-        label = "Uploaded analysis"
-        detail = "Showing the current locally processed document set."
-    else:
-        label = "Demo fixture"
-        detail = "Upload documents to replace this illustrative ranking with a real analysis."
+def render_data_context() -> None:
+    """Identify the only result source used by the product runtime."""
     st.markdown(
-        f'<div class="context-notice"><strong>{escape(label)}</strong>'
-        f'<span>{escape(detail)}</span></div>',
+        '<div class="context-notice"><strong>Uploaded analysis</strong>'
+        '<span>Showing the current locally processed document set.</span></div>',
         unsafe_allow_html=True,
+    )
+
+
+def render_no_analysis(page_name: str) -> None:
+    """Render a safe pre-analysis state for result-dependent pages."""
+    render_page_header(
+        "Apex / Awaiting analysis",
+        page_name,
+        "Upload source documents before reviewing candidate results.",
+    )
+    st.markdown(
+        """
+        <div class="empty-analysis">
+            <strong>No analysis available yet.</strong>
+            <p>Upload a job description and candidate resumes to begin.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.button(
+        "Go to Upload Documents",
+        on_click=navigate_to,
+        args=("Upload Documents",),
+        type="primary",
     )
 
 
@@ -368,15 +384,13 @@ def render_candidate_feature(candidate: dict[str, Any]) -> None:
     st.markdown('<div class="candidate-separator"></div>', unsafe_allow_html=True)
 
 
-def render_dashboard(
-    candidates: list[dict[str, Any]], using_uploaded_analysis: bool
-) -> None:
+def render_dashboard(candidates: list[dict[str, Any]]) -> None:
     render_page_header(
         "Stage 3 / Ranked shortlist",
         "Leading candidates",
         "The strongest supplied matches, in authoritative Stage 2 order.",
     )
-    render_data_context(using_uploaded_analysis)
+    render_data_context()
     st.markdown(
         f"""
         <div class="briefing-strip">
@@ -399,15 +413,13 @@ def render_dashboard(
         render_candidate_feature(candidate)
 
 
-def render_rankings(
-    candidates: list[dict[str, Any]], using_uploaded_analysis: bool
-) -> None:
+def render_rankings(candidates: list[dict[str, Any]]) -> None:
     render_page_header(
         "Stage 3 / Ranked field",
         "Candidate rankings",
         "The complete Stage 2 result set, presented in its supplied rank order.",
     )
-    render_data_context(using_uploaded_analysis)
+    render_data_context()
     rows = "".join(
         f"""
         <tr><td class="rank-cell">{candidate['rank']:02d}</td>
@@ -464,15 +476,13 @@ def render_matching_details(candidate: dict[str, Any]) -> None:
     st.markdown(f'<div class="match-records">{"".join(records)}</div>', unsafe_allow_html=True)
 
 
-def render_details(
-    candidates: list[dict[str, Any]], using_uploaded_analysis: bool
-) -> None:
+def render_details(candidates: list[dict[str, Any]]) -> None:
     render_page_header(
         "Stage 3 / Candidate record",
         "Candidate details",
         "Inspect one ranked candidate without changing the supplied scores or evidence.",
     )
-    render_data_context(using_uploaded_analysis)
+    render_data_context()
     candidate_by_id = {candidate["candidate_id"]: candidate for candidate in candidates}
     selected_candidate_id = st.selectbox(
         "Select candidate",
@@ -532,15 +542,13 @@ def common_matched_skill_names(
     )
 
 
-def render_comparison(
-    candidates: list[dict[str, Any]], using_uploaded_analysis: bool
-) -> None:
+def render_comparison(candidates: list[dict[str, Any]]) -> None:
     render_page_header(
         "Stage 3 / Side-by-side analysis",
         "Compare candidates",
         "Read the supplied ranking signals together. No scores or ranks are recalculated here.",
     )
-    render_data_context(using_uploaded_analysis)
+    render_data_context()
     candidate_by_id = {candidate["candidate_id"]: candidate for candidate in candidates}
     candidate_ids = list(candidate_by_id)
     selector_a, selector_b = st.columns(2, gap="large")
@@ -647,14 +655,7 @@ if "upload_generation" not in st.session_state:
 
 analysis_candidates = st.session_state.get("analysis_candidates")
 using_uploaded_analysis = analysis_candidates is not None
-if using_uploaded_analysis:
-    candidates = analysis_candidates
-else:
-    try:
-        candidates = load_rankings(RANKINGS_PATH)
-    except (OSError, UnicodeError, ValueError) as error:
-        st.error(f"Unable to load candidate rankings: {error}")
-        st.stop()
+candidates = analysis_candidates if using_uploaded_analysis else []
 
 with st.sidebar:
     st.markdown(
@@ -688,20 +689,22 @@ with st.sidebar:
         )
     st.markdown(
         f"""
-        <div class="sidebar-status"><span>{'Uploaded analysis' if using_uploaded_analysis else 'Demo fixture'}</span>
-        <strong>{len(candidates)} candidates loaded</strong>
-        <small>{'Local Stage 1 → Stage 2 → Stage 3' if using_uploaded_analysis else 'Upload documents to run a real analysis'}</small></div>
+        <div class="sidebar-status"><span>{'Uploaded analysis' if using_uploaded_analysis else 'Awaiting analysis'}</span>
+        <strong>{f'{len(candidates)} candidates loaded' if using_uploaded_analysis else 'No candidates loaded'}</strong>
+        <small>{'Local Stage 1 → Stage 2 → Stage 3' if using_uploaded_analysis else 'Upload documents to begin'}</small></div>
         """,
         unsafe_allow_html=True,
     )
 
 if selected_page == "Upload Documents":
     render_upload_documents()
+elif not candidates:
+    render_no_analysis(selected_page)
 elif selected_page == "Leading Candidates":
-    render_dashboard(candidates, using_uploaded_analysis)
+    render_dashboard(candidates)
 elif selected_page == "Rankings":
-    render_rankings(candidates, using_uploaded_analysis)
+    render_rankings(candidates)
 elif selected_page == "Candidate Details":
-    render_details(candidates, using_uploaded_analysis)
+    render_details(candidates)
 else:
-    render_comparison(candidates, using_uploaded_analysis)
+    render_comparison(candidates)
