@@ -24,6 +24,13 @@ from stage3.comparison import (  # noqa: E402
 )
 from stage3.data_loader import load_rankings  # noqa: E402
 from stage3.explanation_generator import generate_explanation  # noqa: E402
+from stage3.upload_pipeline import (  # noqa: E402
+    SUPPORTED_EXTENSIONS,
+    UploadPipelineError,
+    analyze_documents,
+    from_streamlit_upload,
+    reset_analysis_state,
+)
 from styles import EDITORIAL_CSS  # noqa: E402
 
 
@@ -81,6 +88,67 @@ def render_page_header(kicker: str, title: str, subtitle: str) -> None:
         """,
         unsafe_allow_html=True,
     )
+
+
+def render_upload_documents() -> None:
+    """Collect documents and run the existing local backend on explicit action."""
+    render_page_header(
+        "Apex / Local analysis",
+        "Upload Documents",
+        "Add one job description and one or more resumes, then start analysis.",
+    )
+    supported = ", ".join(extension.upper() for extension in SUPPORTED_EXTENSIONS)
+    st.caption(f"Supported document types: {supported}. Processing stays local.")
+
+    generation = st.session_state.get("upload_generation", 0)
+    job_description_upload = st.file_uploader(
+        "Job Description",
+        type=list(SUPPORTED_EXTENSIONS),
+        accept_multiple_files=False,
+        key=f"job_description_upload_{generation}",
+    )
+    resume_uploads = st.file_uploader(
+        "Candidate Resumes",
+        type=list(SUPPORTED_EXTENSIONS),
+        accept_multiple_files=True,
+        key=f"resume_uploads_{generation}",
+    )
+
+    if st.button("Analyse Candidates", type="primary"):
+        try:
+            job_description = (
+                from_streamlit_upload(job_description_upload)
+                if job_description_upload is not None
+                else None
+            )
+            resumes = [from_streamlit_upload(upload) for upload in resume_uploads]
+            with st.spinner("Extracting documents and ranking candidates locally..."):
+                analyzed_candidates = analyze_documents(job_description, resumes)
+        except UploadPipelineError as error:
+            st.error(str(error))
+        except Exception as error:
+            st.error(f"Analysis could not be completed: {error}")
+        else:
+            st.session_state.pop("candidate_a", None)
+            st.session_state.pop("candidate_b", None)
+            st.session_state["analysis_candidates"] = analyzed_candidates
+            st.session_state["analysis_files"] = {
+                "job_description": job_description.name,
+                "resumes": [resume.name for resume in resumes],
+            }
+            st.success(
+                f"Analysis complete. {len(analyzed_candidates)} candidate"
+                f"{'s' if len(analyzed_candidates) != 1 else ''} ranked. "
+                "Open Leading Candidates, Candidate Details, or Candidate Comparison."
+            )
+
+    analysis_files = st.session_state.get("analysis_files")
+    if analysis_files:
+        st.info(
+            f"Current analysis: {analysis_files['job_description']} with "
+            f"{len(analysis_files['resumes'])} resume"
+            f"{'s' if len(analysis_files['resumes']) != 1 else ''}."
+        )
 
 
 def render_section_header(number: str, title: str, description: str | None = None) -> None:
@@ -465,11 +533,19 @@ st.set_page_config(
 )
 st.markdown(EDITORIAL_CSS, unsafe_allow_html=True)
 
-try:
-    candidates = load_rankings(RANKINGS_PATH)
-except (OSError, UnicodeError, ValueError) as error:
-    st.error(f"Unable to load candidate rankings: {error}")
-    st.stop()
+if "upload_generation" not in st.session_state:
+    st.session_state["upload_generation"] = 0
+
+analysis_candidates = st.session_state.get("analysis_candidates")
+using_uploaded_analysis = analysis_candidates is not None
+if using_uploaded_analysis:
+    candidates = analysis_candidates
+else:
+    try:
+        candidates = load_rankings(RANKINGS_PATH)
+    except (OSError, UnicodeError, ValueError) as error:
+        st.error(f"Unable to load candidate rankings: {error}")
+        st.stop()
 
 with st.sidebar:
     st.markdown(
@@ -479,19 +555,40 @@ with st.sidebar:
         """,
         unsafe_allow_html=True,
     )
+    navigation_options = [
+        "Upload Documents",
+        "Leading Candidates",
+        "Rankings",
+        "Candidate Details",
+        "Candidate Comparison",
+    ]
+    if st.session_state.get("navigation") not in (None, *navigation_options):
+        st.session_state["navigation"] = "Upload Documents"
     selected_page = st.radio(
-        "Navigation", options=["Dashboard", "Rankings", "Candidate Details", "Compare Candidates"],
+        "Navigation",
+        options=navigation_options,
         label_visibility="collapsed",
+        key="navigation",
     )
+    if using_uploaded_analysis:
+        st.button(
+            "Clear analysis / upload new dataset",
+            on_click=reset_analysis_state,
+            args=(st.session_state,),
+            use_container_width=True,
+        )
     st.markdown(
         f"""
-        <div class="sidebar-status"><span>Stage 3 demo</span><strong>{len(candidates)} candidates loaded</strong>
-        <small>Structured Stage 2 output</small></div>
+        <div class="sidebar-status"><span>{'Uploaded analysis' if using_uploaded_analysis else 'Demo fixture'}</span>
+        <strong>{len(candidates)} candidates loaded</strong>
+        <small>{'Local Stage 1 → Stage 2 → Stage 3' if using_uploaded_analysis else 'Upload documents to run a real analysis'}</small></div>
         """,
         unsafe_allow_html=True,
     )
 
-if selected_page == "Dashboard":
+if selected_page == "Upload Documents":
+    render_upload_documents()
+elif selected_page == "Leading Candidates":
     render_dashboard(candidates)
 elif selected_page == "Rankings":
     render_rankings(candidates)

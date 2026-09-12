@@ -1,2 +1,6 @@
-# Dependencies will be added once the architecture is finalized.
 streamlit
+PyMuPDF
+python-docx
+sentence-transformers
+scikit-learn
+numpy
