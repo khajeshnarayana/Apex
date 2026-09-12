@@ -109,7 +109,19 @@ def extract_from_pdf(pdf_path: str) -> ExtractionResult:
                     clean_parts.append("".join(line_parts))
 
     doc.close()
-    return ExtractionResult(clean_text="\n".join(clean_parts), flagged_spans=flagged)
+    # Merge lone bullet characters with the next line so "•\nTypeScript" becomes "• TypeScript"
+    # This preserves skill context for the JD parser
+    merged = []
+    i = 0
+    while i < len(clean_parts):
+        line = clean_parts[i]
+        if line.strip() in ("\u2022", "-", "*") and i + 1 < len(clean_parts):
+            merged.append(line.strip() + " " + clean_parts[i + 1])
+            i += 2
+        else:
+            merged.append(line)
+            i += 1
+    return ExtractionResult(clean_text="\n".join(merged), flagged_spans=flagged)
 
 
 # ── DOCX extraction ────────────────────────────────────────────────────────────
@@ -238,31 +250,41 @@ def split_into_sections(clean_text: str) -> dict:
 # ── Skill extraction ───────────────────────────────────────────────────────────
 
 # Extend this list once you have the actual JD
+# Skills drawn from the actual JD (TechNova — Junior Full Stack Developer Intern)
+# MUST-HAVE from JD
+JD_REQUIRED = [
+    "javascript", "react", "node.js", "express", "rest apis", "json",
+    "mysql", "postgresql", "mongodb", "git", "github",
+]
+
+# GOOD-TO-HAVE from JD
+JD_NICE_TO_HAVE = [
+    "typescript", "aws", "gcp", "azure", "docker", "jest", "mocha", "agile", "scrum",
+]
+
 SKILL_VOCAB = [
-    # Languages
-    "python", "javascript", "java", "c++", "typescript", "sql", "go", "ruby", "php", "swift",
-    "dart", "kotlin", "bash", "powershell", "r",
-    # Frontend
-    "react", "vue", "angular", "html", "css", "next.js", "tailwind", "react native",
-    # Mobile
-    "flutter", "android", "ios", "android sdk", "firebase",
-    # Backend
-    "node.js", "express", "django", "flask", "fastapi", "spring boot", "celery", "rabbitmq",
-    # Databases
-    "mongodb", "postgresql", "mysql", "redis", "sqlite", "firestore",
-    # Cloud / DevOps
-    "aws", "gcp", "azure", "docker", "kubernetes", "git", "linux", "ci/cd", "terraform",
-    "github", "gitlab", "jenkins",
-    # APIs
-    "rest apis", "graphql", "websockets",
-    # Cyber
+    # === JD MUST-HAVE (match these first — highest signal) ===
+    "javascript", "react", "node.js", "express", "rest apis", "json",
+    "mysql", "postgresql", "mongodb", "git", "github",
+    # === JD GOOD-TO-HAVE ===
+    "typescript", "aws", "gcp", "azure", "docker", "jest", "mocha", "agile", "scrum",
+    # === General full-stack / CS skills ===
+    "python", "java", "c++", "sql", "go", "ruby", "php", "swift",
+    "dart", "kotlin", "bash", "powershell",
+    "vue", "angular", "html", "css", "next.js", "tailwind", "react native",
+    "flutter", "android", "ios", "firebase",
+    "django", "flask", "fastapi", "spring boot",
+    "redis", "sqlite", "firestore",
+    "kubernetes", "linux", "ci/cd", "terraform", "gitlab", "jenkins",
+    "graphql", "websockets",
+    # === Cyber (present in some resumes) ===
     "burp suite", "owasp", "penetration testing", "nmap", "wireshark", "metasploit",
     "sqlmap", "splunk", "kali linux", "vulnerability assessment", "vapt",
-    # Data / ML
+    # === Data / ML ===
     "pandas", "numpy", "tensorflow", "pytorch", "machine learning", "scikit-learn",
     "scapy", "opencv",
-    # Tools
-    "postman", "figma", "jira", "linux shell", "virtualbox",
+    # === Tools ===
+    "postman", "figma", "jira", "virtualbox",
 ]
 
 
@@ -278,16 +300,62 @@ def extract_skills(text: str, vocab: list = SKILL_VOCAB) -> list:
 
 # ── Full pipeline ──────────────────────────────────────────────────────────────
 
+def parse_education(raw_text: str) -> dict:
+    """Extract degree, institution, year range, and CGPA/GPA from education raw text."""
+    result = {
+        "degree": "",
+        "institution": "",
+        "year": "",
+        "cgpa": "",
+        "raw_text": raw_text,
+    }
+    if not raw_text:
+        return result
+
+    # CGPA / GPA
+    cgpa_match = re.search(r"(?:cgpa|gpa)[:\s]*([0-9]+\.[0-9]+)\s*(?:/\s*[0-9]+)?", raw_text, re.IGNORECASE)
+    if cgpa_match:
+        result["cgpa"] = cgpa_match.group(1)
+
+    # Year range e.g. 2022-2026 or 2022 – 2026
+    year_match = re.search(r"(20\d{2})\s*[-–]\s*(20\d{2}|present|expected)", raw_text, re.IGNORECASE)
+    if year_match:
+        result["year"] = f"{year_match.group(1)}-{year_match.group(2)}"
+
+    # Degree — look for common degree prefixes
+    degree_match = re.search(
+        r"(b\.?tech|b\.?e\.?|b\.?sc\.?|m\.?tech|m\.?sc\.?|bca|mca|b\.?com)[^,\n]*",
+        raw_text, re.IGNORECASE
+    )
+    if degree_match:
+        result["degree"] = degree_match.group(0).strip()
+
+    # Institution — line or segment after the degree or on its own line
+    lines = [l.strip() for l in raw_text.split("\n") if l.strip()]
+    for line in lines:
+        # institution lines usually contain "Institute", "College", "University", "School", "NIT", "IIT"
+        if re.search(r"(institute|college|university|school|nit|iit|manipal|symbiosis|rv |vit )", line, re.IGNORECASE):
+            inst = re.sub(r"^(b\.?tech|b\.?e\.?|b\.?sc\.?|m\.?tech|bca|mca)[^,]*,\s*", "", line, flags=re.IGNORECASE)
+            inst = re.sub(r"\s*[\(\[]?20\d{2}.*$", "", inst).strip().rstrip(",")
+            result["institution"] = inst
+            break
+
+    return result
+
+
 def build_resume_json(file_path: str, resume_id: str) -> dict:
     result = extract_clean_text(file_path)
     sections_raw = split_into_sections(result.clean_text)
 
     sections = {}
     for name, raw_text in sections_raw.items():
-        sections[name] = {
-            "raw_text": raw_text,
-            "extracted_skills": extract_skills(raw_text) if name in ("skills", "experience", "projects") else [],
-        }
+        if name == "education":
+            sections[name] = parse_education(raw_text)
+        else:
+            sections[name] = {
+                "raw_text": raw_text,
+                "extracted_skills": extract_skills(raw_text) if name in ("skills", "experience", "projects") else [],
+            }
 
     # Extract candidate name from first non-empty line
     candidate_name = ""
@@ -310,13 +378,21 @@ def build_resume_json(file_path: str, resume_id: str) -> dict:
     }
 
 
-def process_batch(input_dir: str, out_dir: str):
+def process_batch(input_dir: str, out_dir: str, skip_file: str = ""):
+    """
+    skip_file: filename (not path) of the JD to exclude if it's inside the resumes folder.
+    """
     os.makedirs(out_dir, exist_ok=True)
     supported = (".pdf", ".docx", ".txt", ".xml")
-    files = [f for f in sorted(os.listdir(input_dir)) if f.lower().endswith(supported)]
+    skip_name = os.path.basename(skip_file).lower() if skip_file else ""
+
+    files = [
+        f for f in sorted(os.listdir(input_dir))
+        if f.lower().endswith(supported) and f.lower() != skip_name
+    ]
 
     if not files:
-        print(f"No PDF or DOCX files found in {input_dir}")
+        print(f"No resume files found in {input_dir}")
         return
 
     for fname in files:
@@ -339,6 +415,7 @@ if __name__ == "__main__":
     import sys
 
     if len(sys.argv) == 2 and sys.argv[1].lower().endswith((".pdf", ".docx", ".txt", ".xml")):
+        # Single file debug mode
         path = sys.argv[1]
         result = extract_clean_text(path)
         print(result.report())
@@ -346,10 +423,11 @@ if __name__ == "__main__":
         print(json.dumps(data, indent=2))
 
     elif len(sys.argv) == 3:
+        # Batch mode: python hidden_text_strip.py <resumes_dir> <out_dir>
         process_batch(sys.argv[1], sys.argv[2])
 
     else:
         print("Usage:")
-        print("  python hidden_text_strip.py <resume.pdf|docx>      # single file, debug")
-        print("  python hidden_text_strip.py <input_dir> <out_dir>  # batch mode")
+        print("  python hidden_text_strip.py <resume.pdf|docx|txt|xml>   # single file debug")
+        print("  python hidden_text_strip.py <resumes_dir> <out_dir>     # batch → one JSON per resume")
         sys.exit(1)
