@@ -55,3 +55,31 @@ st.dataframe(
     hide_index=True,
     width="stretch",
 )
+
+st.header("Top 3 Candidates")
+
+top_candidates = candidates[:3]
+
+for candidate in top_candidates:
+    with st.container(border=True):
+        st.subheader(f"Rank {candidate['rank']} — {candidate['name']}")
+
+        final_score_column, keyword_score_column, semantic_score_column = st.columns(3)
+        final_score_column.metric("Final Score", f"{candidate['final_score']:.1f}")
+        keyword_score_column.metric(
+            "Keyword Score", f"{candidate['keyword_score']:.1f}"
+        )
+        semantic_score_column.metric(
+            "Semantic Score", f"{candidate['semantic_score']:.1f}"
+        )
+
+        matched_skills = candidate["matched_required_skills"]
+        missing_skills = candidate["missing_required_skills"]
+        matched_skills_text = ", ".join(matched_skills) or "None identified"
+        missing_skills_text = ", ".join(missing_skills) or "None identified"
+
+        matched_skills_column, missing_skills_column = st.columns(2)
+        matched_skills_column.write("**Matched Required Skills**")
+        matched_skills_column.write(matched_skills_text)
+        missing_skills_column.write("**Missing Required Skills**")
+        missing_skills_column.write(missing_skills_text)
